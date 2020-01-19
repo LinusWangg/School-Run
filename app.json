@@ -3,7 +3,7 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/location/location",
-    "map"
+    "pages/map/map"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -31,6 +31,12 @@
       {
         "pagePath": "pages/location/location",
         "text": "wywwd",
+        "iconPath": "iconPicture/tab005.jpg",
+        "selectedIconPath": "iconPicture/tab008.jpg"
+      },
+      {
+        "pagePath": "pages/map/map",
+        "text": "map",
         "iconPath": "iconPicture/tab005.jpg",
         "selectedIconPath": "iconPicture/tab008.jpg"
       }
