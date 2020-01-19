@@ -15,9 +15,9 @@
 		"scopeDataCheck": false
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.10.1",
-	"appid": "wxabe5a4b8a9c68151",
-	"projectname": "School-Run",
+	"libVersion": "2.9.4",
+	"appid": "wx13c3ceb7c73cb158",
+	"projectname": "%E5%9C%B0%E5%9B%BE%E6%B5%8B%E8%AF%95",
 	"debugOptions": {
 		"hidedInDevtools": []
 	},
