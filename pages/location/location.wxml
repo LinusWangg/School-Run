@@ -1,0 +1,55 @@
+<view class="mainView">
+   <map
+        class="mapView"
+        style="width: 100%; height: 100vh;"
+        latitude="{{latitude}}"
+        longitude="{{longitude}}"
+        scale="100"
+        polyline="{{polyline}}"
+        markers="{{markers}}"
+        
+        >
+        <!--开始 按键-->
+        <cover-view class='ButtonLayout'>
+        <!-- <image class="icon" src="../../iconPicture/tab001.jpg" mode="aspectFit"/> -->
+        <!-- <button bindtap="openLocation">打开位置</button> -->
+        <block wx:if="{{!start}}">
+            <button class='StartRunButton' bindtap="startRun">
+                <cover-image class='ButtonImage' src="../../iconPicture/start.png"></cover-image>
+                <!-- <cover-view>开始跑步</cover-view> -->
+                <!-- <cover-view >{{start}}</cover-view> -->
+            </button>
+        </block>
+        <!--暂停 按键-->
+        <block wx:else>
+            <button class='StopRunButton' bindtap="stopRun">
+                <cover-image class='ButtonImage' src="../../iconPicture/stop.png"></cover-image>
+                <!-- <cover-view>暂停跑步</cover-view> -->
+            </button>
+        </block>
+        <!--停止按 键-->
+        <block>
+            <button class='ClearButton' bindtap="stopRun">
+                <cover-image class='ButtonImage' src="../../iconPicture/stop.png"></cover-image>
+                <!-- <cover-viaew>暂停跑步</cover-view> -->
+            </button>
+        </block>
+
+        </cover-view>
+        <cover-view class="Container">
+            <cover-view class="CoverText">\n里程数：{{meters}}km</cover-view>
+            <cover-view class="CoverText">\n\n时 间：{{time}}</cover-view>
+        </cover-view>
+
+        
+
+    </map>
+
+</view>
+
+
+
+<!-- <view>  
+    <text>\n里程数：{{meters}}km</text>
+    <text>\n\n时间：{{time}}</text>
+</view> -->
