@@ -4,11 +4,6 @@ App({
    * 当小程序初始化时候，触发onLaunch()
    */
   onLaunch: function (options) {
-    // 初次打开时的操作
-    console.log(options);
-    console.log("王烨文辣是真的牛皮！！！");
-    
-    // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())
     wx.setStorageSync('logs', logs)
@@ -45,8 +40,6 @@ App({
    * 当小程序从后台到前台时候，才触发
    */
   onShow: function(options) {
-    console.log("王烨文带我们走向辉煌！！！");
-    console.log("wywnb");
     console.log(options);
   },
 
