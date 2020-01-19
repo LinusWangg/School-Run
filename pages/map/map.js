@@ -1,66 +1,87 @@
 // map.js
+function getUserLocation() {
+  wx.getSetting({
+    success(res) {
+      if (res.authSetting['scope.userLocationBackground']==false) {
+        wx.authorize({
+          scope: 'scope.userLocation',
+          success: (res) => {
+              console.log('成功：' , res)
+          },
+          fail: (res) => {
+              console.log('失败：', res)
+          },
+        })
+      }
+      else{
+        wx.startLocationUpdateBackground({
+          success: (res) => {
+            console.log('startLocationUpdate-res', res)
+          },
+          fail: (err) => {
+            console.log('startLocationUpdate-err', err)
+          }
+        })
+      } 
+      // else {
+        if (res.authSetting['scope.userLocation']==false) {
+          wx.authorize({
+            scope: 'scope.userLocation',
+            success: (res) => {
+                console.log('成功：' , res)
+            },
+            fail: (res) => {
+                console.log('失败：', res)
+            },
+          })
+        } else {
+          wx.startLocationUpdateBackground({
+            success: (res) => {
+              console.log('startLocationUpdate-res', res)
+            },
+            fail: (err) => {
+              console.log('startLocationUpdate-err', err)
+            }
+          })
+        }
+      // }
+    }
+  })
+}
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-
+    markers: [],
+    longitude: 0,
+    latitude: 0,
+    // polyline: [{
+    //   points: [{
+    //     longitude: 113.3245211,
+    //     latitude: 23.10229
+    //   }, {
+    //     longitude: 113.324520,
+    //     latitude: 23.21229
+    //   }],
+    //   color:"#FF0000DD",
+    //   width: 2,
+    //   dottedLine: true
+    // }],
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-
+  regionchange(e) {
+    // console.log(e.type)
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
+  markertap(e) {
+    // console.log(e.markerId)
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
+  controltap(e) {
+    // console.log(e.controlId)
+  },
   onShow: function () {
-
+    getUserLocation();
+    const _locationChangeFn = res=> {
+      this.latitude = res.latitude;
+      this.longitude = res.longitude;
+      console.log('location change', res.latitude, res.longitude)
+    }
+    wx.onLocationChange(_locationChangeFn);
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  }
 })
