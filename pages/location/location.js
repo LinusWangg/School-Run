@@ -180,6 +180,61 @@ Page({
 
 
   //****************************
+  clearRun: function () {
+    startRun = 0;
+    var that = this;
+
+    wx.showModal({
+      title: '提示',
+      content: '是否结束并提交？',
+      confirmText: '确定',
+      cancelText: '取消',
+
+      success(res) {
+        if (res.confirm) {
+          console.log('用户点击确定');
+          count_down(this);
+          countTooGetLocation = 0;
+          total_micro_second = 0;
+          startRun = 0;
+          totalSecond = 0;
+          oriMeters = 0.0;
+          oriPoints = [];
+
+          that.setData({
+            start: false,
+            clock: '',
+            isLocation: false,
+            latitude: 0,
+            longitude: 0,
+            markers: [],
+            meters: 0.00,
+            time: "0:00:00",
+            polyline: [{
+              points: oriPoints,
+              color: "#00FF00",
+              width: 8,
+              arrowLine: true,
+              dottedLine: false
+            }],
+          })
+
+          wx.showToast({
+            title: '成功',
+            icon: 'success',
+            duration: 2000
+          });
+
+        } //end if
+        else if (res.cancel) {
+          console.log('用户点击取消')
+        }
+      }
+    })
+  },
+
+
+  //****************************
   updateTime: function (time) {
     var data = this.data;
     data.time = time;
