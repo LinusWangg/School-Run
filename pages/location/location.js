@@ -1,8 +1,5 @@
 // pages/location/location.js
 
-var amapFile = require('../../libs/amap-wx.js');    //高德地图配置文件 
-var config = require('../../libs/config.js');       //自定义配置文件
-
 var countTooGetLocation = 0;
 var total_micro_second = 0;
 var startRun = 0;
@@ -86,7 +83,6 @@ Page({
     latitude: 0,
     longitude: 0,
     markers: [],
-    // covers: [],
     meters: 0.00,
     time: "0:00:00",
     polyline: [{
@@ -158,24 +154,8 @@ Page({
   },
 
   //****************************
-  // openLocation: function () {
-  //   wx.getLocation({
-  //     type: 'gcj02', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标
-  //     success: function (res) {
-  //       wx.openLocation({
-  //         latitude: res.latitude, // 纬度，范围为-90~90，负数表示南纬
-  //         longitude: res.longitude, // 经度，范围为-180~180，负数表示西经
-  //         scale: 18, // 缩放比例5~18
-  //       })
-  //     },
-  //   })
-  // },
-
-
-  //****************************
   startRun: function () {
     if (startRun == 1) {
-      console.log(startRun);
       return;
     }
     startRun = 1;
@@ -191,7 +171,6 @@ Page({
   //****************************
   stopRun: function () {
     startRun = 0;
-    console.log(startRun);
     count_down(this);
 
     this.setData({
@@ -202,7 +181,6 @@ Page({
 
   //****************************
   updateTime: function (time) {
-
     var data = this.data;
     data.time = time;
     this.data = data;
@@ -222,15 +200,7 @@ Page({
       success: function (res) {
         console.log("res----------")
         console.log(res)
-
-        //make datas 
-        // var newCover = {
-        //   latitude: res.latitude,
-        //   longitude: res.longitude,
-        //   iconPath: '../../iconPicture/dot.png',
-          
-        // };
-
+        
         var newMarker = {
           latitude: res.latitude,
           longitude: res.longitude,
@@ -244,50 +214,30 @@ Page({
           longitude: res.longitude
         }
 
-        //var oriCovers = that.data.covers;
-        //var oriPoints = that.data.polyline.points;
         var oriMarkers = that.data.markers;
 
         console.log("oriMeters----------")
         console.log(oriMeters);
-        console.log(startRun);
 
-        //var cover_len = oriCovers.length;
         var point_len = oriPoints.length;
         var markers_len = oriMarkers.length;
 
-        //var point_len = cover_len;
-        //var lastCover;
         var lastPoint;
         var lastMarker;
 
-        // if (cover_len == 0) {
-        //   oriCovers.push(newCover);
-        // }
-
         if (point_len == 0) {
           oriPoints.push(newPoint);
-          console.log("fuck")
         }
 
         if (markers_len == 0) {
           oriMarkers.push(newMarker);
         }
-        //cover_len = oriCovers.length;
-        // poly_len = oriPoints.length;
         
         markers_len = oriMarkers.length;
         point_len = markers_len;
 
-        //var lastCover = oriCovers[cover_len - 1];
         var lastPoint = oriPoints[point_len - 1];
         var lastMarker = oriMarkers[markers_len - 1];
-
-        // console.log("oriCovers----------")
-        // console.log(oriCovers, cover_len);
-
-        console.log("oriPolies----------")
-        console.log(oriPoints, point_len);
 
         console.log("oriMarkers----------")
         console.log(oriMarkers, markers_len);
@@ -306,7 +256,6 @@ Page({
         var meters = new Number(oriMeters);
         var showMeters = meters.toFixed(2);
 
-        //oriCovers.push(newCover);
         oriPoints.push(newPoint);
         oriMarkers.push(newMarker);
 
@@ -314,7 +263,6 @@ Page({
           latitude: res.latitude,
           longitude: res.longitude,
           markers: oriMarkers,
-          //covers: oriCovers,
           meters: showMeters,
           polyline: [{
             points: oriPoints,
@@ -374,8 +322,6 @@ Page({
         }
         })
       }
-
-
     })
   }
 })
