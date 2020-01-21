@@ -6,11 +6,11 @@ a small program for school run
 
 1. 扫码功能
 
-    1. 学校名字+编号+时间 nuaa0011579417696aabbccdd md5
+    1. 学校名字+编号+时间 nuaa0011579417696aabbccdd md5
     2. 上传 md5 时间 gps 扫码的id 学校名称
     到底是本地判断还是服务器判断  上传的数据可不可信 保证上传数据的可信度
     离线判断
-    上传 md5 学校 ipad 编号 时间 gps
+    上传 md5 学校 ipad 编号 时间 gps
     服务 计算md5进行匹配  同时位置 大致ok 
 
 2. 跑步
