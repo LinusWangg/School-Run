@@ -1,87 +1,34 @@
-// map.js
-function getUserLocation() {
-  wx.getSetting({
-    success(res) {
-      if (res.authSetting['scope.userLocationBackground']==false) {
-        wx.authorize({
-          scope: 'scope.userLocation',
-          success: (res) => {
-              console.log('成功：' , res)
-          },
-          fail: (res) => {
-              console.log('失败：', res)
-          },
-        })
-      }
-      else{
-        wx.startLocationUpdateBackground({
-          success: (res) => {
-            console.log('startLocationUpdate-res', res)
-          },
-          fail: (err) => {
-            console.log('startLocationUpdate-err', err)
-          }
-        })
-      } 
-      // else {
-        if (res.authSetting['scope.userLocation']==false) {
-          wx.authorize({
-            scope: 'scope.userLocation',
-            success: (res) => {
-                console.log('成功：' , res)
-            },
-            fail: (res) => {
-                console.log('失败：', res)
-            },
-          })
-        } else {
-          wx.startLocationUpdateBackground({
-            success: (res) => {
-              console.log('startLocationUpdate-res', res)
-            },
-            fail: (err) => {
-              console.log('startLocationUpdate-err', err)
-            }
-          })
-        }
-      // }
-    }
-  })
-}
+
+var amapFile = require('../../libs/amap-wx.js');    //高德地图配置文件 
 Page({
   data: {
-    markers: [],
-    longitude: 0,
-    latitude: 0,
-    // polyline: [{
-    //   points: [{
-    //     longitude: 113.3245211,
-    //     latitude: 23.10229
-    //   }, {
-    //     longitude: 113.324520,
-    //     latitude: 23.21229
-    //   }],
-    //   color:"#FF0000DD",
-    //   width: 2,
-    //   dottedLine: true
-    // }],
+    src: ''
   },
-  regionchange(e) {
-    // console.log(e.type)
-  },
-  markertap(e) {
-    // console.log(e.markerId)
-  },
-  controltap(e) {
-    // console.log(e.controlId)
-  },
-  onShow: function () {
-    getUserLocation();
-    const _locationChangeFn = res=> {
-      this.latitude = res.latitude;
-      this.longitude = res.longitude;
-      console.log('location change', res.latitude, res.longitude)
-    }
-    wx.onLocationChange(_locationChangeFn);
-  },
+  onLoad: function() {
+    var that = this;
+    var myAmapFun = new amapFile.AMapWX({key:"dd382e60f63f03ec6da64156b7051e88"});
+    wx.getSystemInfo({
+      success: function(data){
+        var height = data.windowHeight;
+        var width = data.windowWidth;
+        var size = width + "*" + height;
+        myAmapFun.getStaticmap({
+          zoom: 8,
+          size: size,
+          scale: 2,
+          markers: "mid,0xFF0000,A:116.37359,39.92437;116.47359,39.92437",
+          success: function(data){
+            that.setData({
+              src: data.url
+            })
+          },
+          fail: function(info){
+            wx.showModal({title:info.errMsg})
+          }
+        })
+
+      }
+    })
+    
+  }
 })
