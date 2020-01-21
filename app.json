@@ -19,26 +19,20 @@
       {
         "pagePath": "pages/index/index",
         "text": "wywnb",
-        "iconPath": "iconPicture/tab005.jpg",
-        "selectedIconPath": "iconPicture/tab004.jpg"
+        "iconPath": "iconPicture/home_before.png",
+        "selectedIconPath": "iconPicture/home.png"
       },
       {
         "pagePath": "pages/logs/logs",
         "text": "wywsb",
-        "iconPath": "iconPicture/tab005.jpg",
-        "selectedIconPath": "iconPicture/tab006.jpg"
+        "iconPath": "iconPicture/scan_before.png",
+        "selectedIconPath": "iconPicture/scan.png"
       },
       {
         "pagePath": "pages/location/location",
         "text": "wywwd",
-        "iconPath": "iconPicture/tab005.jpg",
-        "selectedIconPath": "iconPicture/tab008.jpg"
-      },
-      {
-        "pagePath": "pages/map/map",
-        "text": "map",
-        "iconPath": "iconPicture/tab005.jpg",
-        "selectedIconPath": "iconPicture/tab008.jpg"
+        "iconPath": "iconPicture/location_before.png",
+        "selectedIconPath": "iconPicture/location.png"
       }
     ],
     "color": "#8f8f8f",
