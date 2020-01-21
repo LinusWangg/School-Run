@@ -1,3 +1,0 @@
-<view class="img_box">
-  <img src="{{src}}"></img>
-</view>

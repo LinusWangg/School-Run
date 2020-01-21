@@ -2,8 +2,7 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/location/location",
-    "pages/map/map"
+    "pages/location/location"
   ],
   "window": {
     "backgroundTextStyle": "light",
