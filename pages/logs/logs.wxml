@@ -1,11 +1,7 @@
 <!--logs.wxml-->
 <view> 
  <button bindtap="click">扫描二维码</button> 
- <text style="text-align:center">{{show}}</text> 
- <view class="" hover-class="none" hover-stop-propagation="false" style="width: 100%; height: 100%;">
-
-  <map id="map" longitude="{{longitude}}" latitude=" {{latitude}}" markers="{{markers}}" scale="13" show-location style="width: 100%; height: 100%;"></map>
-  {{longitude}}
-
-</view>
+ <text style="text-align:center">{{show}}</text>
+ <!--客户端内部编码，测试时对比用-->
+ <text style="text-align:center">{{code}}</text>
 </view>
