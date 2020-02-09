@@ -4,10 +4,10 @@ const app = getApp()
 
 Page({
   data: {
-    motto: 'Hello World',
+    motto: 'Hello User',
     userInfo: {},
     hasUserInfo: false,
-    canIUse: wx.canIUse('button.open-type.getUserInfo')
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
   },
   //事件处理函数
   bindViewTap: function() {
@@ -50,5 +50,32 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
-  }
+  },
+  authorize: function(){
+    wx.login({
+      success:function(res)
+      {
+        var code=res.code
+        var appid=app.globalData.appid
+        var nickname=app.globalData.userInfo.nickname
+        wx.request({
+          url: app.globalData.serverUrl+app.globalData.apiVersion+'/authorize',
+          method:'POST',
+          data:{
+            code:code,
+            appid:appid,
+            nickname:nickname,
+          },
+          header:{
+            'content-type':'application/json'
+          },
+          success:function(res){
+            wx.showToast({
+              title: '授权成功',
+            })
+          }
+        })
+      }
+    })
+  },
 })
