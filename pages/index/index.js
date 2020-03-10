@@ -1,9 +1,11 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+const CookieUtil=require('../../utils/cookie.js')
 Page({
   data: {
+    warn:'',
+    isSubmit:false,
     motto: 'Hello User',
     userInfo: {},
     hasUserInfo: false,
@@ -51,20 +53,37 @@ Page({
       hasUserInfo: true
     })
   },
+  formsubmit: function (e) {
+    console.log('form发生了submit事件，携带数据为：', e.detail.value);
+    let { student_id } = e.detail.value;
+    if (!student_id) {
+      this.setData({
+        warn: "手机号或密码为空！",
+        isSubmit: true
+      })
+      return;
+    }
+    this.setData({
+      warn: "",
+      isSubmit: true,
+      student_id,
+    })
+    app.globalData.stdid=e.detail.value
+  },
   authorize: function(){
     wx.login({
       success:function(res)
       {
         var code=res.code
         var appid=app.globalData.appid
-        var nickname=app.globalData.userInfo.nickname
+        var student_id=app.globalData.stdid
         wx.request({
           url: app.globalData.serverUrl+app.globalData.apiVersion+'/authorize',
           method:'POST',
           data:{
             code:code,
             appid:appid,
-            nickname:nickname,
+            student_id:student_id,
           },
           header:{
             'content-type':'application/json'
@@ -73,6 +92,19 @@ Page({
             wx.showToast({
               title: '授权成功',
             })
+            var cookie=CookieUtil.getSessionIDFromResponse(res)
+            CookieUtil.setCookieToStorage(cookie)
+            console.log(student_id)
+          }
+        })
+        wx.request({
+          url: app.globalData.serverUrl + app.globalData.apiVersion + '/user',
+          method:'GET',
+          header: {
+            'content-type': 'application/json'
+          },
+          success(res){
+            console.log(res.data)
           }
         })
       }

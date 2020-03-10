@@ -7,9 +7,18 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <view class="usermotto">
-    <button bindtap="authorize">登录授权</button> 
-    <text class="userinfo-nickname">{{code}}</text>
-    <text class="userinfo-nickname">{{code}}</text>
-  </view>
+  <block wx:if="{{!isSubmit}}">
+    <view class="usermotto">
+      <form bindsubmit="formsubmit">
+      <input name="student_id"></input>
+      <button form-type="submit">提交</button> 
+      </form>
+    </view>
+  </block>
+  <block wx:else>
+    <view class="usermotto">
+      <text>{{student_id}}</text>
+      <button bindtap="authorize">登录授权</button> 
+    </view>
+  </block>
 </view>

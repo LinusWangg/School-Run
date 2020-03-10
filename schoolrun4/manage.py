@@ -1,6 +1,8 @@
 #!/usr/bin/env python
-import os
 import sys
+sys.dont_write_bytecode = True
+import os
+
 
 if __name__ == '__main__':
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'schoolrun4.settings')

@@ -4,4 +4,4 @@ from django.db import models
 
 class User(models.Model):
     open_id = models.CharField(max_length=32,unique=True)
-    nickname = models.CharField(max_length=256)
+    student_id = models.CharField(max_length=32,unique=True)
