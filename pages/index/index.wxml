@@ -21,4 +21,5 @@
       <button bindtap="authorize">登录授权</button> 
     </view>
   </block>
+  <button bindtap="flash">刷新</button>
 </view>

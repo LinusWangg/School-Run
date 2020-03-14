@@ -73,6 +73,7 @@ def __authorize_by_code(request):
     code = post_data.get('code')
     app_id = post_data.get('appid')
     student_id = post_data.get('student_id')
+    is_submit = post_data.get('is_submit')
 
     response={}
     if not code or not app_id:
@@ -91,7 +92,7 @@ def __authorize_by_code(request):
     request.session['is_authorized']=True
 
     if not User.objects.filter(open_id=openid):
-        new_user=User(open_id=openid,student_id=student_id)
+        new_user=User(open_id=openid,student_id=student_id,is_register=is_submit)
         print('new user:openid:%s,student_id:%s'%(openid,student_id))
         new_user.save()
 
@@ -102,3 +103,30 @@ def __authorize_by_code(request):
 
 def authorize(request):
     return __authorize_by_code(request)
+
+def _flash_(request):
+    post_data = request.body.decode("utf-8")
+    post_data = json.loads(post_data)
+    code = post_data.get('code')
+    app_id = post_data.get('appid')
+    response={}
+    if not code or not app_id:
+        response['message']='failed'
+        response['code']=ReturnCode.BROKEN_AUTHORIZED_DATA
+        return JsonResponse(data=response,safe=False)
+    data=c2s(app_id,code)
+    openid=data.get('openid')
+    if not openid:
+        response=wrap_json_response(code=ReturnCode.FAILED,message='auth failed')
+        return JsonResponse(data=response,safe=False)
+
+    request.session['open_id']=openid
+    request.session['is_authorized']=True
+
+    user=User.objects.get(open_id=openid)
+    data={}
+    data['student_id']=json.loads(user.student_id)
+    data['is_register']=user.is_register
+    data['open_id']=user.open_id
+    response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)

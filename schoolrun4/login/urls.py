@@ -20,5 +20,6 @@ from login import views
 urlpatterns = [
     path('user',views.UserView.as_view()),
     path('authorize',views.authorize,name='authorize'),
+    path('flash',views._flash_,name='flash'),
 ]
 

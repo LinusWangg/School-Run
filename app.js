@@ -67,5 +67,7 @@ App({
     apiVersion: "/login",
     appid:"wxabe5a4b8a9c68151",
     stdid:"",
+    submit:false,
+    openid:"",
   }
 })
