@@ -52,13 +52,37 @@ Page({
       
         if(res.result == password)    //扫码且比对成功
         {
+          wx.request({
+            url: app.globalData.serverUrl+'/daily'+'/check',
+            method:'POST',
+            data: {
+              open_id: app.globalData.openid,
+              student_id: app.globalData.stdid,
+            },
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res){
+              if(res.data.data.is_post==false)
+              {
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+              }
+              else if (res.data.data.is_post==true)
+              {
+                wx.showToast({
+                  title: '不需要重复打卡',
+                  icon: 'suucess',
+                  duration: 2000
+                })
+              }
+            }
+          })
           this.setData({
             flag:true,
-          })
-          wx.showToast({
-            title: '成功',
-            icon: 'success',
-            duration: 2000
           })
         }
         else                          //比对失败

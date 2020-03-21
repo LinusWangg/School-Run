@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'schoolrun4',
     'login',
-    'django_crontab'
+    'dailypost',
 ]
 
 MIDDLEWARE = [
