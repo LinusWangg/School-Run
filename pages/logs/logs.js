@@ -7,6 +7,7 @@ Page({
   data: {
     show: "",
     code: "",//测试用
+    flag: false,
   },
 
   onLoad: function () {
@@ -51,6 +52,9 @@ Page({
       
         if(res.result == password)    //扫码且比对成功
         {
+          this.setData({
+            flag:true,
+          })
           wx.showToast({
             title: '成功',
             icon: 'success',

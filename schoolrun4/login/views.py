@@ -6,7 +6,11 @@ from login.models import User
 import json
 import requests
 import schoolrun4
-
+import qrcode
+from django.utils.six import BytesIO
+import django.utils.timezone as timezone
+import hashlib
+import time
 # Create your views here.
 
 def already_authorized(request):
@@ -130,3 +134,40 @@ def _flash_(request):
     data['open_id']=user.open_id
     response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
+
+
+def md(url):
+    md5 = hashlib.md5()
+    md5.update(url.encode())
+    result = md5.hexdigest()
+    return result
+
+def makeqrcode(request):
+
+    qr = qrcode.QRCode(
+	version=2,
+	error_correction=qrcode.constants.ERROR_CORRECT_L,
+	box_size=10,
+	border=1
+    )#设置二维码的大小
+
+    ticks=time.time()
+    local_time=time.localtime(time.time())
+
+    code="nuaa-001-"
+    code+=time.strftime("%Y%m%d%H",local_time)
+    min=int(time.strftime("%M",local_time))
+    min=int(min/10)
+    code+=str(min)
+    b=code.encode(encoding='utf-8')
+    m=hashlib.md5()
+    m.update(b)
+    src=m.hexdigest()
+    qr.add_data(src)
+    qr.make(fit=True)
+    img = qr.make_image()
+    buf = BytesIO()
+    img.save(buf)
+    image_stream = buf.getvalue()
+    response = HttpResponse(image_stream,content_type="image/jpg")
+    return response

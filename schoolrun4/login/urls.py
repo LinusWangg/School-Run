@@ -21,5 +21,6 @@ urlpatterns = [
     path('user',views.UserView.as_view()),
     path('authorize',views.authorize,name='authorize'),
     path('flash',views._flash_,name='flash'),
+    path('qrcode', views.makeqrcode,name='qrcode'),
 ]
 
