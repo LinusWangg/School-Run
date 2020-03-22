@@ -7,19 +7,16 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </block>
   </view>
-  <block wx:if="{{!isSubmit}}">
-    <view class="usermotto">
-      <form bindsubmit="formsubmit">
-      <input name="student_id"></input>
-      <button form-type="submit">提交</button> 
-      </form>
-    </view>
-  </block>
-  <block wx:else>
-    <view class="usermotto">
-      <text>{{student_id}}</text>
-      <button bindtap="authorize">登录授权</button> 
-    </view>
-  </block>
-  <button bindtap="flash">刷新</button>
+  <button bindtap="GetSql">个人信息/注册</button>
+  <modal hidden="{{hiddenmodalput}}" title="完善资料" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
+      <input bindinput='iStudent' type='text' placeholder="请输入学号..." />
+  </modal>
+  <modal hidden="{{hiddeinfo}}" title="个人信息" concel-text="确认" bindcancel="cancelS">
+    <text>学号:</text>
+    <text>{{stdid}}\n</text>
+    <text>open_id:</text>
+    <text>{{openid}}\n</text>
+    <text>打卡次数:</text>
+    <text>{{time}}\n</text>
+  </modal>
 </view>

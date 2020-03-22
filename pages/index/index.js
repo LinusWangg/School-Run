@@ -10,6 +10,12 @@ Page({
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    hiddenmodalput:true,
+    hiddeinfo:true,
+    stdid:'',
+    time:0,
+    openid:'',
+    code:'',
   },
   //事件处理函数
   bindViewTap: function() {
@@ -58,16 +64,38 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  
+  cancelM: function (e) {
+    this.setData({
+      hiddenmodalput: true,
+    })
+  },
+  iStudent: function (e) {
+    app.globalData.stdid=e.detail.value
+  },
+  cancelS:function(e){
+    this.setData({
+      hiddeinfo:true,
+    })
+  },
+  confirmM:function(e){
+    var that=this
     wx.login({
-      success: function (res) {
+      success: function (res)
+      {
         var code = res.code
         var appid = app.globalData.appid
+        var student_id = app.globalData.stdid
+        var is_submit = app.globalData.submit
         wx.request({
-          url: app.globalData.serverUrl + app.globalData.apiVersion + '/flash',
+          url: app.globalData.serverUrl + app.globalData.apiVersion + '/authorize',
           method: 'POST',
           data: {
             code: code,
             appid: appid,
+            student_id: student_id,
+            is_submit: is_submit,
           },
           header: {
             'content-type': 'application/json'
@@ -78,76 +106,56 @@ Page({
             })
             var cookie = CookieUtil.getSessionIDFromResponse(res)
             CookieUtil.setCookieToStorage(cookie)
-            console.log(res)
-            app.globalData.stdid = res.data.data.student_id
-            app.globalData.submit = res.data.data.is_register
-            app.globalData.openid = res.data.data.open_id
-            console.log(app.globalData.stdid)
-            console.log(app.globalData.submit)
-            console.log(app.globalData.openid)
+            console.log(cookie)
           }
+        })
+        that.setData({
+          hiddenmodalput: true,
         })
       }
     })
   },
-  formsubmit: function (e) {
-    console.log('form发生了submit事件，携带数据为：', e.detail.value);
-    let { student_id } = e.detail.value;
-    if (!student_id) {
-      this.setData({
-        warn: "手机号或密码为空！",
-        isSubmit: true
-      })
-      return;
-    }
-    this.setData({
-      warn: "",
-      isSubmit: true,
-      student_id,
-    })
-    app.globalData.stdid=e.detail.value
-    app.globalData.submit=true
-  },
-  authorize: function(){
+  GetSql:function(){
+    var that=this;
     wx.login({
       success:function(res)
       {
         var code=res.code
         var appid=app.globalData.appid
-        var student_id=app.globalData.stdid
-        var is_submit=app.globalData.submit
         wx.request({
-          url: app.globalData.serverUrl+app.globalData.apiVersion+'/authorize',
+          url: app.globalData.serverUrl + app.globalData.apiVersion + '/getinfo',
           method:'POST',
           data:{
             code:code,
             appid:appid,
-            student_id:student_id,
-            is_submit:is_submit,
           },
-          header:{
-            'content-type':'application/json'
-          },
-          success:function(res){
-            wx.showToast({
-              title: '授权成功',
-            })
-            var cookie=CookieUtil.getSessionIDFromResponse(res)
-            CookieUtil.setCookieToStorage(cookie)
-            console.log(cookie)
-          }
-        })
-        wx.request({
-          url: app.globalData.serverUrl + app.globalData.apiVersion + '/user',
-          method:'GET',
           header: {
             'content-type': 'application/json'
           },
-          success(res){
-            console.log(res.data)
+          success:function(res){
+            if(res.data.data.is_register==false)
+            {
+              that.setData({
+                hiddenmodalput:false,
+              })
+              app.globalData.submit=true
+            }
+            else if(res.data.data.is_register==true)
+            {
+              app.globalData.openid=res.data.data.open_id
+              app.globalData.stdid=res.data.data.student_id
+              app.globalData.is_register=res.data.data.is_register
+              app.globalData.Totaltime=res.data.data.time
+              that.setData({
+                hiddeinfo:false,
+                stdid: res.data.data.student_id,
+                openid: res.data.data.open_id,
+                time: res.data.data.time,
+              })
+            }
           }
         })
       }
     })
-  },
+  }
 })

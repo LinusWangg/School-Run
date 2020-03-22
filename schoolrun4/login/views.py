@@ -11,6 +11,7 @@ from django.utils.six import BytesIO
 import django.utils.timezone as timezone
 import hashlib
 import time
+from dailypost.models import Totalpost
 # Create your views here.
 
 def already_authorized(request):
@@ -78,7 +79,6 @@ def __authorize_by_code(request):
     app_id = post_data.get('appid')
     student_id = post_data.get('student_id')
     is_submit = post_data.get('is_submit')
-
     response={}
     if not code or not app_id:
         response['message']='failed'
@@ -86,7 +86,6 @@ def __authorize_by_code(request):
         return JsonResponse(data=response,safe=False)
     data=c2s(app_id,code)
     openid=data.get('openid')
-    student_id=student_id.get('student_id')
     print('get openid:',openid)
     if not openid:
         response=wrap_json_response(code=ReturnCode.FAILED,message='auth failed')
@@ -171,3 +170,40 @@ def makeqrcode(request):
     image_stream = buf.getvalue()
     response = HttpResponse(image_stream,content_type="image/jpg")
     return response
+
+def getinfo(request):
+    post_data = request.body.decode("utf-8")
+    post_data = json.loads(post_data)
+    code = post_data.get('code')
+    app_id = post_data.get('appid')
+    response={}
+    if not code or not app_id:
+        response['message']='failed'
+        response['code']=ReturnCode.BROKEN_AUTHORIZED_DATA
+        return JsonResponse(data=response,safe=False)
+    data=c2s(app_id,code)
+    openid=data.get('openid')
+    if not openid:
+        response=wrap_json_response(code=ReturnCode.FAILED,message='auth failed')
+        return JsonResponse(data=response,safe=False)
+
+    request.session['open_id']=openid
+    request.session['is_authorized']=True
+
+    user=User.objects.filter(open_id=openid).first()
+    total=Totalpost.objects.filter(open_id=openid).first()
+
+    if not user:
+        data={}
+        data['is_register']=False
+        response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
+        return JsonResponse(data=response,safe=False)
+
+    else:
+        data={}
+        data['is_register']=True
+        data['open_id']=user.open_id
+        data['student_id']=json.loads(user.student_id)
+        data['time']=total.Total_time
+        response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
+        return JsonResponse(data=response,safe=False)

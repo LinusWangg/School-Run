@@ -22,5 +22,6 @@ urlpatterns = [
     path('authorize',views.authorize,name='authorize'),
     path('flash',views._flash_,name='flash'),
     path('qrcode', views.makeqrcode,name='qrcode'),
+    path('getinfo',views.getinfo,name='getinfo'),
 ]
 

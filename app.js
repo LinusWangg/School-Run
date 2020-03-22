@@ -69,5 +69,7 @@ App({
     stdid:"",
     submit:false,
     openid:"",
+    Totaltime:0,
+    code:'',
   }
 })

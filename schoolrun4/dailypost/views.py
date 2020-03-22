@@ -39,8 +39,9 @@ def check(request):
             print('new user:openid:%s,student_id:%s'%(open_id,student_id))
             new_user.save()
         else:
-            temp=Totalpost.objects.filter(open_id=open_id)
-            temp.Total_time=temp.Total_time+1
+            temp=Totalpost.objects.filter(open_id=open_id).first()
+            temptime=temp.Total_time
+            temp.Total_time=temptime+1
             temp.save()
     
     else:
