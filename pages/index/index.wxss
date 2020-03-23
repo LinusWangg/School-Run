@@ -19,3 +19,33 @@
 .usermotto {
   margin-top: 200px;
 }
+
+.brock {
+  height:200px;
+  width: 100%;
+  background-color: #FFFFFF
+}
+
+.brock-2 {
+  height:200px;
+  width: 100%;
+  background-color: #A3EA2F
+}
+
+.brock-3 {
+  height:100px;
+  margin:auto;
+  width:50%;
+}
+
+swiper {
+ 
+width: 100%;
+height: 500rpx;
+}
+
+swiper image{
+width: 100%;
+height: 500rpx;
+ 
+}

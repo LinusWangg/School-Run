@@ -5,7 +5,7 @@ const CookieUtil=require('../../utils/cookie.js')
 Page({
   data: {
     warn:'',
-    isSubmit:false,
+    isOn:false,
     motto: 'Hello User',
     userInfo: {},
     hasUserInfo: false,
@@ -16,6 +16,19 @@ Page({
     time:0,
     openid:'',
     code:'',
+    imgUrls: [
+      {
+        url: '/images/1.jpg'
+      }, {
+        url: '/images/2.jpg'
+      }, {
+        url: '/images/3.jpg'
+      }
+    ],
+    indicatorDots: true,  //小点
+    autoplay: true,  //是否自动轮播
+    interval: 3000,  //间隔时间
+    duration: 3000,  //滑动时间
   },
   //事件处理函数
   bindViewTap: function() {
@@ -151,6 +164,7 @@ Page({
                 stdid: res.data.data.student_id,
                 openid: res.data.data.open_id,
                 time: res.data.data.time,
+                isOn: res.data.data.is_register,
               })
             }
           }
