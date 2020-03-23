@@ -8,6 +8,8 @@ Page({
     show: "",
     code: "",//测试用
     flag: false,
+    latitude: 0,
+    longitude: 0,
   },
 
   onLoad: function () {
@@ -35,76 +37,81 @@ Page({
     var hour = date.getHours();
     //分  
     var min = date.getMinutes();
+    var latitude;
+    var longitude;
     //加密规则
-    var password = "nuaa-001-"+year.toString()+month.toString()+day.toString()+hour.toString()+(Math.trunc(min/10)).toString();
-  
-    var password = utilMd5.hexMD5(password);
-    //调试用
-    console.log(password);
     //扫描二维码
+    wx.getLocation({
+      type: "wgs84",
+      success: function (res) {
+        latitude = res.latitude
+        longitude = res.longitude
+        that.setData({
+          latitude: latitude,
+          longitude: longitude,
+        })
+      }
+    }),
     wx.scanCode({
       success: (res) => {
-        this.show = "二维码编码:\n" + res.result + "\n二维码类型:\n" + res.scanType + "\n字符集:\n" + res.charSet + "\n路径:\n" + res.path + "\n";
-        that.setData({
-          show: this.show,
-          code:"\n客户端编码:\n"+password
-        })
-      
-        if(res.result == password)    //扫码且比对成功
-        {
-          wx.request({
-            url: app.globalData.serverUrl+'/daily'+'/check',
-            method:'POST',
-            data: {
-              open_id: app.globalData.openid,
-              student_id: app.globalData.stdid,
-            },
-            header: {
-              'content-type': 'application/json'
-            },
-            success: function (res){
-              if(res.data.data.is_post==false)
-              {
-                wx.showToast({
-                  title: '成功',
-                  icon: 'success',
-                  duration: 2000
-                })
-              }
-              else if (res.data.data.is_post==true)
-              {
-                wx.showToast({
-                  title: '不需要重复打卡',
-                  icon: 'suucess',
-                  duration: 2000
-                })
-              }
+        wx.request({
+          url: app.globalData.serverUrl+'/daily'+'/check',
+          method:'POST',
+          data: {
+            open_id: app.globalData.openid,
+            student_id: app.globalData.stdid,
+            hour:hour,
+            minute:min,
+            code:res.result,
+            latitude: latitude,
+            longitude: longitude,
+          },
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function (res){
+            if(res.data.data.is_post==false&&res.data.data.result==true)
+            {
+              wx.showToast({
+                title: '成功',
+                icon: 'success',
+                duration: 2000
+              })
             }
-          })
-          this.setData({
-            flag:true,
-          })
-        }
-        else                          //比对失败
-        {
-          wx.showModal({
-            title: '扫码结果',
-            content: '扫码失败，请在正确的时间地点扫描！',
-          })
-        }
-      },
-      //调取扫码接口失败
-      fail: (res) => {
-        wx.showToast({
-          title: '失败',
-          icon: 'success',
-          duration: 2000
+            else if (res.data.data.is_post == false && res.data.data.result == false)
+            {
+              wx.showToast({
+                title: '失败',
+                icon: 'failure',
+                duration: 2000
+              })
+            }
+            else if (res.data.data.is_post==true)
+            {
+              wx.showToast({
+                title: '不需要重复打卡',
+                icon: 'success',
+                duration: 2000
+              })
+            }
+          }
         })
-      },
-      //调取扫码接口后操作（无论成功失败）
-      complete: (res) => {
-      }
-    })
+        this.setData({
+          flag:true,
+        })
+    },
+      //调取扫码接口失败
+    fail: (res) => {
+      wx.showToast({
+        title: '失败',
+        icon: 'success',
+        duration: 2000
+      })
+    },
+    //调取扫码接口后操作（无论成功失败）
+    complete: (res) => {
+    }
+  })
   },
   onLoad: function(){
     var that = this;

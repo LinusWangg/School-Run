@@ -20,4 +20,5 @@ from dailypost import views
 
 urlpatterns = [
     path('check',views.check,name='check'),
+    path('qrcode', views.makeqrcode,name='qrcode'),
 ]
