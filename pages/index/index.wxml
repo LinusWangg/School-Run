@@ -8,17 +8,44 @@
     </swiper-item>  
   </block>  
  </swiper>  
-<view class="brock">
-  <text wx:if="{{isOn}}">学号:</text>
-  <text wx:if="{{isOn}}">{{stdid}}\n</text>
-  <text wx:if="{{isOn}}">open_id:</text>
-  <text wx:if="{{isOn}}">{{openid}}\n</text>
-  <text wx:if="{{isOn}}">早操打卡次数:</text>
-  <text wx:if="{{isOn}}">{{time}}\n</text>
+<view class="list">
+      <!--用户头像-->
+      <view class="user-info">
+        <button wx:if="{{!isOn}}" bindtap="GetSql">登录/注册</button>
+
+        <block wx:else>
+          <view class="head">
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" style="margin:auto"></image>
+            <text type='text' class="text-style">{{userInfo.nickName}}</text>
+          </view>
+        </block>
+      </view>
+      <block>
+        <!--学校-->
+        <view class="user-school">
+          <text>学校</text>
+          <text type='text' class="text-style">{{school}}</text>
+        </view>
+        <!--学号-->
+        <view class="user-id">
+          <text>学号</text>
+          <text type='text' class="text-style">{{stdid}}</text>
+        </view>
+        <!--姓名-->
+        <view class="user-name">
+          <text>学生姓名</text>
+          <text type='text' class="text-style">{{name}}</text>
+        </view>
+        <view class="user-name">
+          <text>早操打卡次数</text>
+          <text type='text' class="text-style">{{time}}</text>
+        </view>
+      </block>
 </view>
-<button wx:if="{{!isOn}}" bindtap="GetSql">登录/注册</button>
 <modal hidden="{{hiddenmodalput}}" title="完善资料" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
   <input bindinput='iStudent' type='text' placeholder="请输入学号..." />
+  <input bindinput='iSchool' type='text' placeholder="请输入学校..." />
+  <input bindinput='iName' type='text' placeholder="请输入姓名..." />
 </modal>
 <modal hidden="{{hiddeinfo}}" title="登陆成功" cancel-text="确认" bindcancel="cancelS" confirm-text="申诉" bindconfirm='justice'>
   <text>学号:</text>

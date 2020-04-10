@@ -8,6 +8,7 @@ class dailypost(models.Model):
     post_time = models.DateTimeField(auto_now=True)
     latitude = models.FloatField(default=0)
     longitude = models.FloatField(default=0)
+    ip = models.GenericIPAddressField(default='')
 
 class Totalpost(models.Model):
     open_id = models.CharField(max_length=32,unique=True)

@@ -27,6 +27,7 @@ def check(request):
     code = post_data.get('code')
     latitude = post_data.get('latitude')
     longitude = post_data.get('longitude')
+    ip = post_data.get('ip')
     minute = minute//10
     response={}
     if not open_id or not student_id:
@@ -44,7 +45,7 @@ def check(request):
                 data['result']=True
                 ticks=time.time()
                 local_time=time.localtime(time.time())
-                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=local_time,latitude=latitude,longitude=longitude)
+                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=local_time,latitude=latitude,longitude=longitude,ip=ip)
                 print('new info:openid:%s,student_id:%s'%(open_id,student_id))
                 new_info.save()
                 if not Totalpost.objects.filter(open_id=open_id):

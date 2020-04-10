@@ -79,6 +79,8 @@ def __authorize_by_code(request):
     app_id = post_data.get('appid')
     student_id = post_data.get('student_id')
     is_submit = post_data.get('is_submit')
+    school = post_data.get('school')
+    name = post_data.get('name')
     response={}
     if not code or not app_id:
         response['message']='failed'
@@ -95,7 +97,7 @@ def __authorize_by_code(request):
     request.session['is_authorized']=True
 
     if not User.objects.filter(open_id=openid):
-        new_user=User(open_id=openid,student_id=student_id,is_register=is_submit)
+        new_user=User(open_id=openid,student_id=student_id,school=school,name=name,is_register=is_submit)
         print('new user:openid:%s,student_id:%s'%(openid,student_id))
         new_user.save()
 
@@ -131,6 +133,8 @@ def _flash_(request):
     data['student_id']=json.loads(user.student_id)
     data['is_register']=user.is_register
     data['open_id']=user.open_id
+    data['school']=user.school
+    data['name']=user.name
     response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
@@ -177,12 +181,16 @@ def getinfo(request):
             data['open_id']=user.open_id
             data['student_id']=json.loads(user.student_id)
             data['time']=total.Total_time
+            data['school']=user.school
+            data['name']=user.name
         
         else:
             data={}
             data['is_register']=True
             data['open_id']=user.open_id
             data['student_id']=json.loads(user.student_id)
+            data['school']=user.school
+            data['name']=user.name
             data['time']=0
         
         response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')

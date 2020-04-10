@@ -71,5 +71,8 @@ App({
     openid:"",
     Totaltime:0,
     code:'',
+    ip:'',
+    school:'',
+    name:'',
   }
 })
