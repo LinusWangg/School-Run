@@ -65,7 +65,51 @@ Page({
           })
         }
       })
-    }
+    };
+    var that = this;
+    wx.login({
+      success: function (res) {
+        var code = res.code
+        var appid = app.globalData.appid
+        that.setData({
+          code:res.code,
+        })
+        wx.request({
+          url: app.globalData.serverUrl + app.globalData.apiVersion + '/getinfo',
+          method: 'POST',
+          data: {
+            code: code,
+            appid: appid,
+          },
+          header: {
+            'content-type': 'application/json'
+          },
+          success: function (res) {
+            if (res.data.data.is_register == false) {
+              that.setData({
+                hiddenmodalput: false,
+              })
+              app.globalData.submit = true
+            }
+            else if (res.data.data.is_register == true) {
+              app.globalData.openid = res.data.data.open_id
+              app.globalData.stdid = res.data.data.student_id
+              app.globalData.is_register = res.data.data.is_register
+              app.globalData.Totaltime = res.data.data.time
+              that.setData({
+                hiddeinfo: false,
+                stdid: res.data.data.student_id,
+                openid: res.data.data.open_id,
+                time: res.data.data.time,
+                isOn: res.data.data.is_register,
+                school: res.data.data.school,
+                name: res.data.data.name,
+              })
+            }
+          }
+        })
+      }
+    })
   },
   getUserInfo: function(e) {
     console.log(e)
@@ -134,6 +178,7 @@ Page({
         })
       }
     })
+    that.onLoad()
   },
   GetSql:function(){
     var that=this;
