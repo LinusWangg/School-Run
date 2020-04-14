@@ -126,8 +126,12 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 
-STATIC_ROOT = ''
+STATIC_ROOT = '/var/School-Run/schoolrun4/static/'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = ( os.path.join('static'), )
+STATICFILES_DIRS = ( '/var/School-Run/schoolrun4/static/' )
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 WX_APP_SECRET = '66d0351912116ab0371252bd0a088777'
