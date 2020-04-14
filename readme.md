@@ -2,7 +2,7 @@
 
 a small program for school run
 
-# 需要实现的功能
+# 需要实现的功能
 
 1. 扫码功能
 
@@ -24,9 +24,9 @@ a small program for school run
 
     1. 选出路线 画出路线
 
-    2. 情况汇总
+    2. 情况汇总
 
 
 4. 用户当天本学期
 
-# 论文
+# 论文
