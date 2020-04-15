@@ -55,14 +55,7 @@ Page({
     wx.scanCode({
       success: (res) => {
         wx.request({
-          url: 'http://ip-api.com/json',
-          success: function (e) {
-            console.log(e.data);
-            app.globalData.ip= e.data.query
-          }
-        })
-        wx.request({
-          url: app.globalData.serverUrl+'/daily'+'/check',
+          url: app.globalData.serverUrl+'daily'+'/check',
           method:'POST',
           data: {
             open_id: app.globalData.openid,
@@ -72,7 +65,6 @@ Page({
             code:res.result,
             latitude: latitude,
             longitude: longitude,
-            ip: app.globalData.ip,
           },
           header: {
             'content-type': 'application/json'

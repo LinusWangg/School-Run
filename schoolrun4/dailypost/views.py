@@ -17,6 +17,19 @@ import datetime
 
 # Create your views here.
 
+def get_ip_address(request):
+    """
+    获取ip地址
+    :param request:
+    :return:
+    """
+    ip = request.META.get("HTTP_X_FORWARDED_FOR", "")
+    if not ip:
+        ip = request.META.get('REMOTE_ADDR', "")
+    client_ip = ip.split(",")[-1].strip() if ip else ""
+    return client_ip
+
+
 def check(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
@@ -27,7 +40,7 @@ def check(request):
     code = post_data.get('code')
     latitude = post_data.get('latitude')
     longitude = post_data.get('longitude')
-    ip = post_data.get('ip')
+    ip = get_ip_address(request)
     minute = minute//10
     response={}
     if not open_id or not student_id:
