@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '45(j9avtw8tnf*q*b+%p6&s9)eswjv+s7+#jcjz124acuj@*h8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["schoolrun.qinmaye.top","47.101.142.119","localhost","127.0.0.1","0.0.0.0"]
 
