@@ -63,7 +63,7 @@ App({
 
   globalData: {
     userinfo: {},
-    serverUrl: "http://127.0.0.1:8000/",
+    serverUrl: "https://schoolrun.qinmaye.top//",
     apiVersion: "login",
     appid:"wxabe5a4b8a9c68151",
     stdid:"",
