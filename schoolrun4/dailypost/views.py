@@ -97,11 +97,14 @@ def makeqrcode(request):
     ticks=time.time()
     local_time=time.localtime(time.time())
 
-    code1 = ''.join(random.sample(string.ascii_letters + string.digits, 8))
     hour = datetime.datetime.now().hour
     minute = datetime.datetime.now().minute // 10
-    new_code = codemodel(hour=hour,minute=minute,code=code1)
-    new_code.save()
+    if not codemodel.objects.filter(hour=hour,minute=minute):
+        code1 = ''.join(random.sample(string.ascii_letters + string.digits, 8))
+        new_code = codemodel(hour=hour,minute=minute,code=code1)
+        new_code.save()
+    else:
+        code1 = codemodel.objects.filter(hour=hour,minute=minute).first().code
     b=code1.encode(encoding='utf-8')
     qr.add_data(b)
     qr.make(fit=True)
