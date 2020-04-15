@@ -98,7 +98,7 @@ def __authorize_by_code(request):
 
     if not User.objects.filter(open_id=openid):
         new_user=User(open_id=openid,student_id=student_id,school=school,name=name,is_register=is_submit)
-        print('new user:openid:%s,student_id:%s'%(openid,student_id))
+        print('new user:openid:%s,student_id:%s'%(new_user.open_id,new_user.student_id))
         new_user.save()
 
     response=wrap_json_response(code=ReturnCode.SUCCESS,message='auth success')
