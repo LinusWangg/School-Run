@@ -20,7 +20,7 @@
           </view>
         </block>
       </view>
-      <block>
+      <block hidden="{{!hiddenmodalput}}">
         <!--学校-->
         <view class="user-school">
           <text>学校</text>
