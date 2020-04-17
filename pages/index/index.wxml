@@ -1,58 +1,111 @@
-<!--index.wxml-->
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">  
-  <block wx:for="{{imgUrls}}">  
-    <swiper-item>  
-      <navigator url="{{item.link}}" hover-class="navigator-hover">  
-        <image src="{{item.url}}" class="slide-image" width="100%" height="500px"/>  
-      </navigator>  
-    </swiper-item>  
-  </block>  
- </swiper>  
-<view class="list">
-      <!--用户头像-->
-      <view class="user-info">
-        
-
-        <block>
-          <view class="head">
-            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" style="margin:auto"></image>
-            <text type='text' class="text-style">{{userInfo.nickName}}</text>
-          </view>
-        </block>
+<view>
+<!-- 上侧部分 -->
+  <view class="top-view">
+  <!-- 用户信息开始 -->
+    <view class="user">
+    <!-- 头像开始 -->
+      <view class="row">
+      <view class="avatar">
+        <open-data class="userAvatar" default-avatar="/iconPicture/tab001.jpg" type="userAvatarUrl"></open-data>
       </view>
-      <block hidden="{{!hiddenmodalput}}">
-        <!--学校-->
-        <view class="user-school">
-          <text>学校</text>
-          <text type='text' class="text-style">{{school}}</text>
-        </view>
-        <!--学号-->
-        <view class="user-id">
-          <text>学号</text>
-          <text type='text' class="text-style">{{stdid}}</text>
-        </view>
-        <!--姓名-->
-        <view class="user-name">
-          <text>学生姓名</text>
-          <text type='text' class="text-style">{{name}}</text>
-        </view>
-        <view class="user-name">
-          <text>早操打卡次数</text>
-          <text type='text' class="text-style">{{time}}</text>
-        </view>
-      </block>
-</view>
-<modal hidden="{{hiddenmodalput}}" title="完善资料" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
-  <input bindinput='iStudent' type='text' placeholder="请输入学号..." />
-  <input bindinput='iSchool' type='text' placeholder="请输入学校..." />
-  <input bindinput='iName' type='text' placeholder="请输入姓名..." />
-</modal>
-<modal hidden="{{hiddeinfo}}" title="登陆成功" cancel-text="确认" bindcancel="cancelS" confirm-text="申诉" bindconfirm='justice'>
-  <text>学号:</text>
-  <text>{{stdid}}\n</text>
-  <text>open_id:</text>
-  <text>{{openid}}\n</text>
-  <text>早操打卡次数:</text>
-  <text>{{time}}\n</text>
-</modal>
+        <!-- <image class="avatar" wx:if="{{hasUserInfo}}" src="{{userInfo.avatarUrl}}"></image>
+        <image class="avatar" wx:else src="/iconPicture/tab001.jpg"></image> -->
+      </view>
+    <!-- 头像结束 -->
 
+    <!-- 用户名称开始 -->
+      <!--view class="name" wx:if="{{userInfo}}"-->
+      <!--view class="name">
+        <view bindtap="onClickLogout">{{userInfo.nickName}}</view>
+      </view-->
+      <!--view class="name" wx:else="{{userInfo}}"-->
+      <view class="name">
+          <navigator url="/pages/preIndex/preIndex">登录</navigator>
+          |
+          <navigator url="/pages/im/room/room">注册</navigator>
+      </view>
+    <!-- 用户名称结束 -->
+    <!-- 个人主页开始 >
+     <view class="site">查看个人主页</view>
+     <!-- 个人主页结束 -->
+    </view>
+     <!-- 关注 粉丝 赞与收藏开始 -->
+    <view class="numbers">
+      <view class="row">
+        <text>{{totalSignIn}}</text>
+        <text>早操</text>
+      </view>
+      <view class="row">
+        <text>0</text>
+        <text>体能</text>
+      </view>
+      <!-->
+      <view class="row">
+        <text>0</text>
+        <text>赞与收藏</text>
+      </view>
+      <view class="row">
+        <text>0</text>
+        <text>好友动态</text>
+      </view>
+      <-->
+    </view>
+
+  <!-- 关注 粉丝 赞与收藏结束 -->
+  <!-- 用户信息结束 -->
+  </view>
+</view> 
+
+<!-- 待支付开始 >
+<view class="middle-view">
+  <view class="item">
+    <image src="/iconPicture/tab001.jpg"></image>
+    <text>待支付</text>
+  </view>
+    <view class="item">
+    <image src="/iconPicture/tab001.jpg"></image>
+    <text>待支付</text>
+  </view>
+    <view class="item">
+    <image src="/iconPicture/tab001.jpg"></image>
+    <text>待支付</text>
+  </view>
+    <view class="item">
+    <image src="/iconPicture/tab001.jpg"></image>
+    <text>待支付</text>
+  </view>
+</view>
+<!-- 待支付结束 -->
+<!-- 钱包 优惠券 开始 -->
+<view class="function-view">
+  <view class="item">
+    <view class="left">我的钱包</view> 
+      <view class="right">
+        <text>¥20</text>
+        <image class="go-icon" src='/iconPicture/tab001.jpg'></image>
+      </view>
+  </view>
+  <view class="item">
+      <view class="left">打卡界面</view>
+      <view class="right">
+        <text>去签到</text>
+        <image class="go-icon" src='/iconPicture/tab001.jpg'></image>
+      </view>
+    </view>
+    <view class="item">
+      <view class="left">体能界面</view>
+      <view class="right">
+        <text>去跑步</text>
+        <image class="go-icon" src='/iconPicture/tab001.jpg'></image>
+      </view>
+    </view>
+</view>
+<!-- 钱包 优惠券 结束 -->
+
+<!-- 官方微信客服开始 -->
+  <view class="contact-view">
+    <button open-type="contact">
+      联系客服
+    </button>
+  </view>
+  <!-- 官方微信客服结束 -->

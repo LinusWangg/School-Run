@@ -2,7 +2,8 @@
   "pages": [
     "pages/index/index",
     "pages/logs/logs",
-    "pages/location/location"
+    "pages/location/location",
+    "pages/preIndex/preIndex"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -45,7 +46,7 @@
     "scope.userLocation": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     },
-    "scope.userLocationBackground":{
+    "scope.userLocationBackground": {
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   }
