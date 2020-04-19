@@ -1,0 +1,96 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 500rpx;
+  background-color: transparent;
+  color: transparent;
+  border: none;
+}
+
+.userinfo-avatar {
+  width: 128rpx;
+  height: 128rpx;
+  flex-direction: center;
+  border-radius: 5%;
+  justify-content: center;
+  align-items: center;
+}
+
+.userinfo-nickname {
+  color: #aaa;
+  padding-right: 100rpx;
+  background-color: transparent;
+}
+
+.usermotto {
+  margin-top: 300rpx;
+  flex-direction: column;
+}
+
+.container {
+  border: none;
+}
+
+.user-motto {
+  display:flex;
+}
+
+.list {
+  width: 750rpx;
+  font-size: 32rpx;
+  background-color: white;
+  flex-direction: column;
+}
+
+.user-info {
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 15rpx solid #eee;
+}
+
+.user-school,.user-id,.user-name {
+  display: flex;
+  height:80rpx;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  padding: 20rpx;
+  border-bottom: 15rpx solid #eee;
+  padding-left: 50rpx;
+}
+
+.text-style {
+  display: flex;
+  height:100rpx;
+  justify-content: space-between;
+  align-content: center;
+  align-items: center;
+  padding: 20rpx;
+  padding-right: 50rpx;
+}
+
+swiper {
+ 
+width: 100%;
+height: 500rpx;
+}
+
+swiper image{
+width: 100%;
+height: 500rpx;
+ 
+}
+
+.head{
+  display: flex;
+}
+
+.button{
+
+}

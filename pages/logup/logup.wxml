@@ -1,0 +1,25 @@
+<view wx:if="{{!success}}">
+      <view class='row'>
+            <view class='info'>
+                  <input class='info-input' bindinput="getSchoolName" placeholder="请输入你的学校" />
+            </view>
+      </view>
+      <view class='row'>
+            <view class='info'>
+                  <input class='info-input' bindinput="getStudentID" placeholder="请输入你的学号" />
+            </view>
+      </view>
+      <view class='row'>
+            <view class='info'>
+                  <input class='info-input' bindinput="getStudentName" placeholder="请输入你的姓名" />
+            </view>
+      </view>
+      <button class='submit' bindtap='submit'>提交</button>
+</view>
+<view class='success' wx:if="{{success}}">
+      <view class='cheer'>
+            <icon type="success" size="24" />
+            恭喜您注册成功!
+      </view>
+      <button type="default" class='return' bindtap='return_home'>返回首页</button>
+</view>
