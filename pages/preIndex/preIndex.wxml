@@ -1,0 +1,58 @@
+<!--index.wxml-->
+<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">  
+  <block wx:for="{{imgUrls}}">  
+    <swiper-item>  
+      <navigator url="{{item.link}}" hover-class="navigator-hover">  
+        <image src="{{item.url}}" class="slide-image" width="100%" height="500px"/>  
+      </navigator>  
+    </swiper-item>  
+  </block>  
+ </swiper>  
+<view class="list">
+      <!--用户头像-->
+      <view class="user-info">
+        
+
+        <block>
+          <view class="head">
+            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" style="margin:auto"></image>
+            <text type='text' class="text-style">{{userInfo.nickName}}</text>
+          </view>
+        </block>
+      </view>
+      <block hidden="{{!hiddenmodalput}}">
+        <!--学校-->
+        <view class="user-school">
+          <text>学校</text>
+          <text type='text' class="text-style">{{school}}</text>
+        </view>
+        <!--学号-->
+        <view class="user-id">
+          <text>学号</text>
+          <text type='text' class="text-style">{{stdid}}</text>
+        </view>
+        <!--姓名-->
+        <view class="user-name">
+          <text>学生姓名</text>
+          <text type='text' class="text-style">{{name}}</text>
+        </view>
+        <view class="user-name">
+          <text>早操打卡次数</text>
+          <text type='text' class="text-style">{{time}}</text>
+        </view>
+      </block>
+</view>
+<modal hidden="{{hiddenmodalput}}" title="完善资料" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
+  <input bindinput='iStudent' type='text' placeholder="请输入学号..." />
+  <input bindinput='iSchool' type='text' placeholder="请输入学校..." />
+  <input bindinput='iName' type='text' placeholder="请输入姓名..." />
+</modal>
+<modal hidden="{{hiddeinfo}}" title="登陆成功" cancel-text="确认" bindcancel="cancelS" confirm-text="申诉" bindconfirm='justice'>
+  <text>学号:</text>
+  <text>{{stdid}}\n</text>
+  <text>open_id:</text>
+  <text>{{openid}}\n</text>
+  <text>早操打卡次数:</text>
+  <text>{{time}}\n</text>
+</modal>
+
