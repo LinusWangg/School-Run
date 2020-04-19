@@ -19,3 +19,4 @@ class codemodel(models.Model):
     hour = models.IntegerField()
     minute = models.IntegerField()
     code = models.CharField(max_length=32)
+    url = models.URLField(default="")

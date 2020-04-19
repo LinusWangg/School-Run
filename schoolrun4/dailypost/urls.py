@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from dailypost import views
-
+from django.conf.urls.static import static
+from schoolrun4 import settings
 urlpatterns = [
     path('check',views.check,name='check'),
     path('qrcode', views.makeqrcode,name='qrcode'),
 ]
+urlpatterns += static('/qrcode/', document_root=settings.MEDIA_ROOT)  #加上这一行
