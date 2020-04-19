@@ -109,7 +109,7 @@
   border-top-left-radius: 32rpx;
   border-bottom-left-radius: 32rpx;
 }
-.top-view .numbers{
+.numbers{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -117,9 +117,10 @@
   padding: 40rpx;
   padding-bottom: 0rpx;
 }
-.top-view .numbers .row{
-   display: flex;
+.numbers .row{
+  display: flex;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
 }
 .middle-view{
@@ -197,3 +198,46 @@
   height: 66rpx;
 }
   /*  官方微信客服结束  */
+
+  /* pages/canvasDemo/canvasDemo.wxss */
+.canvasBox{
+  height: 120rpx;
+  width: 120rpx;
+  position: relative;
+  background-color: #f5f5f5;
+}
+.bigCircle{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto auto;
+  background-color: #ddd;
+}
+.littleCircle{
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto auto;
+  background-color: #eee;
+}
+.canvas{
+  width: 120rpx;
+  height: 120rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto auto;
+  z-index: 99;
+}

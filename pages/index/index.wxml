@@ -1,5 +1,5 @@
 <view>
-<!-- 上侧部分 -->
+  <!-- 上侧部分 -->
   <view class="top-view">
   <!-- 用户信息开始 -->
     <view class="user">
@@ -8,97 +8,71 @@
       <view class="avatar">
         <open-data class="userAvatar" default-avatar="/iconPicture/tab001.jpg" type="userAvatarUrl"></open-data>
       </view>
-        <!-- <image class="avatar" wx:if="{{hasUserInfo}}" src="{{userInfo.avatarUrl}}"></image>
-        <image class="avatar" wx:else src="/iconPicture/tab001.jpg"></image> -->
       </view>
     <!-- 头像结束 -->
 
     <!-- 用户名称开始 -->
-      <!--view class="name" wx:if="{{userInfo}}"-->
-      <!--view class="name">
-        <view bindtap="onClickLogout">{{userInfo.nickName}}</view>
-      </view-->
-      <!--view class="name" wx:else="{{userInfo}}"-->
+    <block wx:if="{{!isLogIn}}">
       <view class="name">
           <navigator url="/pages/preIndex/preIndex">登录</navigator>
           |
-          <navigator url="/pages/im/room/room">注册</navigator>
+          <navigator url="/pages/logup/logup">注册</navigator>
       </view>
+    </block>
+    <block wx:else>
+      <view>
+        <text>欢迎使用！</text>
+      </view>
+    </block>
     <!-- 用户名称结束 -->
-    <!-- 个人主页开始 >
-     <view class="site">查看个人主页</view>
-     <!-- 个人主页结束 -->
     </view>
-     <!-- 关注 粉丝 赞与收藏开始 -->
+  </view>
+  <!--上层结束-->
+
     <view class="numbers">
       <view class="row">
-        <text>{{totalSignIn}}</text>
+        <text>{{student.time}}</text>
         <text>早操</text>
       </view>
+      <!--
+        draw : 确定 canvas的id
+        per : 进度百分比 (1-100)
+        r: 圆的半径 (按px,最终转化成rpx)
+      -->
+      <view class="row">
+        <circle draw='circwewle1' per = '{{perSign}}' r = '50'/>
+      </view>
+
       <view class="row">
         <text>0</text>
         <text>体能</text>
       </view>
-      <!-->
-      <view class="row">
-        <text>0</text>
-        <text>赞与收藏</text>
-      </view>
-      <view class="row">
-        <text>0</text>
-        <text>好友动态</text>
-      </view>
-      <-->
-    </view>
 
-  <!-- 关注 粉丝 赞与收藏结束 -->
+      <view class="row">
+        <circle draw='circwewle2' per = '0' r = '50'/>
+      </view>
+
+    </view>
   <!-- 用户信息结束 -->
-  </view>
+  
 </view> 
 
-<!-- 待支付开始 >
-<view class="middle-view">
-  <view class="item">
-    <image src="/iconPicture/tab001.jpg"></image>
-    <text>待支付</text>
-  </view>
-    <view class="item">
-    <image src="/iconPicture/tab001.jpg"></image>
-    <text>待支付</text>
-  </view>
-    <view class="item">
-    <image src="/iconPicture/tab001.jpg"></image>
-    <text>待支付</text>
-  </view>
-    <view class="item">
-    <image src="/iconPicture/tab001.jpg"></image>
-    <text>待支付</text>
-  </view>
-</view>
-<!-- 待支付结束 -->
-<!-- 钱包 优惠券 开始 -->
 <view class="function-view">
   <view class="item">
-    <view class="left">我的钱包</view> 
-      <view class="right">
-        <text>¥20</text>
-        <image class="go-icon" src='/iconPicture/tab001.jpg'></image>
-      </view>
+    <view class="left"></view> 
   </view>
+
   <view class="item">
-      <view class="left">打卡界面</view>
-      <view class="right">
-        <text>去签到</text>
-        <image class="go-icon" src='/iconPicture/tab001.jpg'></image>
-      </view>
-    </view>
-    <view class="item">
-      <view class="left">体能界面</view>
-      <view class="right">
-        <text>去跑步</text>
-        <image class="go-icon" src='/iconPicture/tab001.jpg'></image>
-      </view>
-    </view>
+    <view class="left">{{student.name}}</view> 
+  </view>
+
+  <view class="item">
+    <view class="left">{{student.student_id}}</view>
+  </view>
+    
+  <view class="item">
+    <view class="left">{{student.school}}</view>
+  </view>
 </view>
 <!-- 钱包 优惠券 结束 -->
 
@@ -109,3 +83,4 @@
     </button>
   </view>
   <!-- 官方微信客服结束 -->
+<!-- 客户端数据可视化测试 -->

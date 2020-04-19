@@ -2,6 +2,7 @@
 //获取应用实例
 const app = getApp()
 const CookieUtil=require('../../utils/cookie.js')
+
 Page({
   data: {
     warn:'',
@@ -37,6 +38,9 @@ Page({
       url: '../logs/logs'
     })
   },
+
+  
+
   onLoad: function () {
     if (app.globalData.userInfo) {
       this.setData({
@@ -106,8 +110,10 @@ Page({
                 name: res.data.data.name,
               })
               
+              var student = res.data.data
+              //本地存储
               try {
-                wx.setStorageSync('totalSignIn',res.data.data.time);
+                wx.setStorageSync('student-info',student);
                 console.log("setStorage Success");
               } catch (e) {
                 console.log("setStorage Error");
@@ -145,6 +151,9 @@ Page({
   cancelS:function(e){
     this.setData({
       hiddeinfo:true,
+    })
+    wx.navigateBack({
+      delta:2,
     })
   },
   confirmM:function(e){

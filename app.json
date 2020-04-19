@@ -3,7 +3,8 @@
     "pages/index/index",
     "pages/logs/logs",
     "pages/location/location",
-    "pages/preIndex/preIndex"
+    "pages/preIndex/preIndex",
+    "pages/logup/logup"
   ],
   "window": {
     "backgroundTextStyle": "light",
