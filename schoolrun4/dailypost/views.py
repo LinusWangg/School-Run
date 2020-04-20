@@ -116,18 +116,20 @@ def makeqrcode(request):
     minute = datetime.datetime.now().minute // 10
     if not codemodel.objects.filter(hour=hour,minute=minute):
         code1 = ''.join(random.sample(string.ascii_letters + string.digits, 8))
-        dest = os.path.join(settings.MEDIA_ROOT, "qrcode")
-        if not os.path.exists(dest):
-            os.mkdir(dest)
-        b=code1.encode(encoding='utf-8')
-        qr.add_data(b)
-        qr.make(fit=True)
-        img = qr.make_image()
-        imgurl = os.path.join(dest, "qrcode-%d-%d.png" % (hour,minute))
-        img.save(imgurl, "png")
-        new_code = codemodel(hour=hour,minute=minute,code=code1,url=imgurl)
+        new_code = codemodel(hour=hour,minute=minute,code=code1)
         new_code.save()
     else:
-        imgurl = codemodel.objects.filter(hour=hour,minute=minute).first().url
-    imgurl  = imgurl[31:]
-    return render(request, 'QRCode.html',{'img':imgurl})
+        code1 = codemodel.objects.filter(hour=hour,minute=minute).first().code
+    b=code1.encode(encoding='utf-8')
+    qr.add_data(b)
+    qr.make(fit=True)
+    img = qr.make_image()
+    buf = BytesIO()
+    img.save(buf)
+    image_stream = buf.getvalue()
+    response = HttpResponse(image_stream,content_type="image/jpg")
+    return response
+
+def flash(request):
+
+    return render(request,"QRCode.html")
