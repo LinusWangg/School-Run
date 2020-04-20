@@ -1,58 +1,86 @@
-<!--index.wxml-->
-<swiper indicator-dots="{{indicatorDots}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="true">  
-  <block wx:for="{{imgUrls}}">  
-    <swiper-item>  
-      <navigator url="{{item.link}}" hover-class="navigator-hover">  
-        <image src="{{item.url}}" class="slide-image" width="100%" height="500px"/>  
-      </navigator>  
-    </swiper-item>  
-  </block>  
- </swiper>  
-<view class="list">
-      <!--用户头像-->
-      <view class="user-info">
-        
-
-        <block>
-          <view class="head">
-            <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover" style="margin:auto"></image>
-            <text type='text' class="text-style">{{userInfo.nickName}}</text>
-          </view>
-        </block>
+<view>
+  <!-- 上侧部分 -->
+  <view class="top-view">
+  <!-- 用户信息开始 -->
+    <view class="user">
+    <!-- 头像开始 -->
+      <view class="row">
+      <view class="avatar">
+        <open-data class="userAvatar" default-avatar="/iconPicture/tab001.jpg" type="userAvatarUrl"></open-data>
       </view>
-      <block>
-        <!--学校-->
-        <view class="user-school">
-          <text>学校</text>
-          <text type='text' class="text-style">{{school}}</text>
-        </view>
-        <!--学号-->
-        <view class="user-id">
-          <text>学号</text>
-          <text type='text' class="text-style">{{stdid}}</text>
-        </view>
-        <!--姓名-->
-        <view class="user-name">
-          <text>学生姓名</text>
-          <text type='text' class="text-style">{{name}}</text>
-        </view>
-        <view class="user-name">
-          <text>早操打卡次数</text>
-          <text type='text' class="text-style">{{time}}</text>
-        </view>
-      </block>
-</view>
-<modal hidden="{{hiddenmodalput}}" title="完善资料" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
-  <input bindinput='iStudent' type='text' placeholder="请输入学号..." />
-  <input bindinput='iSchool' type='text' placeholder="请输入学校..." />
-  <input bindinput='iName' type='text' placeholder="请输入姓名..." />
-</modal>
-<modal hidden="{{hiddeinfo}}" title="登陆成功" cancel-text="确认" bindcancel="cancelS" confirm-text="申诉" bindconfirm='justice'>
-  <text>学号:</text>
-  <text>{{stdid}}\n</text>
-  <text>open_id:</text>
-  <text>{{openid}}\n</text>
-  <text>早操打卡次数:</text>
-  <text>{{time}}\n</text>
-</modal>
+      </view>
+    <!-- 头像结束 -->
 
+    <!-- 用户名称开始 -->
+    <block wx:if="{{!isLogIn}}">
+      <view class="name">
+          <navigator url="/pages/preIndex/preIndex">登录</navigator>
+          |
+          <navigator url="/pages/logup/logup">注册</navigator>
+      </view>
+    </block>
+    <block wx:else>
+      <view>
+        <text>欢迎使用！</text>
+      </view>
+    </block>
+    <!-- 用户名称结束 -->
+    </view>
+  </view>
+  <!--上层结束-->
+
+    <view class="numbers">
+      <view class="row">
+        <text>{{student.time}}</text>
+        <text>早操</text>
+      </view>
+      <!--
+        draw : 确定 canvas的id
+        per : 进度百分比 (1-100)
+        r: 圆的半径 (按px,最终转化成rpx)
+      -->
+      <view class="row">
+        <circle draw='circwewle1' per = '{{perSign}}' r = '50'/>
+      </view>
+
+      <view class="row">
+        <text>0</text>
+        <text>体能</text>
+      </view>
+
+      <view class="row">
+        <circle draw='circwewle2' per = '0' r = '50'/>
+      </view>
+
+    </view>
+  <!-- 用户信息结束 -->
+  
+</view> 
+
+<view class="function-view">
+  <view class="item">
+    <view class="left"></view> 
+  </view>
+
+  <view class="item">
+    <view class="left">{{student.name}}</view> 
+  </view>
+
+  <view class="item">
+    <view class="left">{{student.student_id}}</view>
+  </view>
+    
+  <view class="item">
+    <view class="left">{{student.school}}</view>
+  </view>
+</view>
+<!-- 钱包 优惠券 结束 -->
+
+<!-- 官方微信客服开始 -->
+  <view class="contact-view">
+    <button open-type="contact">
+      联系客服
+    </button>
+  </view>
+  <!-- 官方微信客服结束 -->
+<!-- 客户端数据可视化测试 -->

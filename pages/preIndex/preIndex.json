@@ -1,7 +1,5 @@
 {
-  "usingComponents": {
-    "circle": "/components/circle/circle"
-  },
+  "usingComponents": {},
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
   "navigationBarTitleText": "WYWNB"

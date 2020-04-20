@@ -9,13 +9,12 @@
   border: none;
 }
 
-.userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  flex-direction: center;
-  border-radius: 5%;
-  justify-content: center;
-  align-items: center;
+.userAvatar {
+    width:100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    display:flex;
+    overflow: hidden;
 }
 
 .userinfo-nickname {
@@ -75,22 +74,170 @@
   padding-right: 50rpx;
 }
 
-swiper {
- 
-width: 100%;
-height: 500rpx;
+/* 顶部样式 开始 */
+.top-view{
+  background-color: #01ccb6;
+  color: white;
+  padding: 40rpx;
 }
-
-swiper image{
-width: 100%;
-height: 500rpx;
- 
-}
-
-.head{
+.top-view .user{
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.top-view .user .row{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.top-view .user .avatar{
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+}
+.top-view .user .name{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  width: 200rpx;
+}
+.top-view .site{
+  background-color: rgba(0, 0, 0, 0.16);
+  padding: 20rpx;
+  border-top-left-radius: 32rpx;
+  border-bottom-left-radius: 32rpx;
+}
+.numbers{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  font-size: 28rpx;
+  padding: 40rpx;
+  padding-bottom: 0rpx;
+}
+.numbers .row{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.middle-view{
+  padding: 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 25rpx;
+  border-bottom: 18rpx solid #f5f5f5;
+}
+/* 顶部样式 结束 */
+/* 待支付 样式 开始*/
+.middle-view{
+  padding: 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 25rpx;
+  border-bottom: 18rpx solid #f5f5f5;
 }
 
-.button{
+.middle-view .item{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.middle-view .item image{
+  width: 50rpx;
+  height: 50rpx;
+  margin-bottom: 20rpx;
+}
+/* 待支付 样式 结束*/
+/*  钱包 优惠券 开始  */
+.function-view{
+  padding: 40rpx;
+  font-size: 28rpx;
+}
 
+.function-view .item{
+  padding: 30rpx 0;
+  border-bottom: 1px solid #efefef;
+  
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.function-view .item .right{
+  color: #8c8c8c;
+}
+.function-view .item .go-icon{
+  margin: 0 20rpx;
+  width: 16rpx;
+  height: 16rpx;
+}
+/*  钱包 优惠券 结束  */
+/*  官方微信客服开始  */
+.contact-view{
+  padding: 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.contact-view button {
+  background-color: #01ccb6;
+  border: 0;
+  padding: 0;
+}
+.contact-view button::after{
+  border: 0;
+}
+.contact-view  image{
+  width: 204rpx;
+  height: 66rpx;
+}
+  /*  官方微信客服结束  */
+
+  /* pages/canvasDemo/canvasDemo.wxss */
+.canvasBox{
+  height: 120rpx;
+  width: 120rpx;
+  position: relative;
+  background-color: #f5f5f5;
+}
+.bigCircle{
+  width: 120rpx;
+  height: 120rpx;
+  border-radius: 50%;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto auto;
+  background-color: #ddd;
+}
+.littleCircle{
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  position: absolute;
+  top:0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto auto;
+  background-color: #eee;
+}
+.canvas{
+  width: 120rpx;
+  height: 120rpx;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto auto;
+  z-index: 99;
 }
