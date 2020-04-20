@@ -129,5 +129,5 @@ def makeqrcode(request):
         new_code.save()
     else:
         imgurl = codemodel.objects.filter(hour=hour,minute=minute).first().url
-    print(imgurl)
+    imgurl  = imgurl[31:]
     return render(request, 'QRCode.html',{'img':imgurl})
