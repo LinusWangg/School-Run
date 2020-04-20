@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title> welcome </title>
+    <script type="text/javascript">
+    function myrefresh() {
+    var now = new Date();
+    if(now.getMinutes()%10==0){
+    window.location.reload();
+    }
+    }
+setInterval('myrefresh()',1000);
+</script>
+</head>
+<body >
+        <img src="{{MEDIA_URL}}{{img}}"/>
+</body> 
+</html>

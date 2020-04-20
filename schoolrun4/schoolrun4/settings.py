@@ -66,6 +66,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
@@ -131,3 +132,6 @@ STATIC_ROOT = "/var/School-Run/schoolrun4/static/"
 STATIC_URL = '/static/'
 
 WX_APP_SECRET = '66d0351912116ab0371252bd0a088777'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT=os.path.join(BASE_DIR,'media').replace('\\','/')

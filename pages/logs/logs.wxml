@@ -1,4 +1,5 @@
 <!--logs.wxml-->
 <view> 
  <button bindtap="click">扫描二维码</button> 
+ <button bindtap='test'>Test</button>
 </view>
