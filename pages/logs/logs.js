@@ -77,6 +77,7 @@ Page({
                 icon: 'success',
                 duration: 2000
               })
+              app.globalData.flag=1
             }
             else if (res.data.data.is_post == false && res.data.data.result == false)
             {

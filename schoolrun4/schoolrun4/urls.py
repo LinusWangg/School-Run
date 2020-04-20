@@ -17,9 +17,12 @@ from django.contrib import admin
 from django.urls import path,include
 import login
 import dailypost
+from django.views.static import serve
+from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',include('login.urls')),
-    path('daily/',include('dailypost.urls'))
+    path('daily/',include('dailypost.urls')),
+    url(r'^media/qrcode/(?P<path>.*)$', serve, {'document_root':'G:\School-Run\schoolrun4\media\qrcode'}),
 ]

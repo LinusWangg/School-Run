@@ -14,7 +14,8 @@ import time
 import random
 import string
 import datetime
-
+from schoolrun4 import settings
+import os
 # Create your views here.
 
 def get_ip_address(request):
@@ -42,6 +43,18 @@ def check(request):
     longitude = post_data.get('longitude')
     ip = get_ip_address(request)
     minute = minute//10
+    if minute == 0:
+        preminute = 5
+        prehour = hour-1
+    else:
+        preminute = minute-1
+        prehour = hour
+    if minute == 5:
+        afterminute = 0
+        afterhour = hour+1
+    else:
+        afterminute = minute+1
+        afterhour = hour
     response={}
     if not open_id or not student_id:
         response['message']='failed'
@@ -53,8 +66,10 @@ def check(request):
         data['is_post']=False
         data['student_id']=student_id
         codeinfo=codemodel.objects.filter(hour=hour,minute=minute).first()
+        precodeinfo=codemodel.objects.filter(hour=prehour,minute=preminute).first()
+        aftercodeinfo=codemodel.objects.filter(hour=afterhour,minute=afterminute).first()
         if codeinfo:
-            if(code==codeinfo.code):
+            if(code==codeinfo.code or code==precodeinfo.code or code== aftercodeinfo.code):
                 data['result']=True
                 ticks=time.time()
                 local_time=time.localtime(time.time())
@@ -101,16 +116,18 @@ def makeqrcode(request):
     minute = datetime.datetime.now().minute // 10
     if not codemodel.objects.filter(hour=hour,minute=minute):
         code1 = ''.join(random.sample(string.ascii_letters + string.digits, 8))
-        new_code = codemodel(hour=hour,minute=minute,code=code1)
+        dest = os.path.join(settings.MEDIA_ROOT, "qrcode")
+        if not os.path.exists(dest):
+            os.mkdir(dest)
+        b=code1.encode(encoding='utf-8')
+        qr.add_data(b)
+        qr.make(fit=True)
+        img = qr.make_image()
+        imgurl = os.path.join(dest, "qrcode-%d-%d.png" % (hour,minute))
+        img.save(imgurl, "png")
+        new_code = codemodel(hour=hour,minute=minute,code=code1,url=imgurl)
         new_code.save()
     else:
-        code1 = codemodel.objects.filter(hour=hour,minute=minute).first().code
-    b=code1.encode(encoding='utf-8')
-    qr.add_data(b)
-    qr.make(fit=True)
-    img = qr.make_image()
-    buf = BytesIO()
-    img.save(buf)
-    image_stream = buf.getvalue()
-    response = HttpResponse(image_stream,content_type="image/jpg")
-    return response
+        imgurl = codemodel.objects.filter(hour=hour,minute=minute).first().url
+    imgurl  = imgurl[31:]
+    return render(request, 'QRCode.html',{'img':imgurl})
