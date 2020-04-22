@@ -5,8 +5,12 @@ var total_micro_second = 0;
 var startRun = 0;
 var totalSecond = 0;
 var oriMeters = 0.0;
+
 var oriPoints = [];
+var smoothPoints = [];
+
 var accuracyList = [];
+
 
 
 /**
@@ -69,6 +73,40 @@ function getDistance(lat1, lng1, lat2, lng2) {
 
 function fill_zero_prefix(num) {
   return num < 10 ? "0" + num : num
+}
+
+//试运行的去毛刺办法--线性平滑
+function LinearSmooth(smoothPoints,newPoint) {
+  smoothPoints.push(newPoint);
+  var len = smoothPoints.length;
+
+  if(len < 7) {
+      ;
+  }
+  else if (len == 7) {
+    smoothPoints[0].latitude = (13 * smoothPoints[0].latitude + 10 * smoothPoints[1].latitude + 7 * smoothPoints[2].latitude + 4 * smoothPoints[3].latitude + smoothPoints[4].latitude - 2 * smoothPoints[5].latitude - 5 * smoothPoints[6].latitude) / 28;
+    smoothPoints[0].longitude = (13 * smoothPoints[0].longitude + 10 * smoothPoints[1].longitude + 7 * smoothPoints[2].longitude + 4 * smoothPoints[3].longitude + smoothPoints[4].longitude - 2 * smoothPoints[5].longitude - 5 * smoothPoints[6].longitude) / 28;
+    
+    smoothPoints[1].latitude = (5 * smoothPoints[0].latitude + 4 * smoothPoints[1].latitude + 3 * smoothPoints[2].latitude + 2 * smoothPoints[3].latitude + smoothPoints[4].latitude - smoothPoints[6].latitude) / 14;
+    smoothPoints[1].longitude = (5 * smoothPoints[0].longitude + 4 * smoothPoints[1].longitude + 3 * smoothPoints[2].longitude + 2 * smoothPoints[3].longitude + smoothPoints[4].longitude - smoothPoints[6].longitude) / 14;
+    
+    smoothPoints[2].latitude = (7 * smoothPoints[0].latitude + 6 * smoothPoints[1].latitude + 5 * smoothPoints[2].latitude + 4 * smoothPoints[3].latitude + 3 * smoothPoints[4].latitude + 2 * smoothPoints[5].latitude + smoothPoints[6].latitude) / 28;
+    smoothPoints[2].longitude = (7 * smoothPoints[0].longitude + 6 * smoothPoints[1].longitude + 5 * smoothPoints[2].longitude + 4 * smoothPoints[3].longitude + 3 * smoothPoints[4].longitude + 2 * smoothPoints[5].longitude + smoothPoints[6].longitude) / 28;
+  }
+  else
+  {
+    smoothPoints[len - 4].latitude = (smoothPoints[len - 7].latitude + smoothPoints[len - 6].latitude + smoothPoints[len - 5].latitude + smoothPoints[len - 4].latitude + smoothPoints[len - 3].latitude + smoothPoints[len - 2].latitude + smoothPoints[len - 1].latitude) / 7;
+    smoothPoints[len - 4].longitude = (smoothPoints[len - 7].longitude + smoothPoints[len - 6].longitude + smoothPoints[len - 5].longitude + smoothPoints[len - 4].longitude + smoothPoints[len - 3].longitude + smoothPoints[len - 2].longitude + smoothPoints[len - 1].longitude) / 7;
+    
+    smoothPoints[len - 3].latitude = (7 * smoothPoints[len - 1].latitude + 6 * smoothPoints[len - 2].latitude + 5 * smoothPoints[len - 3].latitude + 4 * smoothPoints[len - 4].latitude + 3 * smoothPoints[len - 5].latitude + 2 * smoothPoints[len - 6].latitude + smoothPoints[len - 7].latitude) / 28;
+    smoothPoints[len - 3].longitude = (7 * smoothPoints[len - 1].longitude + 6 * smoothPoints[len - 2].longitude + 5 * smoothPoints[len - 3].longitude + 4 * smoothPoints[len - 4].longitude + 3 * smoothPoints[len - 5].longitude + 2 * smoothPoints[len - 6].longitude + smoothPoints[len - 7].longitude) / 28;
+    
+    smoothPoints[len - 2].latitude = (5 * smoothPoints[len - 1].latitude + 4 * smoothPoints[len - 2].latitude + 3 * smoothPoints[len - 3].latitude + 2 * smoothPoints[len - 4].latitude + smoothPoints[len - 5].latitude - smoothPoints[len - 7].latitude) / 14;
+    smoothPoints[len - 2].longitude = (5 * smoothPoints[len - 1].longitude + 4 * smoothPoints[len - 2].longitude + 3 * smoothPoints[len - 3].longitude + 2 * smoothPoints[len - 4].longitude + smoothPoints[len - 5].longitude - smoothPoints[len - 7].longitude) / 14;
+    
+    smoothPoints[len - 1].latitude = (13 * smoothPoints[len - 1].latitude + 10 * smoothPoints[len - 2].latitude + 7 * smoothPoints[len - 3].latitude + 4 * smoothPoints[len - 4].latitude + smoothPoints[len - 5].latitude - 2 * smoothPoints[len - 6].latitude - 5 * smoothPoints[len - 7].latitude) / 28;
+    smoothPoints[len - 1].longitude = (13 * smoothPoints[len - 1].longitude + 10 * smoothPoints[len - 2].longitude + 7 * smoothPoints[len - 3].longitude + 4 * smoothPoints[len - 4].longitude + smoothPoints[len - 5].longitude - 2 * smoothPoints[len - 6].longitude - 5 * smoothPoints[len - 7].longitude) / 28;
+  }
 }
 
 Page({
@@ -246,7 +284,6 @@ Page({
 
   },
 
-
   //****************************
   getLocation: function () {
     var that = this;
@@ -272,47 +309,42 @@ Page({
         }
 
         var oriMarkers = that.data.markers;
-
-        // console.log("oriMeters----------")
-        // console.log(oriMeters);
-
         var point_len = oriPoints.length;
-        var markers_len = oriMarkers.length;
 
         var lastPoint;
         var lastMarker;
 
         if (point_len == 0) {
           oriPoints.push(newPoint);
-        }
-
-        if (markers_len == 0) {
+          smoothPoints.push(newPoint);
           oriMarkers.push(newMarker);
+          console.log("==0");
         }
-        
-        markers_len = oriMarkers.length;
-        point_len = markers_len;
+        else {
+          console.log(">0");
+          point_len = oriPoints.length;
 
-        var lastPoint = oriPoints[point_len - 1];
-        var lastMarker = oriMarkers[markers_len - 1];
-        oriMarkers[markers_len -1].iconPath = '../../iconPicture/dot.png';
+          var lastPoint = oriPoints[point_len - 1];
+          var lastMarker = oriMarkers[point_len - 1];
+          oriMarkers[point_len - 1].iconPath = '../../iconPicture/dot.png';
 
-        var newMeters = getDistance(lastMarker.latitude, lastMarker.longitude, res.latitude, res.longitude) / 1000;
+          var newMeters = getDistance(lastMarker.latitude, lastMarker.longitude, res.latitude, res.longitude) / 1000;
 
-        if (newMeters < 0.0015) {
-          newMeters = 0.0;
+          if (newMeters < 0.0015) {
+            newMeters = 0.0;
+          }
+
+          if(newMeters < 36.0 && res.accuracy <= 30) {
+            oriPoints.push(newPoint);
+            //LinearSmooth(smoothPoints, newPoint);
+            smoothPoints.push(newPoint);
+            oriMarkers.push(newMarker);
+            oriMeters = oriMeters + newMeters;
+          }
         }
-
-        oriMeters = oriMeters + newMeters;
-        // console.log("newMeters----------")
-        // console.log(newMeters);
-
 
         var meters = new Number(oriMeters);
         var showMeters = meters.toFixed(2);
-
-        oriPoints.push(newPoint);
-        oriMarkers.push(newMarker);
 
         that.setData({
           latitude: res.latitude,
@@ -323,8 +355,13 @@ Page({
           polyline: [{
             points: oriPoints,
             color:"#00FF00",
-            width: 8,
+            width: 5,
             dottedLine: false
+        }],
+        polygon:[{
+          points:smoothPoints,
+          strokeColor:"#0000FF",
+          strokeWidth:10,
         }],
         settings: {
             showLocation:false,
