@@ -6,6 +6,7 @@ var startRun = 0;
 var totalSecond = 0;
 var oriMeters = 0.0;
 var oriPoints = [];
+var accuracyList = [];
 
 
 /**
@@ -27,8 +28,6 @@ function count_down(that) {
     countTooGetLocation = 0;
   }
 
-
-  setTimeout
   setTimeout(function () {
     countTooGetLocation += 10;
     total_micro_second += 10;
@@ -96,8 +95,8 @@ Page({
   onLoad: function() {
     // 页面初始化 options为页面跳转所带来的参数
     this.getLocation()
-    console.log("onLoad")
-    console.log(startRun)
+    // console.log("onLoad")
+    // console.log(startRun)
     count_down(this);
     this.setData({
       start: false,
@@ -193,6 +192,7 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定');
+          console.log("精度列表",accuracyList);
           count_down(this);
           countTooGetLocation = 0;
           total_micro_second = 0;
@@ -209,6 +209,7 @@ Page({
             longitude: 0,
             markers: [],
             meters: 0.00,
+            accuracy:0,
             time: "0:00:00",
             polyline: [{
               points: oriPoints,
@@ -248,18 +249,19 @@ Page({
 
   //****************************
   getLocation: function () {
-    var that = this
+    var that = this;
     wx.getLocation({
 
       type: 'gcj02', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标
       success: function (res) {
         console.log("res----------")
-        console.log(res)
+        console.log(res.accuracy)
+        accuracyList.push(res.accuracy);
         
         var newMarker = {
           latitude: res.latitude,
           longitude: res.longitude,
-          iconPath: '../../iconPicture/dot.png',
+          iconPath: '../../iconPicture/tab001.jpg',
           width: 10,
           height: 10
         }
@@ -271,8 +273,8 @@ Page({
 
         var oriMarkers = that.data.markers;
 
-        console.log("oriMeters----------")
-        console.log(oriMeters);
+        // console.log("oriMeters----------")
+        // console.log(oriMeters);
 
         var point_len = oriPoints.length;
         var markers_len = oriMarkers.length;
@@ -293,9 +295,7 @@ Page({
 
         var lastPoint = oriPoints[point_len - 1];
         var lastMarker = oriMarkers[markers_len - 1];
-
-        console.log("oriMarkers----------")
-        console.log(oriMarkers, markers_len);
+        oriMarkers[markers_len -1].iconPath = '../../iconPicture/dot.png';
 
         var newMeters = getDistance(lastMarker.latitude, lastMarker.longitude, res.latitude, res.longitude) / 1000;
 
@@ -304,8 +304,8 @@ Page({
         }
 
         oriMeters = oriMeters + newMeters;
-        console.log("newMeters----------")
-        console.log(newMeters);
+        // console.log("newMeters----------")
+        // console.log(newMeters);
 
 
         var meters = new Number(oriMeters);
@@ -319,12 +319,17 @@ Page({
           longitude: res.longitude,
           markers: oriMarkers,
           meters: showMeters,
+          accuracy:res.accuracy,
           polyline: [{
             points: oriPoints,
             color:"#00FF00",
             width: 8,
             dottedLine: false
         }],
+        settings: {
+            showLocation:false,
+        },
+
         });
       },
       
