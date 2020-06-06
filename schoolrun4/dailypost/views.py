@@ -36,6 +36,8 @@ def check(request):
     post_data = json.loads(post_data)
     open_id = post_data.get('open_id')
     student_id = post_data.get('student_id')
+    month = post_data.get('month')
+    day = post_data.get('day')
     hour = post_data.get('hour')
     minute = post_data.get('minute')
     code = post_data.get('code')
@@ -61,19 +63,19 @@ def check(request):
         response['code']=ReturnCode.BROKEN_AUTHORIZED_DATA
         return JsonResponse(data=response,safe=False)
     
-    if not dailypost.objects.filter(open_id=open_id):
+    if not dailypost.objects.filter(open_id=open_id,month=month,day=day):
         data={}
         data['is_post']=False
         data['student_id']=student_id
-        codeinfo=codemodel.objects.filter(hour=hour,minute=minute).first()
-        precodeinfo=codemodel.objects.filter(hour=prehour,minute=preminute).first()
-        aftercodeinfo=codemodel.objects.filter(hour=afterhour,minute=afterminute).first()
+        codeinfo=codemodel.objects.filter(month=month,day=day,hour=hour,minute=minute).first()
+        precodeinfo=codemodel.objects.filter(month=month,day=day,hour=prehour,minute=preminute).first()
+        aftercodeinfo=codemodel.objects.filter(month=month,day=day,hour=afterhour,minute=afterminute).first()
         if codeinfo:
-            if(code==codeinfo.code or code==precodeinfo.code or code== aftercodeinfo.code):
+            if(code==codeinfo.code or code==precodeinfo.code or code==aftercodeinfo.code):
                 data['result']=True
                 ticks=time.time()
                 local_time=time.localtime(time.time())
-                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=local_time,latitude=latitude,longitude=longitude,ip=ip)
+                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=local_time,month=month,day=day,latitude=latitude,longitude=longitude,ip=ip)
                 print('new info:openid:%s,student_id:%s'%(open_id,student_id))
                 new_info.save()
                 if not Totalpost.objects.filter(open_id=open_id):
@@ -111,25 +113,25 @@ def makeqrcode(request):
 
     ticks=time.time()
     local_time=time.localtime(time.time())
-
+    month = datetime.datetime.now().month
+    day = datetime.datetime.now().day
     hour = datetime.datetime.now().hour
     minute = datetime.datetime.now().minute // 10
-    if not codemodel.objects.filter(hour=hour,minute=minute):
+    if not codemodel.objects.filter(month=month,day=day,hour=hour,minute=minute):
         code1 = ''.join(random.sample(string.ascii_letters + string.digits, 8))
-        new_code = codemodel(hour=hour,minute=minute,code=code1)
+        dest = os.path.join(settings.MEDIA_ROOT, "qrcode")
+        if not os.path.exists(dest):
+            os.mkdir(dest)
+        b=code1.encode(encoding='utf-8')
+        qr.add_data(b)
+        qr.make(fit=True)
+        img = qr.make_image()
+        imgurl = os.path.join(dest, "qrcode-%d-%d-%d-%d.png" % (month,day,hour,minute))
+        img.save(imgurl, "png")
+        new_code = codemodel(month=month,day=day,hour=hour,minute=minute,code=code1,url=imgurl)
         new_code.save()
     else:
-        code1 = codemodel.objects.filter(hour=hour,minute=minute).first().code
-    b=code1.encode(encoding='utf-8')
-    qr.add_data(b)
-    qr.make(fit=True)
-    img = qr.make_image()
-    buf = BytesIO()
-    img.save(buf)
-    image_stream = buf.getvalue()
-    response = HttpResponse(image_stream,content_type="image/jpg")
-    return response
-
-def flash(request):
-
-    return render(request,"QRCode.html")
+        imgurl = codemodel.objects.filter(month=month,day=day,hour=hour,minute=minute).first().url
+    imgurl  = imgurl[31:]
+    print(imgurl)
+    return render(request, 'QRCode.html',{'img':imgurl})

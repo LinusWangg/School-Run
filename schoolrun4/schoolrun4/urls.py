@@ -24,5 +24,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('login/',include('login.urls')),
     path('daily/',include('dailypost.urls')),
+    path('run/',include('run.urls')),
     url(r'^media/qrcode/(?P<path>.*)$', serve, {'document_root':'G:\School-Run\schoolrun4\media\qrcode'}),
 ]

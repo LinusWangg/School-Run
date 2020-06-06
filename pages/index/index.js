@@ -47,6 +47,8 @@ Page({
       student = wx.getStorageSync('student-info');
       if(student) {
         perSign = parseInt(100*student.time/total);
+        app.globalData.openid = student.open_id;
+        app.globalData.stdid = student.student_id;
         that.setData({
           student:student,
           isLogIn:true,

@@ -60,6 +60,8 @@ Page({
           data: {
             open_id: app.globalData.openid,
             student_id: app.globalData.stdid,
+            month:month,
+            day:day,
             hour:hour,
             minute:min,
             code:res.result,

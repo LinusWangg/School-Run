@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'schoolrun4',
     'login',
     'dailypost',
+    'run',
 ]
 
 MIDDLEWARE = [

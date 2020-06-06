@@ -1,5 +1,5 @@
 // pages/location/location.js
-
+var app = getApp();
 var countTooGetLocation = 0;
 var total_micro_second = 0;
 var startRun = 0;
@@ -87,11 +87,11 @@ Page({
     time: "0:00:00",
     polyline: [{
       points: oriPoints,
-    color:"#00FF00",
-    width: 8,
-    start: true,
-    dottedLine: false
-  }],
+      color:"#00FF00",
+      width: 8,
+      start: true,
+      dottedLine: false
+    }],
   },
   onLoad: function() {
     // 页面初始化 options为页面跳转所带来的参数
@@ -189,18 +189,33 @@ Page({
       content: '是否结束并提交？',
       confirmText: '确定',
       cancelText: '取消',
-
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定');
           count_down(this);
+          wx.request({
+            url: app.globalData.serverUrl + 'run' + '/Trace',
+            method: 'POST',
+            data: {
+              open_id: app.globalData.openid,
+              student_id: app.globalData.stdid,
+              points: oriPoints,
+              length: oriMeters,
+              time_cost: total_micro_second,
+            },
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              console.log(that.time)
+            }
+          })
           countTooGetLocation = 0;
           total_micro_second = 0;
           startRun = 0;
           totalSecond = 0;
           oriMeters = 0.0;
           oriPoints = [];
-
           that.setData({
             start: false,
             clock: '',

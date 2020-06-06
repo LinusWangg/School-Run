@@ -1,12 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
+  
+<!DOCTYPE HTML>
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="10">
-    <title>qrcode</title>
+    <title> welcome </title>
+    <script type="text/javascript">
+    function myrefresh() {
+    var now = new Date();
+    if(now.getMinutes()%10==0){
+    window.location.reload();
+    }
+    }
+setInterval('myrefresh()',1000);
+</script>
 </head>
-<body>
-    <img src="https://schoolrun.qinmaye.top/daily/qrcode">
-</body>
+<body >
+        <img src="{{MEDIA_URL}}{{img}}"/>
+</body> 
 </html>
