@@ -80,6 +80,7 @@ Page({
                 duration: 2000
               })
               app.globalData.flag=1
+              app.globalData.signToday=true
             }
             else if (res.data.data.is_post == false && res.data.data.result == false)
             {
@@ -88,6 +89,7 @@ Page({
                 icon: 'failure',
                 duration: 2000
               })
+              app.globalData.signToday = false
             }
             else if (res.data.data.is_post==true)
             {
@@ -96,6 +98,7 @@ Page({
                 icon: 'success',
                 duration: 2000
               })
+              app.globalData.signToday = true
             }
           }
         })

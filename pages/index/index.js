@@ -80,11 +80,22 @@ Page({
 
   onShow: function (options) {
     let that = this;
-
+    console.log('onshow');
     that.setData({
       total:total,
     });
     try {
+      console.log(app.globalData.signToday);
+      console.log(app.globalData.signPlusToday);
+      if(app.globalData.signToday==true&&app.globalData.signPlusToday==false)
+      {
+        student = wx.getStorageSync('student-info');
+        student.time = student.time+1;
+        app.globalData.signPlusToday=true;
+        app.globalData.signToday=false;
+        wx.setStorageSync('student-info', student);
+        console.log("setStorage Success");
+      }
       student = wx.getStorageSync('student-info');
       if(student) {
         perSign = parseInt(100*student.time/total);

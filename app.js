@@ -75,5 +75,7 @@ App({
     school:'',
     name:'',
     flag:0,
+    signToday:false,
+    signPlusToday:false,
   }
 })
