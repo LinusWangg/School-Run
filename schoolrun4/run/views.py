@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse,FileResponse
 from django.views import View
+from . import models
 from utils.response import wrap_json_response,ReturnCode,CommonResponseMixin
 from run.models import Trace,Point
 import json
@@ -43,4 +44,15 @@ def Get_Trace(request):
     return JsonResponse(data=response,safe=False)
 
 def draw(request):
-    pass
+    Trace = models.Trace.objects.get(pk=3)
+    point_list = []
+    start = Trace.start_point
+    end = Trace.end_point
+    for i in range(start,end):
+        temp = models.Point.objects.get(pk=i)
+        point = {'x':temp.longitude,'y':temp.latitude}
+        point_list.append(point)
+    print(point_list)
+    point_list = json.dumps(point_list)
+    print(point_list)
+    return render(request, 'Trace.html',{'point_list':point_list})
