@@ -45,7 +45,10 @@ def Get_Trace(request):
     return JsonResponse(data=response,safe=False)
 
 def draw(request):
-    Trace = models.Trace.objects.get(pk=3)
+    post_data = request.body.decode("utf-8")
+    post_data = json.loads(post_data)
+    dataid = post_data.get('dataid')
+    Trace = models.Trace.objects.get(pk=dataid)
     point_list = []
     start = Trace.start_point
     end = Trace.end_point
@@ -54,9 +57,8 @@ def draw(request):
         point = {'x':temp.longitude,'y':temp.latitude}
         point_list.append(point)
     print(point_list)
-    point_list = json.dumps(point_list)
-    print(point_list)
-    return render(request, 'Trace.html',{'point_list':point_list})
+    response=wrap_json_response(data=point_list,code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)
 
 def getmine(request):
     post_data = request.body.decode("utf-8")

@@ -5,7 +5,8 @@
     "pages/location/location",
     "pages/preIndex/preIndex",
     "pages/logup/logup",
-    "pages/checkroute"
+    "pages/checkroute/checkroute",
+    "pages/routeDraw/routeDraw"
   ],
   "window": {
     "backgroundTextStyle": "light",

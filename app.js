@@ -77,5 +77,6 @@ App({
     flag:0,
     signToday:false,
     signPlusToday:false,
+    tempid:0,
   }
 })
