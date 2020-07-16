@@ -1,0 +1,3 @@
+ <view wx:for="{{Trace_List}}">
+    {{item.student_id}}:{{item.ip}}
+  </view>

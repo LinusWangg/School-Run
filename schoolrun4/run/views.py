@@ -4,6 +4,7 @@ from django.views import View
 from . import models
 from utils.response import wrap_json_response,ReturnCode,CommonResponseMixin
 from run.models import Trace,Point
+from django.core import serializers
 import json
 import requests
 import schoolrun4
@@ -56,3 +57,13 @@ def draw(request):
     point_list = json.dumps(point_list)
     print(point_list)
     return render(request, 'Trace.html',{'point_list':point_list})
+
+def getmine(request):
+    post_data = request.body.decode("utf-8")
+    post_data = json.loads(post_data)
+    open_id = post_data.get('open_id')
+    student_id = post_data.get('student_id')
+    Trace_list = list(models.Trace.objects.filter(student_id=student_id).values('id','student_id','ip'))
+    print(Trace_list)
+    response=wrap_json_response(data=Trace_list,code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)

@@ -82,5 +82,12 @@
       联系客服
     </button>
   </view>
+  <view class="contact-view">
+    <button>
+      <navigator url="/pages/checkroute/checkroute">
+      查询线路
+      </navigator>
+    </button>
+  </view>
   <!-- 官方微信客服结束 -->
 <!-- 客户端数据可视化测试 -->
