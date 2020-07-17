@@ -54,7 +54,7 @@ def draw(request):
     end = Trace.end_point
     for i in range(start,end):
         temp = models.Point.objects.get(pk=i)
-        point = {'x':temp.longitude,'y':temp.latitude}
+        point = {'latitude':temp.latitude,'longitude':temp.longitude}
         point_list.append(point)
     print(point_list)
     response=wrap_json_response(data=point_list,code=ReturnCode.SUCCESS,message='ok')

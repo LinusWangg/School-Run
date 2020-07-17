@@ -15,7 +15,10 @@ Page({
       start: true,
       dottedLine: false
     }],
+    latitude:0,
+    longitude:0,
   },
+  
 
   /**
    * 生命周期函数--监听页面加载
@@ -47,7 +50,9 @@ Page({
       },
       success:function(res){
         that.setData({
-          'polyline.points':res.data.data,
+          latitude:res.data.data[res.data.data.length/2].latitude,
+          longitude:res.data.data[res.data.data.length/2].longitude,
+          ["polyline["+ 0 +"].points"]:res.data.data,
         })
       },
     })
