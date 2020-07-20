@@ -39,7 +39,7 @@ def Get_Trace(request):
             oripoint = new_point.id
         if i==len(points)-1:
             lastpoint = new_point.id
-    new_Trace = Trace(start_point = oripoint,end_point = lastpoint,open_id = open_id,student_id = student_id,ip = get_ip_address(request))
+    new_Trace = Trace(start_point = oripoint,end_point = lastpoint,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost)
     new_Trace.save()
     response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
@@ -65,7 +65,14 @@ def getmine(request):
     post_data = json.loads(post_data)
     open_id = post_data.get('open_id')
     student_id = post_data.get('student_id')
-    Trace_list = list(models.Trace.objects.filter(student_id=student_id).values('id','student_id','ip'))
+    Trace_list = list(models.Trace.objects.filter(student_id=student_id).values('id','student_id','distance'))
     print(Trace_list)
     response=wrap_json_response(data=Trace_list,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
+
+def runTrace(request):
+    runTrace = models.runTrace.objects.all()
+    print(runTrace)
+    response=wrap_json_response(data=runTrace,code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)
+

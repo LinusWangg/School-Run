@@ -10,6 +10,12 @@ class Point(models.Model):
 class Trace(models.Model):
     start_point = models.IntegerField()
     end_point = models.IntegerField()
+    distance = models.FloatField(default=0)
+    time_cost = models.IntegerField(default=0)
     open_id = models.CharField(max_length=32)
     student_id = models.CharField(max_length=32)
     ip = models.GenericIPAddressField(default=' ')
+
+class runTrace(models.Model):
+    start_point = models.IntegerField()
+    end_point = models.IntegerField()
