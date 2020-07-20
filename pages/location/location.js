@@ -6,6 +6,7 @@ var startRun = 0;
 var totalSecond = 0;
 var oriMeters = 0.0;
 var oriPoints = [];
+var id = 0;
 
 
 /**
@@ -93,9 +94,10 @@ Page({
       dottedLine: false
     }],
   },
-  onLoad: function() {
+  onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
     this.getLocation()
+    id = options.id;
     console.log("onLoad")
     console.log(startRun)
     count_down(this);
@@ -204,6 +206,7 @@ Page({
             url: app.globalData.serverUrl + 'run' + '/Trace',
             method: 'POST',
             data: {
+              id: id,
               open_id: app.globalData.openid,
               student_id: app.globalData.stdid,
               points: oriPoints,

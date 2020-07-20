@@ -17,6 +17,7 @@ class Trace(models.Model):
     ip = models.GenericIPAddressField(default=' ')
     month = models.IntegerField(default=0)
     day = models.IntegerField(default=0)
+    DTW = models.FloatField(default=0)
 
 class runTrace(models.Model):
     start_point = models.IntegerField()

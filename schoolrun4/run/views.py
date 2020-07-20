@@ -9,6 +9,7 @@ import json
 import requests
 import schoolrun4
 import datetime
+import numpy as np
 
 def get_ip_address(request):
     """
@@ -22,6 +23,25 @@ def get_ip_address(request):
     client_ip = ip.split(",")[-1].strip() if ip else ""
     return client_ip
 
+def dtw(ts_run,ts_unique,d=lambda x,y: abs(float(x['latitude'])-float(y['latitude']))+abs(float(x['longitude'])-float(y['longitude']))):
+    ts_run,ts_unique = np.array(ts_run),np.array(ts_unique)
+    M,N = len(ts_run),len(ts_unique)
+    cost = np.ones((M,N))
+
+    cost[0,0] = d(ts_run[0],ts_unique[0])
+    for i in range(1,M):
+        cost[i,0] = cost[i-1,0] + d(ts_run[i],ts_unique[0])
+
+    for j in range(1,N):
+        cost[0,j] = cost[0,j-1] + d(ts_run[0],ts_unique[j])
+
+    for i in range(1,M):
+        for j in range(1,N):
+            choices = cost[i-1,j-1],cost[i,j-1],cost[i-1,j]
+            cost[i,j] = min(choices) + d(ts_run[i],ts_unique[j])
+
+    return cost[-1,-1]
+
 def Get_Trace(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
@@ -32,6 +52,18 @@ def Get_Trace(request):
     time_cost = post_data.get('time_cost')
     month = post_data.get('month')
     day = post_data.get('day')
+    Traceid = post_data.get('id')
+    runTrace = models.runTrace.objects.get(pk=Traceid)
+    point_list = []
+    start = runTrace.start_point
+    end = runTrace.end_point
+    for i in range(start,end):
+        temp = models.Point.objects.get(pk=i)
+        point = {'latitude':temp.latitude,'longitude':temp.longitude}
+        point_list.append(point)
+    print(point_list)
+    DTW = dtw(point_list,points)
+    print(DTW)
     oripoint = 0
     lastpoint = 0
     for i in range(len(points)):
@@ -41,7 +73,7 @@ def Get_Trace(request):
             oripoint = new_point.id
         if i==len(points)-1:
             lastpoint = new_point.id
-    new_Trace = Trace(start_point = oripoint,end_point = lastpoint,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day)
+    new_Trace = Trace(start_point = oripoint,end_point = lastpoint,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
     new_Trace.save()
     response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)

@@ -1,9 +1,14 @@
 <view wx:for="{{runTrace}}">
   <span>
-    {{index}}:
+    {{index+1}}:
     <button class='btn'>
     <navigator url="/pages/routeDraw2/routeDraw2?start_point={{item.start_point}}&end_point={{item.end_point}}">
     预览
+    </navigator>
+    </button>
+    <button class='btn'>
+    <navigator url="/pages/location/location?id={{index+1}}">
+    开始跑步
     </navigator>
     </button>
   </span>
