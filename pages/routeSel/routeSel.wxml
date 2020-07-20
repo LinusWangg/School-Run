@@ -1,0 +1,10 @@
+<view wx:for="{{runTrace}}">
+  <span>
+    {{index}}:
+    <button class='btn'>
+    <navigator url="/pages/routeDraw/routeDraw?start_point={{item.start_point}}&end_point={{item.end_point}}">
+    预览
+    </navigator>
+    </button>
+  </span>
+</view>

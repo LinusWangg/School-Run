@@ -15,6 +15,8 @@ class Trace(models.Model):
     open_id = models.CharField(max_length=32)
     student_id = models.CharField(max_length=32)
     ip = models.GenericIPAddressField(default=' ')
+    month = models.IntegerField(default=0)
+    day = models.IntegerField(default=0)
 
 class runTrace(models.Model):
     start_point = models.IntegerField()

@@ -1,6 +1,12 @@
-
+<wxs module="filters" src="checkroute.wxs"></wxs>
 <view wx:for="{{Trace_List}}">
-  <navigator url="/pages/routeDraw/routeDraw?id={{item.id}}">
-    {{item.student_id}}:{{item.ip}}
-  </navigator>
+  <span>
+    距离:{{filters.toFix(item.distance)}}km
+    跑步日期:{{item.month}}月{{item.day}}日
+    <button class='btn'>
+    <navigator url="/pages/routeDraw/routeDraw?id={{item.id}}">
+    预览
+    </navigator>
+    </button>
+  </span>
 </view>

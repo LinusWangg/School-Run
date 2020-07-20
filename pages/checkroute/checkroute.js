@@ -12,6 +12,7 @@ Page({
   },
   onShow:function(){
     var that = this
+    //获取当前时间戳  
     wx.request({
       url: app.globalData.serverUrl+'run/getmine',
       method: 'POST',

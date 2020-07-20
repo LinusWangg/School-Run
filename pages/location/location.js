@@ -183,7 +183,14 @@ Page({
   clearRun: function () {
     startRun = 0;
     var that = this;
+    var timestamp = Date.parse(new Date());
 
+    //获取当前时间  
+    var date = new Date(timestamp);
+    //月  
+    var month = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    //日  
+    var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
     wx.showModal({
       title: '提示',
       content: '是否结束并提交？',
@@ -202,6 +209,8 @@ Page({
               points: oriPoints,
               length: oriMeters,
               time_cost: total_micro_second,
+              month: month,
+              day: day,
             },
             header: {
               'content-type': 'application/json'

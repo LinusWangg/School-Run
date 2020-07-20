@@ -6,7 +6,8 @@
     "pages/preIndex/preIndex",
     "pages/logup/logup",
     "pages/checkroute/checkroute",
-    "pages/routeDraw/routeDraw"
+    "pages/routeDraw/routeDraw",
+    "pages/routeSel/routeSel"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -32,7 +33,7 @@
         "selectedIconPath": "iconPicture/scan.png"
       },
       {
-        "pagePath": "pages/location/location",
+        "pagePath": "pages/routeSel/routeSel",
         "text": "wywwd",
         "iconPath": "iconPicture/location_before.png",
         "selectedIconPath": "iconPicture/location.png"
