@@ -49,10 +49,11 @@ Page({
         'content-type': 'application/json'
       },
       success:function(res){
+        console.log(res.data.data)
         that.setData({
-          latitude:res.data.data[res.data.data.length/2].latitude,
-          longitude:res.data.data[res.data.data.length/2].longitude,
           ["polyline["+ 0 +"].points"]:res.data.data,
+          latitude:res.data.data[parseInt(res.data.data.length/2)].latitude,
+          longitude:res.data.data[parseInt(res.data.data.length/2)].longitude,
         })
       },
     })
