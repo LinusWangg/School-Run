@@ -2,7 +2,7 @@
   <span>
     {{index}}:
     <button class='btn'>
-    <navigator url="/pages/routeDraw/routeDraw?start_point={{item.start_point}}&end_point={{item.end_point}}">
+    <navigator url="/pages/routeDraw2/routeDraw2?start_point={{item.start_point}}&end_point={{item.end_point}}">
     预览
     </navigator>
     </button>

@@ -78,5 +78,7 @@ App({
     signToday:false,
     signPlusToday:false,
     tempid:0,
+    start_point:0,
+    end_point:0,
   }
 })

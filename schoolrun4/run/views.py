@@ -62,6 +62,20 @@ def draw(request):
     response=wrap_json_response(data=point_list,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
+def draw2(request):
+    post_data = request.body.decode("utf-8")
+    post_data = json.loads(post_data)
+    start_point = int(post_data.get('start_point'))
+    end_point = int(post_data.get('end_point'))
+    point_list = []
+    for i in range(start_point,end_point):
+        temp = models.Point.objects.get(pk=i)
+        point = {'latitude':temp.latitude,'longitude':temp.longitude}
+        point_list.append(point)
+    print(point_list)
+    response=wrap_json_response(data=point_list,code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)
+
 def getmine(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)

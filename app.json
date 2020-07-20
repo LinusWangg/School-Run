@@ -7,7 +7,8 @@
     "pages/logup/logup",
     "pages/checkroute/checkroute",
     "pages/routeDraw/routeDraw",
-    "pages/routeSel/routeSel"
+    "pages/routeSel/routeSel",
+    "pages/routeDraw2/routeDraw2"
   ],
   "window": {
     "backgroundTextStyle": "light",

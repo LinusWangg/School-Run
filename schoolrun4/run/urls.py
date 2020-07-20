@@ -25,6 +25,7 @@ from schoolrun4 import settings
 urlpatterns = [
     path('Trace',views.Get_Trace,name='Trace'),
     path('Draw',views.draw,name='Draw'),
+    path('Draw2',views.draw2,name='Draw2'),
     path('getmine',views.getmine,name='getmine'),
     path('runTrace',views.runTrace,name='runTrace'),
 ]
