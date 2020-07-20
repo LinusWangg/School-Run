@@ -5,5 +5,6 @@ from . import models
 register_list = [
     models.Point,
     models.Trace,
+    models.runTrace,
 ]
 admin.site.register(register_list)
