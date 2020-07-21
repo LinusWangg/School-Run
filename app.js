@@ -63,7 +63,7 @@ App({
 
   globalData: {
     userinfo: {},
-    serverUrl: "http://www.wywnb.xyz/",
+    serverUrl: "http://127.0.0.1:8000/",
     apiVersion: "login",
     appid:"wxabe5a4b8a9c68151",
     stdid:"",
@@ -78,7 +78,6 @@ App({
     signToday:false,
     signPlusToday:false,
     tempid:0,
-    start_point:0,
-    end_point:0,
+    tempid2:0,
   }
 })

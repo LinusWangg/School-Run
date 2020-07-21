@@ -27,5 +27,5 @@ urlpatterns = [
     path('Draw',views.draw,name='Draw'),
     path('Draw2',views.draw2,name='Draw2'),
     path('getmine',views.getmine,name='getmine'),
-    path('runTrace',views.runTrace,name='runTrace'),
+    path('runTrace',views.ruTrace,name='runTrace'),
 ]

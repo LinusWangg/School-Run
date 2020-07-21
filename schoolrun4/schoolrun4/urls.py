@@ -22,6 +22,7 @@ from django.conf.urls import url
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #url(r'^mongonaut/', include('mongonaut.urls')),
     path('login/',include('login.urls')),
     path('daily/',include('dailypost.urls')),
     path('run/',include('run.urls')),

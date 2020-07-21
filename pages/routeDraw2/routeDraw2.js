@@ -24,8 +24,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-        app.globalData.start_point = options.start_point,
-        app.globalData.end_point = options.end_point
+        app.globalData.tempid2 = options.id
   },
 
   /**
@@ -44,8 +43,7 @@ Page({
       url: app.globalData.serverUrl+'run/Draw2',
       method: 'POST',
       data:{
-        start_point : app.globalData.start_point,
-        end_point : app.globalData.end_point,
+        dataid:app.globalData.tempid2,
       },
       header: {
         'content-type': 'application/json'
