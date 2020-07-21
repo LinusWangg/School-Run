@@ -7,7 +7,8 @@
         scale="100"
         polyline="{{polyline}}"
         markers="{{markers}}"
-        show-location="{{true}}"
+        polygons="{{polygon}}"
+        show-location="{{false}}"
     >
         <!--开始 按键-->
         <cover-view class='ButtonLayout'>
@@ -37,5 +38,6 @@
             <cover-view class="CoverText">\n里程数：{{meters}}km</cover-view>
             <cover-view class="CoverText">\n\n时 间：{{time}}</cover-view>
         </cover-view>
+        <cover-view>精确值：{{accuracy}}</cover-view>
     </map>
 </view>
