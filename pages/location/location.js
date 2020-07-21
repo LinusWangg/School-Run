@@ -293,7 +293,8 @@ Page({
 
         var newPoint = {
           latitude: res.latitude,
-          longitude: res.longitude
+          longitude: res.longitude,
+          time: Date.parse(new Date()),
         }
 
         var oriMarkers = that.data.markers;
