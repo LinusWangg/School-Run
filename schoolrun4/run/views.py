@@ -11,6 +11,7 @@ import schoolrun4
 import datetime
 import numpy as np
 from bson import json_util
+import math
 
 def get_ip_address(request):
     """
@@ -63,11 +64,103 @@ def Get_Trace(request):
     response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
+
+def cal_ang(point_1, point_2, point_3):
+    """
+    根据三点坐标计算夹角
+    :param point_1: 点1坐标
+    :param point_2: 点2坐标
+    :param point_3: 点3坐标
+    :return: 返回任意角的夹角值，这里只是返回点2的夹角
+    """
+    a=math.sqrt((point_2['latitude']-point_3['latitude'])*(point_2['latitude']-point_3['latitude'])+(point_2['longitude']-point_3['longitude'])*(point_2['longitude'] - point_3['longitude']))
+    b=math.sqrt((point_1['latitude']-point_3['latitude'])*(point_1['latitude']-point_3['latitude'])+(point_1['longitude']-point_3['longitude'])*(point_1['longitude'] - point_3['longitude']))
+    c=math.sqrt((point_1['latitude']-point_2['latitude'])*(point_1['latitude']-point_2['latitude'])+(point_1['longitude']-point_2['longitude'])*(point_1['longitude'] - point_2['longitude']))
+    if(a==0 or b==0 or c==0):
+        B=0
+        A=0
+        C=0
+    else:
+        A=math.degrees(math.acos((a*a-b*b-c*c)/(-2*b*c)))
+        B=math.degrees(math.acos((b*b-a*a-c*c)/(-2*a*c)))
+        C=math.degrees(math.acos((c*c-a*a-b*b)/(-2*a*b)))
+    return B
+
+def clear(In):
+    out = []
+    N = len(In)
+    ER = 6378
+    out.append(In[0])
+    for i in range(1,N-1):
+        lat1 = In[i-1]['latitude'] * math.pi / 180
+        lng1 = In[i-1]['longitude'] * math.pi / 180
+        lat2 = In[i]['latitude'] * math.pi / 180
+        lng2 = In[i]['longitude'] * math.pi / 180
+        lat3 = In[i+1]['latitude'] * math.pi / 180
+        lng3 = In[i+1]['longitude'] * math.pi / 180
+        angle = cal_ang(In[i-1],In[i],In[i+1])
+
+        Cos1 = math.cos(lat2) * math.cos(lat1) * math.cos(lng2 -lng1) + math.sin(lat1) * math.sin(lat2)
+        dis1 = ER*math.acos(Cos1)
+
+        Cos2 = math.cos(lat3) * math.cos(lat2) * math.cos(lng3 -lng2) + math.sin(lat2) * math.sin(lat3)
+        dis2 = ER*math.acos(Cos2)
+
+        if(angle <= 30 and angle != 0):
+            continue
+        else:
+            out.append(In[i])
+    out.append(In[N-1])
+    return out
+
+
+def linersmooth(In):
+    out = [{'latitude':0,'longitude':0} for x in range(0,len(In))]
+    N = len(In)
+    if(len(In) < 7):
+        out = In
+        return out
+    else:
+        out[0]['latitude'] = ( 13.0 * In[0]['latitude'] + 10.0 * In[1]['latitude'] + 7.0 * In[2]['latitude'] + 4.0 * In[3]['latitude'] + In[4]['latitude'] - 2.0 * In[5]['latitude'] - 5.0 * In[6]['latitude'] ) / 28.0
+
+        out[1]['latitude'] = ( 5.0 * In[0]['latitude'] + 4.0 * In[1]['latitude'] + 3 * In[2]['latitude'] + 2 * In[3]['latitude'] + In[4]['latitude'] - In[6]['latitude'] ) / 14.0
+
+        out[2]['latitude'] = ( 7.0 * In[0]['latitude'] + 6.0 * In[1]['latitude'] + 5.0 * In[2]['latitude'] + 4.0 * In[3]['latitude'] + 3.0 * In[4]['latitude'] + 2.0 * In[5]['latitude'] + In[6]['latitude'] ) / 28.0
+
+        for i in range(3,N-3):
+            out[i]['latitude'] = ( In[i - 3]['latitude'] + In[i - 2]['latitude'] + In[i - 1]['latitude'] + In[i]['latitude'] + In[i + 1]['latitude'] + In[i + 2]['latitude'] + In[i + 3]['latitude'] ) / 7.0;
+
+        out[N - 3]['latitude'] = ( 7.0 * In[N - 1]['latitude'] + 6.0 * In[N - 2]['latitude'] + 5.0 * In[N - 3]['latitude'] + 4.0 * In[N - 4]['latitude'] + 3.0 * In[N - 5]['latitude'] + 2.0 * In[N - 6]['latitude'] + In[N - 7]['latitude'] ) / 28.0
+
+        out[N - 2]['latitude'] = ( 5.0 * In[N - 1]['latitude'] + 4.0 * In[N - 2]['latitude'] + 3.0 * In[N - 3]['latitude'] + 2.0 * In[N - 4]['latitude'] + In[N - 5]['latitude'] - In[N - 7]['latitude'] ) / 14.0
+
+        out[N - 1]['latitude'] = ( 13.0 * In[N - 1]['latitude'] + 10.0 * In[N - 2]['latitude'] + 7.0 * In[N - 3]['latitude'] + 4 * In[N - 4]['latitude'] + In[N - 5]['latitude'] - 2 * In[N - 6]['latitude'] - 5 * In[N - 7]['latitude'] ) / 28.0
+
+        out[0]['longitude'] = ( 13.0 * In[0]['longitude'] + 10.0 * In[1]['longitude'] + 7.0 * In[2]['longitude'] + 4.0 * In[3]['longitude'] + In[4]['longitude'] - 2.0 * In[5]['longitude'] - 5.0 * In[6]['longitude'] ) / 28.0
+
+        out[1]['longitude'] = ( 5.0 * In[0]['longitude'] + 4.0 * In[1]['longitude'] + 3 * In[2]['longitude'] + 2 * In[3]['longitude'] + In[4]['longitude'] - In[6]['longitude'] ) / 14.0
+
+        out[2]['longitude'] = ( 7.0 * In[0]['longitude'] + 6.0 * In[1]['longitude'] + 5.0 * In[2]['longitude'] + 4.0 * In[3]['longitude'] + 3.0 * In[4]['longitude'] + 2.0 * In[5]['longitude'] + In[6]['longitude'] ) / 28.0
+
+        for i in range(3,N-3):
+            out[i]['longitude'] = ( In[i - 3]['longitude'] + In[i - 2]['longitude'] + In[i - 1]['longitude'] + In[i]['longitude'] + In[i + 1]['longitude'] + In[i + 2]['longitude'] + In[i + 3]['longitude'] ) / 7.0;
+
+        out[N - 3]['longitude'] = ( 7.0 * In[N - 1]['longitude'] + 6.0 * In[N - 2]['longitude'] + 5.0 * In[N - 3]['longitude'] + 4.0 * In[N - 4]['longitude'] + 3.0 * In[N - 5]['longitude'] + 2.0 * In[N - 6]['longitude'] + In[N - 7]['longitude'] ) / 28.0
+
+        out[N - 2]['longitude'] = ( 5.0 * In[N - 1]['longitude'] + 4.0 * In[N - 2]['longitude'] + 3.0 * In[N - 3]['longitude'] + 2.0 * In[N - 4]['longitude'] + In[N - 5]['longitude'] - In[N - 7]['longitude'] ) / 14.0
+
+        out[N - 1]['longitude'] = ( 13.0 * In[N - 1]['longitude'] + 10.0 * In[N - 2]['longitude'] + 7.0 * In[N - 3]['longitude'] + 4 * In[N - 4]['longitude'] + In[N - 5]['longitude'] - 2 * In[N - 6]['longitude'] - 5 * In[N - 7]['longitude'] ) / 28.0
+        
+        return out
+
+
 def draw(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     dataid = post_data.get('dataid')
     Trac = Trace.objects.get(pk=dataid).trace
+    Trac = clear(Trac)
+    Trac = linersmooth(Trac)
     print(Trac)
     response=wrap_json_response(data=Trac,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
@@ -76,7 +169,9 @@ def draw2(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     dataid = post_data.get('dataid')
-    Trace = runTrace.objects.get(pk=dataid).trace
+    Trace = Trace.objects.get(pk=dataid).trace
+    Trace = clear(Trace)
+    Trace = linersmooth(Trace)
     print(Trace)
     response=wrap_json_response(data=Trace,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
