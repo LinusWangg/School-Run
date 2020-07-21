@@ -3,6 +3,7 @@
   <span>
     距离:{{filters.toFix(item[2])}}km
     跑步日期:{{item[3]}}月{{item[4]}}日
+    DTW:{{filters.toFix(item[5])}}
     <button class='btn'>
     <navigator url="/pages/routeDraw/routeDraw?id={{item[0]}}">
     预览

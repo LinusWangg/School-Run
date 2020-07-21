@@ -15,4 +15,4 @@ class Trace(mongoengine.Document):
     DTW = mongoengine.FloatField(default=0)
 
 class runTrace(mongoengine.Document):
-    trace = mongoengine.ListField()
+    trace = mongoengine.ListField(unique=True)

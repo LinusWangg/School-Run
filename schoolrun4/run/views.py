@@ -53,12 +53,12 @@ def Get_Trace(request):
     time_cost = post_data.get('time_cost')
     month = post_data.get('month')
     day = post_data.get('day')
-    #Traceid = post_data.get('id')
-    #runTrace = runTrace.objects.get(pk=Traceid).trace
-    #print(runTrace)
-    #DTW = dtw(runTrace,points)
-    #print(DTW)
-    new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day)
+    Traceid = post_data.get('id')
+    rTrace = runTrace.objects.get(pk=Traceid).trace
+    print(rTrace)
+    DTW = dtw(rTrace,points)
+    print(DTW)
+    new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
     new_Trace.save()
     response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
@@ -88,7 +88,7 @@ def getmine(request):
     student_id = post_data.get('student_id')
     Trace_list = []
     for i in Trace.objects.filter(student_id=student_id):
-        Trace_list.append([json_util.dumps(i.id)[10:34],i.student_id,i.distance,i.month,i.day])
+        Trace_list.append([json_util.dumps(i.id)[10:34],i.student_id,i.distance,i.month,i.day,i.DTW])
     print(Trace_list)
     response=wrap_json_response(data=Trace_list,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
@@ -101,3 +101,19 @@ def ruTrace(request):
     response=wrap_json_response(data=rTrace,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
+def Trans(request):
+    Oid = '5f166b4eaf2ec19d2082cea4'
+    temp = Trace.objects.get(pk=Oid).trace
+    new_run = runTrace(trace = temp)
+    new_run.save()
+    response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)
+
+def Cal(request):
+    Oid1 = '5f166b4eaf2ec19d2082cea4'
+    Oid2 = '5f16693eaf2ec19d2082cea3'
+    temp1 = Trace.objects.get(pk=Oid1).trace
+    temp2 = Trace.objects.get(pk=Oid2).trace
+    DTW = dtw(temp1,temp2)
+    response=wrap_json_response(data=DTW,code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)

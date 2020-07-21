@@ -13,8 +13,3 @@
     </button>
   </span>
 </view>
-<button class='btn'>
-    <navigator url="/pages/location/location">
-    开始跑步
-    </navigator>
-  </button>

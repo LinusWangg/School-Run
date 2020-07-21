@@ -28,4 +28,6 @@ urlpatterns = [
     path('Draw2',views.draw2,name='Draw2'),
     path('getmine',views.getmine,name='getmine'),
     path('runTrace',views.ruTrace,name='runTrace'),
+    path('Trans',views.Trans,name='Trans'),
+    path('Cal',views.Cal,name='Cal'),
 ]
