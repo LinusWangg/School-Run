@@ -334,7 +334,7 @@ Page({
             newMeters = 0.0;
           }
 
-          if(newMeters < 36.0 && res.accuracy <= 30) {
+          if(newMeters < 48.0) {
             oriPoints.push(newPoint);
             //LinearSmooth(smoothPoints, newPoint);
             smoothPoints.push(newPoint);
