@@ -19,3 +19,5 @@ schoolrun.log
 uwsgi.pid
 
 .vscode/*
+pages/location/location.js
+pages/location/location.js

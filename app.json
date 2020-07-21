@@ -41,6 +41,11 @@
     "backgroundColor": "#ffffff",
     "position": "bottom"
   },
+
+  "requiredBackgroundModes": [
+    "location"
+  ],
+
   "style": "v2",
   "sitemapLocation": "sitemap.json",
   "permission": {
