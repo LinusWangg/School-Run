@@ -44,27 +44,6 @@ def dtw(ts_run,ts_unique,d=lambda x,y: abs(float(x['latitude'])-float(y['latitud
 
     return cost[-1,-1]
 
-def Get_Trace(request):
-    post_data = request.body.decode("utf-8")
-    post_data = json.loads(post_data)
-    open_id = post_data.get('open_id')
-    student_id = post_data.get('student_id')
-    points = post_data.get('points')
-    length = post_data.get('length')
-    time_cost = post_data.get('time_cost')
-    month = post_data.get('month')
-    day = post_data.get('day')
-    Traceid = post_data.get('id')
-    rTrace = runTrace.objects.get(pk=Traceid).trace
-    print(rTrace)
-    DTW = dtw(rTrace,points)
-    print(DTW)
-    new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
-    new_Trace.save()
-    response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
-    return JsonResponse(data=response,safe=False)
-
-
 def cal_ang(point_1, point_2, point_3):
     """
     根据三点坐标计算夹角
@@ -81,9 +60,13 @@ def cal_ang(point_1, point_2, point_3):
         A=0
         C=0
     else:
-        A=math.degrees(math.acos((a*a-b*b-c*c)/(-2*b*c)))
-        B=math.degrees(math.acos((b*b-a*a-c*c)/(-2*a*c)))
-        C=math.degrees(math.acos((c*c-a*a-b*b)/(-2*a*b)))
+        if((b*b-a*a-c*c)/(-2*a*c)>1):
+            temp = 0.99999999999
+        elif((b*b-a*a-c*c)/(-2*a*c)<-1):
+            temp = -0.99999999999
+        else:
+            temp = (b*b-a*a-c*c)/(-2*a*c)
+        B=math.degrees(math.acos(temp))
     return B
 
 def clear(In):
@@ -106,7 +89,7 @@ def clear(In):
         Cos2 = math.cos(lat3) * math.cos(lat2) * math.cos(lng3 -lng2) + math.sin(lat2) * math.sin(lat3)
         dis2 = ER*math.acos(Cos2)
 
-        if(angle <= 30 and angle != 0):
+        if((angle <= 80 and angle != 0) or (dis1 >= 0.03 and dis2 >= 0.03)):
             continue
         else:
             out.append(In[i])
@@ -115,7 +98,7 @@ def clear(In):
 
 
 def linersmooth(In):
-    out = [{'latitude':0,'longitude':0} for x in range(0,len(In))]
+    out = [{'latitude':0,'longitude':0,'time':0} for x in range(0,len(In))]
     N = len(In)
     if(len(In) < 7):
         out = In
@@ -151,17 +134,38 @@ def linersmooth(In):
 
         out[N - 1]['longitude'] = ( 13.0 * In[N - 1]['longitude'] + 10.0 * In[N - 2]['longitude'] + 7.0 * In[N - 3]['longitude'] + 4 * In[N - 4]['longitude'] + In[N - 5]['longitude'] - 2 * In[N - 6]['longitude'] - 5 * In[N - 7]['longitude'] ) / 28.0
         
+        for i in range(0,N):
+            out[i]['time'] = In[i]['time']
+        
         return out
-
+def Get_Trace(request):
+    post_data = request.body.decode("utf-8")
+    post_data = json.loads(post_data)
+    open_id = post_data.get('open_id')
+    student_id = post_data.get('student_id')
+    points = post_data.get('points')
+    length = post_data.get('length')
+    time_cost = post_data.get('time_cost')
+    month = post_data.get('month')
+    day = post_data.get('day')
+    Traceid = post_data.get('id')
+    rTrace = runTrace.objects.get(pk=Traceid).trace
+    points = clear(points)
+    points = clear(points)
+    points = linersmooth(points)
+    points = linersmooth(points)
+    DTW = dtw(rTrace,points)
+    print(DTW)
+    new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
+    new_Trace.save()
+    response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)
 
 def draw(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     dataid = post_data.get('dataid')
     Trac = Trace.objects.get(pk=dataid).trace
-    Trac = clear(Trac)
-    Trac = linersmooth(Trac)
-    print(Trac)
     response=wrap_json_response(data=Trac,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
@@ -169,10 +173,7 @@ def draw2(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     dataid = post_data.get('dataid')
-    Trace = Trace.objects.get(pk=dataid).trace
-    Trace = clear(Trace)
-    Trace = linersmooth(Trace)
-    print(Trace)
+    Trace = runTrace.objects.get(pk=dataid).trace
     response=wrap_json_response(data=Trace,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
@@ -199,6 +200,9 @@ def ruTrace(request):
 def Trans(request):
     Oid = '5f166b4eaf2ec19d2082cea4'
     temp = Trace.objects.get(pk=Oid).trace
+    temp = clear(temp)
+    temp = linersmooth(temp)
+    temp = linersmooth(temp)
     new_run = runTrace(trace = temp)
     new_run.save()
     response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
