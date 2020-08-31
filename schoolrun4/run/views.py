@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse,FileResponse
 from django.views import View
 from . import models
-from .models import Trace,runTrace
+from .models import Trace,runTrace,TotalPost
 from utils.response import wrap_json_response,ReturnCode,CommonResponseMixin
 from django.core import serializers
 import json
@@ -149,14 +149,43 @@ def Get_Trace(request):
     month = post_data.get('month')
     day = post_data.get('day')
     Traceid = post_data.get('id')
-    rTrace = runTrace.objects.get(pk=Traceid).trace
-    points = clear(points)
-    points = clear(points)
-    points = linersmooth(points)
-    points = linersmooth(points)
-    DTW = dtw(rTrace,points)
-    print(DTW)
-    new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
+    data = {}
+    if not Trace.objects.filter(open_id = open_id,month = month,day = day):
+        data['is_post'] = False
+        rTrace = runTrace.objects.get(pk=Traceid).trace
+        DTW = dtw(rTrace,points)
+        print(DTW)
+        if(DTW <= 0.03 and length >= 2):
+            data['success'] = True
+            new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
+            new_Trace.save()
+            if not TotalPost.objects.filter(open_id = open_id):
+                total = 1
+                new_user=Totalpost(open_id=open_id,student_id=student_id,Total_time=total)
+                new_user.save()
+            else:
+                temp=Totalpost.objects.filter(open_id=open_id).first()
+                temptime=temp.Total_time
+                temp.Total_time=temptime+1
+                temp.save()
+        else:
+            data['success'] = False
+    else:
+        data['is_post'] = True
+    response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)
+
+def Get_Trace2(request):
+    post_data = request.body.decode("utf-8")
+    post_data = json.loads(post_data)
+    open_id = post_data.get('open_id')
+    student_id = post_data.get('student_id')
+    points = post_data.get('points')
+    length = post_data.get('length')
+    time_cost = post_data.get('time_cost')
+    month = post_data.get('month')
+    day = post_data.get('day')
+    new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day)
     new_Trace.save()
     response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)

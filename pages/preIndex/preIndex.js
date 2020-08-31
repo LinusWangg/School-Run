@@ -16,6 +16,7 @@ Page({
     hiddeinfo:true,
     stdid:'',
     time:0,
+    runtime:0,
     openid:'',
     code:'',
     imgUrls: [
@@ -100,6 +101,7 @@ Page({
               app.globalData.stdid = res.data.data.student_id
               app.globalData.is_register = res.data.data.is_register
               app.globalData.Totaltime = res.data.data.time
+              app.globalData.runTotaltime = res.data.data.runtime
               that.setData({
                 hiddeinfo: false,
                 stdid: res.data.data.student_id,
@@ -108,6 +110,7 @@ Page({
                 isOn: res.data.data.is_register,
                 school: res.data.data.school,
                 name: res.data.data.name,
+                runtime: res.data.data.runtime,
               })
               
               var student = res.data.data

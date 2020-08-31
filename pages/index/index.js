@@ -62,6 +62,7 @@ Page({
           school: "未知学校",
           student_id: "未知ID",
           time: 0,
+          runtime: 0,
         };
         that.setData({
           student:student,
@@ -70,6 +71,7 @@ Page({
       }
     } catch (e) {
       student.time = 0,
+      student.runtime = 0,
       that.setData({
         student:student,
         isLogIn:false,
@@ -96,6 +98,15 @@ Page({
         wx.setStorageSync('student-info', student);
         console.log("setStorage Success");
       }
+      if(app.globalData.runsignToday==true&&app.globalData.runsignPlusToday==false)
+      {
+        student = wx.getStorageSync('student-info');
+        student.runtime = student.runtime+1;
+        app.globalData.runsignPlusToday=true;
+        app.globalData.runsignToday=false;
+        wx.setStorageSync('student-info', student);
+        console.log("setStorage Success");
+      }
       student = wx.getStorageSync('student-info');
       if(student) {
         perSign = parseInt(100*student.time/total);
@@ -112,6 +123,7 @@ Page({
           school: "未知学校",
           student_id: "未知ID",
           time: 0,
+          runtime: 0,
         };
         that.setData({
           student:student,
@@ -120,6 +132,7 @@ Page({
       }
     } catch (e) {
       student.time = 0;
+      student.runtime = 0;
       that.setData({
         student:student,
         isLogIn:false,

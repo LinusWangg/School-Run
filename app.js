@@ -70,6 +70,7 @@ App({
     submit:false,
     openid:"",
     Totaltime:0,
+    runTotaltime:0,
     code:'',
     ip:'',
     school:'',
@@ -79,5 +80,7 @@ App({
     signPlusToday:false,
     tempid:0,
     tempid2:0,
+    runsignToday:false,
+    runsignPlusToday:false,
   }
 })

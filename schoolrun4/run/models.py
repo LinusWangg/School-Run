@@ -16,3 +16,8 @@ class Trace(mongoengine.Document):
 
 class runTrace(mongoengine.Document):
     trace = mongoengine.ListField(unique=True)
+
+class TotalPost(models.Model):
+    open_id = models.CharField(max_length=32,unique=True)
+    student_id = models.CharField(max_length=32,unique=True)
+    Total_time = models.IntegerField()

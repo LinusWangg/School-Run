@@ -81,6 +81,7 @@ Page({
               })
               app.globalData.flag=1
               app.globalData.signToday=true
+              app.globalData.signPlusToday=false
             }
             else if (res.data.data.is_post == false && res.data.data.result == false)
             {
@@ -99,6 +100,7 @@ Page({
                 duration: 2000
               })
               app.globalData.signToday = true
+              app.globalData.signPlusToday=true
             }
           }
         })

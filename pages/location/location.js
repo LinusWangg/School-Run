@@ -219,7 +219,35 @@ Page({
               'content-type': 'application/json'
             },
             success: function (res) {
-              console.log(that.time)
+              if(res.data.data.is_post==false && res.data.data.success==true)
+              {
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+                app.globalData.signToday=true
+                app.globalData.signPlusToday=false
+              }
+              else if(res.data.data.is_post==false && res.data.data.success==false)
+              {
+                wx.showToast({
+                  title: '打卡不规范',
+                  icon: 'failure',
+                  duration: 2000
+                })
+                app.globalData.signToday = false
+              }
+              else if(res.data.data.is_post==true)
+              {
+                wx.showToast({
+                  title: '今日已打卡过',
+                  icon: 'success',
+                  duration: 2000
+                })
+                app.globalData.signToday = true
+                app.globalData.signPlusToday=true
+              }
             }
           })
           countTooGetLocation = 0;

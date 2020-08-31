@@ -40,6 +40,10 @@
           <text>早操打卡次数</text>
           <text type='text' class="text-style">{{time}}</text>
         </view>
+        <view class="user-name">
+          <text>体能打卡次数</text>
+          <text type='text' class="text-style">{{runtime}}</text>
+        </view>
       </block>
 </view>
 <modal hidden="{{hiddenmodalput}}" title="完善资料" confirm-text="提交" cancel-text="取消" bindcancel="cancelM" bindconfirm="confirmM">
@@ -54,5 +58,7 @@
   <text>{{openid}}\n</text>
   <text>早操打卡次数:</text>
   <text>{{time}}\n</text>
+  <text>体能打卡次数:</text>
+  <text>{{runtime}}\n</text>
 </modal>
 
