@@ -8,7 +8,8 @@
     "pages/checkroute/checkroute",
     "pages/routeDraw/routeDraw",
     "pages/routeSel/routeSel",
-    "pages/routeDraw2/routeDraw2"
+    "pages/routeDraw2/routeDraw2",
+    "pages/Notice/Notice"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -26,6 +27,12 @@
         "text": "wywnb",
         "iconPath": "iconPicture/home_before.png",
         "selectedIconPath": "iconPicture/home.png"
+      },
+      {
+        "pagePath": "pages/Notice/Notice",
+        "text": "wywxb",
+        "iconPath": "iconPicture/Table.jpg",
+        "selectedIconPath": "iconPicture/Table.jpg"
       },
       {
         "pagePath": "pages/logs/logs",
