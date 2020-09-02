@@ -44,12 +44,12 @@
       </view>
 
       <view class="row">
-        <text>0</text>
+        <text>{{student.runtime}}</text>
         <text>体能</text>
       </view>
 
       <view class="row">
-        <circle draw='circwewle2' per = '0' r = '50'/>
+        <circle draw='circwewle2' per = '{{runperSign}}' r = '50'/>
       </view>
 
     </view>

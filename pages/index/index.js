@@ -13,6 +13,7 @@ var date = new Date(timestamp);
 var total = date.getMonth()+1 <= 6 ? 30:20;
 
 var perSign = 0;
+var runperSign = 0;
 
 Page({
   ...Canvas.options,
@@ -23,6 +24,7 @@ Page({
     student: {},
     isLogIn: false,
     perSign:0,
+    runperSign:0,
   },
 
   //事件处理函数 
@@ -46,6 +48,7 @@ Page({
     try {
       student = wx.getStorageSync('student-info');
       if(student) {
+        runperSign = parseInt(100*student.runtime/total);
         perSign = parseInt(100*student.time/total);
         app.globalData.openid = student.open_id;
         app.globalData.stdid = student.student_id;
@@ -53,6 +56,7 @@ Page({
           student:student,
           isLogIn:true,
           perSign:perSign,
+          runperSign:runperSign,
         });
       } else {
         student = {
@@ -110,10 +114,12 @@ Page({
       student = wx.getStorageSync('student-info');
       if(student) {
         perSign = parseInt(100*student.time/total);
+        runperSign = parseInt(100*student.runtime/total);
         that.setData({
           student:student,
           isLogIn:true,
           perSign:perSign,
+          runperSign:runperSign,
         })
       } else {
         student = {

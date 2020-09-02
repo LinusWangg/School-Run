@@ -161,17 +161,36 @@ def Get_Trace(request):
             new_Trace.save()
             if not TotalPost.objects.filter(open_id = open_id):
                 total = 1
-                new_user=Totalpost(open_id=open_id,student_id=student_id,Total_time=total)
+                new_user=TotalPost(open_id=open_id,student_id=student_id,Total_time=total)
                 new_user.save()
             else:
-                temp=Totalpost.objects.filter(open_id=open_id).first()
+                temp=TotalPost.objects.filter(open_id=open_id).first()
                 temptime=temp.Total_time
                 temp.Total_time=temptime+1
                 temp.save()
         else:
             data['success'] = False
     else:
-        data['is_post'] = True
+        #data['is_post'] = True
+        data['is_post'] = False
+        rTrace = runTrace.objects.get(pk=Traceid).trace
+        DTW = dtw(rTrace,points)
+        print(DTW)
+        if(DTW <= 0.03 and length >= 2):
+            data['success'] = True
+            new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
+            new_Trace.save()
+            if not TotalPost.objects.filter(open_id = open_id):
+                total = 1
+                new_user=TotalPost(open_id=open_id,student_id=student_id,Total_time=total)
+                new_user.save()
+            else:
+                temp=TotalPost.objects.filter(open_id=open_id).first()
+                temptime=temp.Total_time
+                temp.Total_time=temptime+1
+                temp.save()
+        else:
+            data['success'] = False
     response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
