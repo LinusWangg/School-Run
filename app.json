@@ -9,7 +9,8 @@
     "pages/routeDraw/routeDraw",
     "pages/routeSel/routeSel",
     "pages/routeDraw2/routeDraw2",
-    "pages/Notice/Notice"
+    "pages/Notice/Notice",
+    "pages/content/content"
   ],
   "window": {
     "backgroundTextStyle": "light",

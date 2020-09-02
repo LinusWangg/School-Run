@@ -80,6 +80,7 @@ App({
     signPlusToday:false,
     tempid:0,
     tempid2:0,
+    contentid:0,
     runsignToday:false,
     runsignPlusToday:false,
   }

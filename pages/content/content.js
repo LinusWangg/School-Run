@@ -1,4 +1,4 @@
-// pages/Notice/Notice.js
+// pages/content/content.js
 var app = getApp();
 Page({
 
@@ -6,27 +6,14 @@ Page({
    * 页面的初始数据
    */
   data: {
-    content_list: [],
+    content:[],
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    wx.request({
-      url: app.globalData.serverUrl+'forum/content_list',
-      method: 'POST',
-      header: {
-        'content-type': 'application/json'
-      },
-      success:function(res){
-        console.log(res.data.data)
-        that.setData({
-          content_list: res.data.data,
-        })
-      },
-    })
+    app.globalData.contentid = options.id
   },
 
   /**
@@ -40,7 +27,23 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-
+    var that = this
+    wx.request({
+      url: app.globalData.serverUrl+'forum/content',
+      method: 'POST',
+      data:{
+        contentid : app.globalData.contentid
+      },
+      header: {
+        'content-type': 'application/json'
+      },
+      success:function(res){
+        console.log(res.data.data)
+        that.setData({
+          content: res.data.data,
+        })
+      },
+    })
   },
 
   /**

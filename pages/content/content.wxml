@@ -1,0 +1,8 @@
+<!--pages/content/content.wxml-->
+<span>
+    {{content[1]}}
+    <wemark md="{{content[2]}}" link highlight type="wemark"></wemark>
+    {{content[3]}}
+    {{content[4]}}
+    {{content[5]}}
+  </span>
