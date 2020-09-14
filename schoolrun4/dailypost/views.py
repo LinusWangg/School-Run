@@ -35,7 +35,7 @@ def check(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     open_id = post_data.get('open_id')
-    student_id = post_data.get('student_id')
+    student_id = str(post_data.get('student_id'))
     month = post_data.get('month')
     day = post_data.get('day')
     hour = post_data.get('hour')
@@ -75,7 +75,7 @@ def check(request):
                 data['result']=True
                 ticks=time.time()
                 local_time=time.localtime(time.time())
-                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=local_time,month=month,day=day,latitude=latitude,longitude=longitude,ip=ip)
+                new_info=dailypost(open_id=open_id,student_id=student_id,month=month,day=day,latitude=latitude,longitude=longitude,ip=str(ip))
                 print('new info:openid:%s,student_id:%s'%(open_id,student_id))
                 new_info.save()
                 if not Totalpost.objects.filter(open_id=open_id):

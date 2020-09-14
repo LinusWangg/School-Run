@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse,JsonResponse,FileResponse
 from django.views import View
 from . import models
-from .models import Trace,runTrace,TotalPost
+from .models import Trace,base_trace,TotalPost
 from utils.response import wrap_json_response,ReturnCode,CommonResponseMixin
 from django.core import serializers
 import json
@@ -142,7 +142,7 @@ def Get_Trace(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     open_id = post_data.get('open_id')
-    student_id = post_data.get('student_id')
+    student_id = str(post_data.get('student_id'))
     points = post_data.get('points')
     length = post_data.get('length')
     time_cost = post_data.get('time_cost')
@@ -152,12 +152,12 @@ def Get_Trace(request):
     data = {}
     if not Trace.objects.filter(open_id = open_id,month = month,day = day):
         data['is_post'] = False
-        rTrace = runTrace.objects.get(pk=Traceid).trace
+        rTrace = base_trace.objects.get(pk=Traceid).trace
         DTW = dtw(rTrace,points)
         print(DTW)
         if(DTW <= 0.03 and length >= 2):
             data['success'] = True
-            new_Trace = Trace(trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
+            new_Trace = Trace(base_id = Traceid,trace = points,open_id = open_id,student_id = student_id,ip = get_ip_address(request),distance = length,time_cost = time_cost,month = month,day = day,DTW = DTW)
             new_Trace.save()
             if not TotalPost.objects.filter(open_id = open_id):
                 total = 1
@@ -173,7 +173,7 @@ def Get_Trace(request):
     else:
         #data['is_post'] = True
         data['is_post'] = False
-        rTrace = runTrace.objects.get(pk=Traceid).trace
+        rTrace = base_trace.objects.get(pk=Traceid).trace
         DTW = dtw(rTrace,points)
         print(DTW)
         if(DTW <= 0.03 and length >= 2):
@@ -198,7 +198,7 @@ def Get_Trace2(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     open_id = post_data.get('open_id')
-    student_id = post_data.get('student_id')
+    student_id = str(post_data.get('student_id'))
     points = post_data.get('points')
     length = post_data.get('length')
     time_cost = post_data.get('time_cost')
@@ -221,7 +221,7 @@ def draw2(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     dataid = post_data.get('dataid')
-    Trace = runTrace.objects.get(pk=dataid).trace
+    Trace = base_trace.objects.get(pk=dataid).trace
     response=wrap_json_response(data=Trace,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
@@ -229,7 +229,7 @@ def getmine(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     open_id = post_data.get('open_id')
-    student_id = post_data.get('student_id')
+    student_id = str(post_data.get('student_id'))
     Trace_list = []
     for i in Trace.objects.filter(student_id=student_id):
         Trace_list.append([json_util.dumps(i.id)[10:34],i.student_id,i.distance,i.month,i.day,i.DTW])
@@ -239,7 +239,7 @@ def getmine(request):
 
 def ruTrace(request):
     rTrace = []
-    for i in runTrace.objects.all():
+    for i in base_trace.objects.all():
         rTrace.append([json_util.dumps(i.id)[10:34]])
     print(rTrace)
     response=wrap_json_response(data=rTrace,code=ReturnCode.SUCCESS,message='ok')
@@ -251,7 +251,7 @@ def Trans(request):
     temp = clear(temp)
     temp = linersmooth(temp)
     temp = linersmooth(temp)
-    new_run = runTrace(trace = temp)
+    new_run = base_trace(trace = temp)
     new_run.save()
     response=wrap_json_response(code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
