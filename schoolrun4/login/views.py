@@ -78,7 +78,7 @@ def __authorize_by_code(request):
     post_data = json.loads(post_data)
     code = post_data.get('code')
     app_id = post_data.get('appid')
-    student_id = post_data.get('student_id')
+    student_id = str(post_data.get('student_id'))
     is_submit = post_data.get('is_submit')
     school = post_data.get('school')
     name = post_data.get('name')
