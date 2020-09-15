@@ -62,6 +62,7 @@ Page({
             student_id: app.globalData.stdid,
             month:month,
             day:day,
+            time:timestamp,
             hour:hour,
             minute:min,
             code:res.result,

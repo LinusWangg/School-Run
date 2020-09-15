@@ -214,6 +214,7 @@ Page({
               time_cost: total_micro_second,
               month: month,
               day: day,
+              time: timestamp,
             },
             header: {
               'content-type': 'application/json'

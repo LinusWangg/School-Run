@@ -12,7 +12,7 @@ import django.utils.timezone as timezone
 import hashlib
 import time
 from dailypost.models import Totalpost
-from run.models import TotalPost as TotalPost2
+from run.models import TotalPost2 
 # Create your views here.
 
 def already_authorized(request):

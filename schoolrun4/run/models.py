@@ -11,9 +11,10 @@ class Trace(mongoengine.Document):
     open_id = mongoengine.StringField(max_length=32)
     student_id = mongoengine.IntField(max_length=32)
     ip = mongoengine.StringField(default=' ')
-    month = mongoengine.IntField(default=0)
-    day = mongoengine.IntField(default=0)
+    post_time = mongoengine.IntField(default=0)
     DTW = mongoengine.FloatField(default=0)
+
+    meta = {'collection':'Trace', 'strict': False}
 
 class base_trace(mongoengine.Document):
     author = mongoengine.StringField(max_length=32)
@@ -21,7 +22,7 @@ class base_trace(mongoengine.Document):
     trace = mongoengine.ListField()
     _class = mongoengine.StringField()
 
-class TotalPost(mongoengine.Document):
+class TotalPost2(mongoengine.Document):
     open_id = mongoengine.StringField(max_length=32,unique=True)
     student_id = mongoengine.StringField(max_length=32,unique=True)
     Total_time = mongoengine.IntField(default=0)

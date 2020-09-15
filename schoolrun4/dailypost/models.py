@@ -7,12 +7,12 @@ import mongoengine
 class dailypost(mongoengine.Document):
     open_id = mongoengine.StringField(max_length=32)
     student_id = mongoengine.StringField(max_length=32)
-    post_time = mongoengine.DateTimeField(auto_now=True)
-    month = mongoengine.IntField(default=0)
-    day = mongoengine.IntField(default=0)
+    post_time = mongoengine.IntField(default=0)
     latitude = mongoengine.FloatField(default=0)
     longitude = mongoengine.FloatField(default=0)
     ip = mongoengine.StringField(default='')
+
+    meta = {'collection':'dailypost', 'strict': False}
 
 class Totalpost(mongoengine.Document):
     open_id = mongoengine.StringField(max_length=32,unique=True)
