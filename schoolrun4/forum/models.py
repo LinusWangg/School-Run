@@ -6,8 +6,10 @@ from mdeditor.fields import MDTextField
 
 # Create your models here.
 
-class Article(mongoengine.Document):
+class notice(mongoengine.Document):
     title = mongoengine.StringField(max_length=64)
     content = MDTextField()
-    createtime = mongoengine.DateTimeField(auto_now=True)
-    createman = mongoengine.StringField(max_length=32)
+    creattime = mongoengine.DateTimeField(auto_now=True)
+    author = mongoengine.StringField(max_length=32)
+    isValid = mongoengine.BooleanField(default=False)
+    _class = mongoengine.StringField()
