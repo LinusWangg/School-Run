@@ -227,8 +227,8 @@ Page({
                   icon: 'success',
                   duration: 2000
                 })
-                app.globalData.signToday=true
-                app.globalData.signPlusToday=false
+                app.globalData.runsignToday=true
+                app.globalData.runsignPlusToday=false
               }
               else if(res.data.data.is_post==false && res.data.data.success==false)
               {
@@ -237,7 +237,7 @@ Page({
                   icon: 'failure',
                   duration: 2000
                 })
-                app.globalData.signToday = false
+                app.globalData.runsignToday = false
               }
               else if(res.data.data.is_post==true)
               {
@@ -246,8 +246,8 @@ Page({
                   icon: 'success',
                   duration: 2000
                 })
-                app.globalData.signToday = true
-                app.globalData.signPlusToday=true
+                app.globalData.runsignToday = true
+                app.globalData.runsignPlusToday=true
               }
             }
           })
