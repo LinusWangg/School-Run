@@ -44,12 +44,12 @@
       </view>
 
       <view class="row">
-        <text>0</text>
+        <text>{{student.runtime}}</text>
         <text>体能</text>
       </view>
 
       <view class="row">
-        <circle draw='circwewle2' per = '0' r = '50'/>
+        <circle draw='circwewle2' per = '{{runperSign}}' r = '50'/>
       </view>
 
     </view>
@@ -80,6 +80,13 @@
   <view class="contact-view">
     <button open-type="contact">
       联系客服
+    </button>
+  </view>
+  <view class="contact-view">
+    <button>
+      <navigator url="/pages/checkroute/checkroute">
+      查询线路
+      </navigator>
     </button>
   </view>
   <!-- 官方微信客服结束 -->

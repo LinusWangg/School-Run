@@ -19,10 +19,20 @@ import login
 import dailypost
 from django.views.static import serve
 from django.conf.urls import url
+from . import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    #url(r'^mongonaut/', include('mongonaut.urls')),
     path('login/',include('login.urls')),
     path('daily/',include('dailypost.urls')),
+    path('run/',include('run.urls')),
+    path('forum/',include('forum.urls')),
     url(r'^media/qrcode/(?P<path>.*)$', serve, {'document_root':'G:\School-Run\schoolrun4\media\qrcode'}),
+    url(r'mdeditor/', include('mdeditor.urls')),
 ]
+
+if settings.DEBUG:
+    # static files (images, css, javascript, etc.)
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

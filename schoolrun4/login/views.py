@@ -12,6 +12,7 @@ import django.utils.timezone as timezone
 import hashlib
 import time
 from dailypost.models import Totalpost
+from run.models import TotalPost2 
 # Create your views here.
 
 def already_authorized(request):
@@ -77,7 +78,7 @@ def __authorize_by_code(request):
     post_data = json.loads(post_data)
     code = post_data.get('code')
     app_id = post_data.get('appid')
-    student_id = post_data.get('student_id')
+    student_id = str(post_data.get('student_id'))
     is_submit = post_data.get('is_submit')
     school = post_data.get('school')
     name = post_data.get('name')
@@ -167,6 +168,7 @@ def getinfo(request):
 
     user=User.objects.filter(open_id=openid).first()
     total=Totalpost.objects.filter(open_id=openid).first()
+    runtotal=TotalPost2.objects.filter(open_id=openid).first()
 
     if not user:
         data={}
@@ -192,6 +194,12 @@ def getinfo(request):
             data['school']=user.school
             data['name']=user.name
             data['time']=0
+        
+        if runtotal:
+            data['runtime']=runtotal.Total_time
+
+        else:
+            data['runtime']=0
         
         response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
         return JsonResponse(data=response,safe=False)

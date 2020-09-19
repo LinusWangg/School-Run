@@ -25,7 +25,7 @@ SECRET_KEY = '45(j9avtw8tnf*q*b+%p6&s9)eswjv+s7+#jcjz124acuj@*h8'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["schoolrun.qinmaye.top","47.101.142.119","localhost","127.0.0.1","0.0.0.0"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -41,6 +41,9 @@ INSTALLED_APPS = [
     'schoolrun4',
     'login',
     'dailypost',
+    'run',
+    'forum',
+    'mdeditor',
 ]
 
 MIDDLEWARE = [
@@ -83,12 +86,19 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
 		'NAME': 'personalinfo',
 		'USER': 'root',
-		'PASSWORD': '123456',
+		'PASSWORD': '#include',
 		'HOST': '127.0.0.1',
 		'PORT': 3306,
         'OPTIONS': {'charset': 'utf8mb4'},
+    },
+    'personalinfo': {
+        'ENGINE':None,
     }
 }
+
+import mongoengine
+
+conn = mongoengine.connect("personalinfo")
 
 
 # Password validation
@@ -128,8 +138,11 @@ USE_TZ = False
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 
-STATIC_ROOT = "/var/School-Run/schoolrun4/static/"
 STATIC_URL = '/static/'
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, "static")
+# ]
+STATIC_ROOT = os.path.join(BASE_DIR, "static")
 
 WX_APP_SECRET = '66d0351912116ab0371252bd0a088777'
 

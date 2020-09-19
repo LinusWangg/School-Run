@@ -1,0 +1,13 @@
+<!--pages/Notice/Notice.wxml-->
+<view wx:for="{{content_list}}">
+  <span>
+    {{item[1]}}
+    {{item[3]}}
+    {{item[4]}}
+    <button class='btn'>
+    <navigator url="/pages/content/content?id={{item[0]}}">
+    查看全文
+    </navigator>
+    </button>
+  </span>
+</view>

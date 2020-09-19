@@ -13,6 +13,7 @@ var date = new Date(timestamp);
 var total = date.getMonth()+1 <= 6 ? 30:20;
 
 var perSign = 0;
+var runperSign = 0;
 
 Page({
   ...Canvas.options,
@@ -23,6 +24,7 @@ Page({
     student: {},
     isLogIn: false,
     perSign:0,
+    runperSign:0,
   },
 
   //事件处理函数 
@@ -46,11 +48,15 @@ Page({
     try {
       student = wx.getStorageSync('student-info');
       if(student) {
+        runperSign = parseInt(100*student.runtime/total);
         perSign = parseInt(100*student.time/total);
+        app.globalData.openid = student.open_id;
+        app.globalData.stdid = student.student_id;
         that.setData({
           student:student,
           isLogIn:true,
           perSign:perSign,
+          runperSign:runperSign,
         });
       } else {
         student = {
@@ -60,6 +66,7 @@ Page({
           school: "未知学校",
           student_id: "未知ID",
           time: 0,
+          runtime: 0,
         };
         that.setData({
           student:student,
@@ -68,6 +75,7 @@ Page({
       }
     } catch (e) {
       student.time = 0,
+      student.runtime = 0,
       that.setData({
         student:student,
         isLogIn:false,
@@ -78,18 +86,40 @@ Page({
 
   onShow: function (options) {
     let that = this;
-
+    console.log('onshow');
     that.setData({
       total:total,
     });
     try {
+      console.log(app.globalData.signToday);
+      console.log(app.globalData.signPlusToday);
+      if(app.globalData.signToday==true&&app.globalData.signPlusToday==false)
+      {
+        student = wx.getStorageSync('student-info');
+        student.time = student.time+1;
+        app.globalData.signPlusToday=true;
+        app.globalData.signToday=false;
+        wx.setStorageSync('student-info', student);
+        console.log("setStorage Success");
+      }
+      if(app.globalData.runsignToday==true&&app.globalData.runsignPlusToday==false)
+      {
+        student = wx.getStorageSync('student-info');
+        student.runtime = student.runtime+1;
+        app.globalData.runsignPlusToday=true;
+        app.globalData.runsignToday=false;
+        wx.setStorageSync('student-info', student);
+        console.log("setStorage Success");
+      }
       student = wx.getStorageSync('student-info');
       if(student) {
         perSign = parseInt(100*student.time/total);
+        runperSign = parseInt(100*student.runtime/total);
         that.setData({
           student:student,
           isLogIn:true,
           perSign:perSign,
+          runperSign:runperSign,
         })
       } else {
         student = {
@@ -99,6 +129,7 @@ Page({
           school: "未知学校",
           student_id: "未知ID",
           time: 0,
+          runtime: 0,
         };
         that.setData({
           student:student,
@@ -107,6 +138,7 @@ Page({
       }
     } catch (e) {
       student.time = 0;
+      student.runtime = 0;
       that.setData({
         student:student,
         isLogIn:false,

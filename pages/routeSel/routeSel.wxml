@@ -1,0 +1,15 @@
+<view wx:for="{{runTrace}}">
+  <span>
+    {{index+1}}:
+    <button class='btn'>
+    <navigator url="/pages/routeDraw2/routeDraw2?id={{item[0]}}">
+    预览
+    </navigator>
+    </button>
+    <button class='btn'>
+    <navigator url="/pages/location/location?id={{item[0]}}">
+    开始跑步
+    </navigator>
+    </button>
+  </span>
+</view>

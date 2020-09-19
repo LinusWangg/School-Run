@@ -63,17 +63,25 @@ App({
 
   globalData: {
     userinfo: {},
-    serverUrl: "https://schoolrun.qinmaye.top/",
+    serverUrl: "https://www.wywnb.xyz/",
     apiVersion: "login",
     appid:"wxabe5a4b8a9c68151",
     stdid:"",
     submit:false,
     openid:"",
     Totaltime:0,
+    runTotaltime:0,
     code:'',
     ip:'',
     school:'',
     name:'',
     flag:0,
+    signToday:false,
+    signPlusToday:false,
+    tempid:0,
+    tempid2:0,
+    contentid:0,
+    runsignToday:false,
+    runsignPlusToday:false,
   }
 })

@@ -1,5 +1,5 @@
 // pages/location/location.js
-
+var app = getApp();
 var countTooGetLocation = 0;
 var total_micro_second = 0;
 var startRun = 0;
@@ -7,11 +7,7 @@ var totalSecond = 0;
 var oriMeters = 0.0;
 
 var oriPoints = [];
-var smoothPoints = [];
-
-var accuracyList = [];
-
-
+var id = 0;
 
 /**
  *毫秒级倒计时
@@ -124,17 +120,18 @@ Page({
     time: "0:00:00",
     polyline: [{
       points: oriPoints,
-    color:"#00FF00",
-    width: 8,
-    start: true,
-    dottedLine: false
-  }],
+      color:"#00FF00",
+      width: 8,
+      start: true,
+      dottedLine: false
+    }],
   },
-  onLoad: function() {
+  onLoad: function(options) {
     // 页面初始化 options为页面跳转所带来的参数
     this.getLocation()
-    // console.log("onLoad")
-    // console.log(startRun)
+    id = options.id;
+    console.log("onLoad")
+    console.log(startRun)
     count_down(this);
     this.setData({
       start: false,
@@ -220,25 +217,79 @@ Page({
   clearRun: function () {
     startRun = 0;
     var that = this;
+    var timestamp = Date.parse(new Date());
 
+    //获取当前时间  
+    var date = new Date(timestamp);
+    //月  
+    var month = (date.getMonth() + 1 < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1);
+    //日  
+    var day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
     wx.showModal({
       title: '提示',
       content: '是否结束并提交？',
       confirmText: '确定',
       cancelText: '取消',
-
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定');
           console.log("精度列表",accuracyList);
           count_down(this);
+          wx.request({
+            url: app.globalData.serverUrl + 'run' + '/Trace',
+            method: 'POST',
+            data: {
+              id: id,
+              open_id: app.globalData.openid,
+              student_id: app.globalData.stdid,
+              points: oriPoints,
+              length: oriMeters,
+              time_cost: total_micro_second,
+              month: month,
+              day: day,
+              time: timestamp,
+            },
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              if(res.data.data.is_post==false && res.data.data.success==true)
+              {
+                wx.showToast({
+                  title: '成功',
+                  icon: 'success',
+                  duration: 2000
+                })
+                app.globalData.runsignToday=true
+                app.globalData.runsignPlusToday=false
+              }
+              else if(res.data.data.is_post==false && res.data.data.success==false)
+              {
+                wx.showToast({
+                  title: '打卡不规范',
+                  icon: 'failure',
+                  duration: 2000
+                })
+                app.globalData.runsignToday = false
+              }
+              else if(res.data.data.is_post==true)
+              {
+                wx.showToast({
+                  title: '今日已打卡过',
+                  icon: 'success',
+                  duration: 2000
+                })
+                app.globalData.runsignToday = true
+                app.globalData.runsignPlusToday=true
+              }
+            }
+          })
           countTooGetLocation = 0;
           total_micro_second = 0;
           startRun = 0;
           totalSecond = 0;
           oriMeters = 0.0;
           oriPoints = [];
-
           that.setData({
             start: false,
             clock: '',
@@ -305,7 +356,8 @@ Page({
 
         var newPoint = {
           latitude: res.latitude,
-          longitude: res.longitude
+          longitude: res.longitude,
+          time: Date.parse(new Date()),
         }
 
         var oriMarkers = that.data.markers;

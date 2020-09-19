@@ -4,7 +4,13 @@
     "pages/logs/logs",
     "pages/location/location",
     "pages/preIndex/preIndex",
-    "pages/logup/logup"
+    "pages/logup/logup",
+    "pages/checkroute/checkroute",
+    "pages/routeDraw/routeDraw",
+    "pages/routeSel/routeSel",
+    "pages/routeDraw2/routeDraw2",
+    "pages/Notice/Notice",
+    "pages/content/content"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -24,13 +30,19 @@
         "selectedIconPath": "iconPicture/home.png"
       },
       {
+        "pagePath": "pages/Notice/Notice",
+        "text": "wywxb",
+        "iconPath": "iconPicture/Table.jpg",
+        "selectedIconPath": "iconPicture/Table.jpg"
+      },
+      {
         "pagePath": "pages/logs/logs",
         "text": "wywsb",
         "iconPath": "iconPicture/scan_before.png",
         "selectedIconPath": "iconPicture/scan.png"
       },
       {
-        "pagePath": "pages/location/location",
+        "pagePath": "pages/routeSel/routeSel",
         "text": "wywwd",
         "iconPath": "iconPicture/location_before.png",
         "selectedIconPath": "iconPicture/location.png"
