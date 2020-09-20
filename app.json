@@ -25,27 +25,27 @@
     "list": [
       {
         "pagePath": "pages/index/index",
-        "text": "wywnb",
-        "iconPath": "iconPicture/home_before.png",
-        "selectedIconPath": "iconPicture/home.png"
+        "text": "主页",
+        "iconPath": "/resources/icon/icon_index_grey.png",
+        "selectedIconPath": "/resources/icon/icon_index_black.png"
       },
       {
         "pagePath": "pages/Notice/Notice",
-        "text": "wywxb",
-        "iconPath": "iconPicture/Table.jpg",
-        "selectedIconPath": "iconPicture/Table.jpg"
+        "text": "通知",
+        "iconPath": "/resources/icon/icon_message_grey.png",
+        "selectedIconPath": "/resources/icon/icon_message_black.png"
       },
       {
         "pagePath": "pages/logs/logs",
-        "text": "wywsb",
-        "iconPath": "iconPicture/scan_before.png",
-        "selectedIconPath": "iconPicture/scan.png"
+        "text": "打卡",
+        "iconPath": "/resources/icon/icon_scan_grey.png",
+        "selectedIconPath": "/resources/icon/icon_scan_black.png"
       },
       {
         "pagePath": "pages/routeSel/routeSel",
-        "text": "wywwd",
-        "iconPath": "iconPicture/location_before.png",
-        "selectedIconPath": "iconPicture/location.png"
+        "text": "体能",
+        "iconPath": "/resources/icon/icon_sport_grey.png",
+        "selectedIconPath": "/resources/icon/icon_sport_black.png"
       }
     ],
     "color": "#8f8f8f",

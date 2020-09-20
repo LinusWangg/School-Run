@@ -1,6 +1,6 @@
 {
   "usingComponents": {
-    "wemark": "../wemark/wemark"
+    "wemark": "/wemark/wemark"
   },
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",
