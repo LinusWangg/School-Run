@@ -15,15 +15,23 @@ Page({
   onLoad: function (options) {
     var that = this
     wx.request({
-      url: app.globalData.serverUrl+'forum/content_list',
+      url: app.globalData.serverUrl + 'forum/content_list',
       method: 'POST',
       header: {
         'content-type': 'application/json'
       },
-      success:function(res){
-        console.log(res.data.data)
+      success: function (res) {
+        var data = res.data.data;
+        if (data) {
+          for (var i = 0; i < data.length; i++) {
+            data[i][3] = data[i][3].slice(0, 10);
+          }
+          console.log(data);
+        } else {
+          data = null;
+        }
         that.setData({
-          content_list: res.data.data,
+          content_list: data,
         })
       },
     })
@@ -76,5 +84,24 @@ Page({
    */
   onShareAppMessage: function () {
 
-  }
+  },
+
+  /** 下拉刷新 **/
+  onPullDownRefresh() {
+    wx.stopPullDownRefresh();
+  },
+
+  showModal(e) {
+    console.log(e);
+    this.setData({
+      modalName: e.currentTarget.dataset.target,
+      title: e.currentTarget.dataset.title,
+      content: e.currentTarget.dataset.content,
+    })
+  },
+  hideModal(e) {
+    this.setData({
+      modalName: null
+    })
+  },
 })
