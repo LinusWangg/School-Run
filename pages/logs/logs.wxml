@@ -1,5 +1,30 @@
 <!--logs.wxml-->
-<view> 
- <button bindtap="click">扫描二维码</button> 
- <button bindtap='test'>Test</button>
+<view class="contain">
+  <block wx:if="{{tips == -1}}">
+    <van-empty class="custom-image" image="/resources/icon/earth.png" description="打卡尚未开始，倒计时~" />
+    <view class="count-down-contain">
+      <van-count-down use-slot class="count-down" time="{{ time }}" bind:change="onChange">
+        <text class="item-first bg-gradual-green">{{ timeData.hours }}</text>
+        <text class="item bg-gradual-green">{{ timeData.minutes }}</text>
+        <text class="item bg-gradual-green">{{ timeData.seconds }}</text>
+      </van-count-down>
+    </view>
+  </block>
+  <block wx:elif="{{tips == 0}}">
+    <van-empty class="custom-image" image="/resources/icon/earth.png" description="点击按钮打卡~">
+      <van-button round size="large" color="linear-gradient(45deg, #39b54a, #8dc63f)">
+        扫码打卡
+      </van-button>
+    </van-empty>
+  </block>
+  <block wx:else>
+    <van-empty class="custom-image" image="/resources/icon/earth.png" description="今日打卡结束，下次打卡倒计时~" />
+    <view class="count-down-contain">
+      <van-count-down use-slot class="count-down" time="{{ time }}" bind:change="onChange">
+        <text class="item-first bg-gradual-green">{{ timeData.hours }}</text>
+        <text class="item bg-gradual-green">{{ timeData.minutes }}</text>
+        <text class="item bg-gradual-green">{{ timeData.seconds }}</text>
+      </van-count-down>
+    </view>
+  </block>
 </view>
