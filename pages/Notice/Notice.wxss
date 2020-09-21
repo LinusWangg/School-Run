@@ -1,3 +1,7 @@
 /* pages/Notice/Notice.wxss */
 @import "/colorui/main.wxss";
 @import "/colorui/icon.wxss";
+
+.contain {
+  margin-top: 200rpx;
+}

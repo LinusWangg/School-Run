@@ -1,4 +1,8 @@
 {
   "navigationBarTitleText": "早操打卡",
-  "usingComponents": {}
+  "usingComponents": {
+    "van-empty": "/miniprogram_npm/vant-weapp/empty/index",
+    "van-button": "/miniprogram_npm/vant-weapp/button/index",
+    "van-count-down": "/miniprogram_npm/vant-weapp/count-down/index"
+  }
 }

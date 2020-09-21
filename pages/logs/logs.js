@@ -2,6 +2,7 @@
 var app = getApp();
 //使用MD5进行加密
 var utilMd5 = require('../../utils/md5.js');
+var timestamp;
 
 Page({
   data: {
@@ -10,14 +11,43 @@ Page({
     flag: false,
     latitude: 0,
     longitude: 0,
+    time: 24 * 60 * 60 * 1000,
+    timeData: {},
+    tips: 0,
+
   },
 
   onLoad: function () {
-    console.log('onLoad')
+    var that = this;
+    var tips = "";
+    console.log('onLoad');
+    var now = new Date();
+    timestamp = Date.parse(now);
+    now.setHours(6, 0, 0, 0);
+    var start_time = Date.parse(now);
+    now.setHours(8, 0, 0, 0);
+    var end_time = Date.parse(now);
+    if(timestamp >= start_time && timestamp <= end_time) {
+      tips = 0;
+      timestamp = end_time - timestamp;
+    }
+    else if(timestamp < start_time) {
+      tips = -1;
+      timestamp = start_time - timestamp;
+    }
+    else {
+      tips = 1;
+      timestamp = start_time + 24 * 3600 * 1000 - timestamp;
+    }
+    that.setData({
+      time: timestamp,
+      tips: tips
+    })
   },
+
   click: function () {
     var that = this;
-    var timestamp=Date.parse(new Date());
+    timestamp=Date.parse(new Date());
     var n=timestamp;
     var date=new Date(n);
     var m=date.getMinutes();
@@ -122,4 +152,13 @@ Page({
     }
   })
   },
+
+  onChange(e) {
+    var hours = e.detail.hours < 10 ? '0' + e.detail.hours : '' + e.detail.hours;
+    var minutes = e.detail.minutes < 10 ? '0' + e.detail.minutes : '' + e.detail.minutes;
+    var seconds = e.detail.seconds < 10 ? '0' + e.detail.seconds : '' + e.detail.seconds;
+    this.setData({
+      timeData: {hours, minutes, seconds}
+    });
+  }
 })

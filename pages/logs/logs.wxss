@@ -1,6 +1,51 @@
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
 .button{
   width:50%;
   height:25%;
   margin-left:25%;
   margin-bottom:37.5%;
+}
+
+.contain {
+  margin-top: 200rpx;
+}
+
+.item {
+  display: inline-block;
+  width: 80rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+  color: #fff;
+  font-size: 28px;
+  text-align: center;
+  background-color: #1989fa;
+  border-radius: 15rpx;
+  padding-top: 20rpx;
+}
+
+.item-first {
+  display: inline-block;
+  width: 80rpx;
+  height: 60rpx;
+  margin-left: 235rpx;
+  color: #fff;
+  font-size: 28px;
+  text-align: center;
+  background-color: #1989fa;
+  border-radius: 15rpx;
+  padding-top: 20rpx;
+}
+.count-down-contain {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.item-white {
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
 }
