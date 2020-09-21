@@ -9,12 +9,11 @@
     "pages/routeDraw/routeDraw",
     "pages/routeSel/routeSel",
     "pages/routeDraw2/routeDraw2",
-    "pages/Notice/Notice",
-    "pages/content/content"
+    "pages/Notice/Notice"
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "backgroundColor": "#ffffff",
+    "backgroundColor": "#000000",
     "navigationBarBackgroundColor": "#ffffff",
     "navigationBarTitleText": "wywnb",
     "navigationBarTextStyle": "black",
