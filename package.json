@@ -1,0 +1,23 @@
+{
+  "name": "school-run",
+  "version": "1.0.0",
+  "description": "a small program for school run",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LinusWangg/School-Run.git"
+  },
+  "keywords": [],
+  "author": "wywnb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LinusWangg/School-Run/issues"
+  },
+  "homepage": "https://github.com/LinusWangg/School-Run#readme",
+  "dependencies": {
+    "vant-weapp": "^0.5.28"
+  }
+}

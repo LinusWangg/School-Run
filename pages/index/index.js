@@ -25,6 +25,37 @@ Page({
     isLogIn: false,
     perSign:0,
     runperSign:0,
+    iconList: [{
+      icon: 'notificationfill',
+      color: 'green',
+      badge: 0,
+      name: '通知',
+      bindtap: 'jump_notice'
+    },{
+      icon: 'play_forward_fill',
+      color: 'green',
+      badge: 0,
+      name: '查询线路',
+      bindtap: 'jump_checkroute'
+    },{
+      icon: 'squarecheckfill',
+      color: 'green',
+      badge: 0,
+      name: '打卡',
+      bindtap: 'jump_logs'
+    },{
+      icon: 'activityfill',
+      color: 'green',
+      badge: 0,
+      name: '体能',
+      bindtap: 'jump_location'
+    },{
+      icon: 'infofill',
+      color: 'green',
+      badge: 0,
+      name: '信息',
+      bindtap: 'jump_info'
+    }],
   },
 
   //事件处理函数 
@@ -147,6 +178,11 @@ Page({
 
   },
 
+  /** 下拉刷新 **/
+  onPullDownRefresh () {
+    wx.stopPullDownRefresh();
+  },
+
   getUserInfo: function (e) {
     let that = this;
     console.log(e)
@@ -155,6 +191,36 @@ Page({
     that.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
+    })
+  },
+
+  jump_notice: function() {
+    wx.switchTab({
+      url: '/pages/Notice/Notice',
+    })
+  },
+
+  jump_checkroute: function() {
+    wx.navigateTo({
+      url: '/pages/checkroute/checkroute',
+    })
+  },
+
+  jump_logs: function() {
+    wx.switchTab({
+      url: '/pages/logs/logs',
+    })
+  },
+
+  jump_location: function() {
+    wx.switchTab({
+      url: '/pages/routeSel/routeSel',
+    })
+  },
+
+  jump_info: function() {
+    wx.navigateTo({
+      url: '/pages/preIndex/preIndex',
     })
   }
 })

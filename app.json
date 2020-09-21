@@ -51,6 +51,7 @@
     "color": "#8f8f8f",
     "selectedColor": "#000000",
     "backgroundColor": "#ffffff",
+    "borderStyle": "black",
     "position": "bottom"
   },
 
