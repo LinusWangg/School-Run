@@ -5,7 +5,9 @@
     <view class="count-down-contain">
       <van-count-down use-slot class="count-down" time="{{ time }}" bind:change="onChange">
         <text class="item-first bg-gradual-green">{{ timeData.hours }}</text>
+        <text class="item-space">:</text>
         <text class="item bg-gradual-green">{{ timeData.minutes }}</text>
+        <text class="item-space">:</text>
         <text class="item bg-gradual-green">{{ timeData.seconds }}</text>
       </van-count-down>
     </view>
@@ -22,7 +24,9 @@
     <view class="count-down-contain">
       <van-count-down use-slot class="count-down" time="{{ time }}" bind:change="onChange">
         <text class="item-first bg-gradual-green">{{ timeData.hours }}</text>
+        <text class="item-space">:</text>
         <text class="item bg-gradual-green">{{ timeData.minutes }}</text>
+        <text class="item-space">:</text>
         <text class="item bg-gradual-green">{{ timeData.seconds }}</text>
       </van-count-down>
     </view>

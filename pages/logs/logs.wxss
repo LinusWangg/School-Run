@@ -24,16 +24,27 @@
   border-radius: 15rpx;
   padding-top: 20rpx;
 }
+.item-space {
+  display: inline-block;
+  width: 10rpx;
+  height: 60rpx;
+  margin-left: 20rpx;
+  color:  #8dc63f;
+  font-size: 30px;
+  text-align: center;
+  background-color: transparent;
+  padding-top: 20rpx;
+}
 
 .item-first {
   display: inline-block;
   width: 80rpx;
   height: 60rpx;
-  margin-left: 235rpx;
+  margin-left: 210rpx;
   color: #fff;
   font-size: 28px;
   text-align: center;
-  background-color: #1989fa;
+  background-color: linear-gradient(45deg, #39b54a, #8dc63f);
   border-radius: 15rpx;
   padding-top: 20rpx;
 }
