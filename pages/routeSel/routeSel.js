@@ -1,107 +1,77 @@
 var app = getApp();
 Page({
   data: {
-    runTrace: [],
+    isValid: false,
     cardCur: 0,
-    swiperList: [{
-      id: 0,
-      base_id: "0001",
-      map_setting:{
-        latitude: 23.099994,
-        longitude: 113.324520,
-        markers: [{
-          id: 1,
-          latitude: 23.099994,
-          longitude: 113.324520,
-          name: 'T.I.T 创意园'
-        }],
-        covers: [{
-          latitude: 23.099994,
-          longitude: 113.344520,
-          iconPath: '/image/location.png'
-          }, {
-          latitude: 23.099994,
-          longitude: 113.304520,
-          iconPath: '/image/location.png'
-        }],
-        scroll: false
-      }
-    }, {
-      id: 1,
-      base_id: "0002",
-      map_setting:{
-        latitude: 23.099994,
-        longitude: 113.324520,
-        markers: [{
-          id: 1,
-          latitude: 23.099994,
-          longitude: 113.324520,
-          name: 'T.I.T 创意园'
-        }],
-        covers: [{
-          latitude: 23.099994,
-          longitude: 113.344520,
-          iconPath: '/image/location.png'
-          }, {
-          latitude: 23.099994,
-          longitude: 113.304520,
-          iconPath: '/image/location.png'
-        }],
-        scroll: false
-      }
-    }, {
-      id: 2,
-      base_id: "0003",
-      map_setting:{
-        latitude: 23.099994,
-        longitude: 113.324520,
-        markers: [{
-          id: 1,
-          latitude: 23.099994,
-          longitude: 113.324520,
-          name: 'T.I.T 创意园'
-        }],
-        covers: [{
-          latitude: 23.099994,
-          longitude: 113.344520,
-          iconPath: '/image/location.png'
-          }, {
-          latitude: 23.099994,
-          longitude: 113.304520,
-          iconPath: '/image/location.png'
-        }],
-        scroll: false
-      }
-    }],
-    
+    idCur: "",
+    swiperList: [],
   },
   onShow: function () {
-    var that = this
+    var that = this;
+    var swiperList = [];
     wx.request({
-      url: app.globalData.serverUrl+'run/runTrace',
+      url: app.globalData.serverUrl + 'run/runTrace',
       method: 'POST',
       header: {
         'content-type': 'application/json'
       },
-      success:function(res){
-        that.setData({
-          runTrace:res.data.data,
-        })
+      success: function (res) {
+        var data = res.data.data;
+        if(data != null && data.length) {
+          for(var i = 0; i < data.length; i++) {
+            var tmp = {
+              id: swiperList.length,
+              base_id: data[i].id,
+              map_setting: {
+                latitude: 31.938116613805835,
+                longitude: 118.79199706295856,
+                scale: 15,
+                scroll: false,
+                polyline: [{
+                  points: data[i].trace,
+                  color: "",
+                  colorList: ["#4eb947", "#55ba46", "#5cbb45", "#63bd44", "#6abe43", "#71bf42", "#78c141", "#7fc240", "#86c43f"],
+                  width: 7,
+                  start: true,
+                  dottedLine: false,
+                  arrowLine: true
+                }],
+              }
+            };
+
+            swiperList.push(tmp);
+          }
+          that.setData({
+            swiperList: swiperList,
+            isValid: true,
+            idCur: swiperList[0].base_id
+          })
+        }
+        else {
+          that.setData({
+            isValid: false,
+          })
+        }
       },
     })
   },
   onReady: function (e) {
-    this.mapCtx = wx.createMapContext('myMap')
+    this.mapCtx = wx.createMapContext('myMap');
   },
   onLoad() {
-    console.log(this.data.swiperList)
     this.towerSwiper('swiperList');
+    if (this.data.swiperList != null && this.data.swiperList.length) {
+      this.setData({
+        idCur: this.data.swiperList[0].base_id
+      })
+    }
     // 初始化towerSwiper 传已有的数组名即可
   },
   // cardSwiper
   cardSwiper(e) {
     this.setData({
-      cardCur: e.detail.current
+      cardCur: e.detail.current,
+      idCur: this.data.swiperList[e.detail.current].base_id
     })
   },
   // towerSwiper
@@ -157,5 +127,11 @@ Page({
         swiperList: list
       })
     }
+  },
+  jump_location: function(event) {
+    console.log(event.currentTarget.dataset.id);
+    wx.navigateTo({
+      url: '/pages/location/location?id='+event.currentTarget.dataset.id,
+    })
   }
 })

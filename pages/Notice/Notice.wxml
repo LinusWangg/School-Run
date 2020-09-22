@@ -1,44 +1,45 @@
 <!--pages/Notice/Notice.wxml-->
-<view class="contain">
-	<!--有通知-->
-	<block wx:if="{{content_list}}">
-		<view wx:for="{{content_list}}">
-			<view class="cu-card article" bindtap="showModal" data-target="Modal" data-title="{{item[1]}}"
-				data-content="{{item[2]}}">
-				<view class="cu-item shadow">
-					<view class="title">
-						<view class="text-cut">{{item[1]}}</view>
-					</view>
-					<view class="content">
-						<view class="desc">
-							<view>
-								<view class="cu-tag bg-red light sm round">日期：{{item[3]}}</view>
-								<view class="cu-tag bg-green light sm round">作者：{{item[4]}}</view>
-							</view>
+
+<!--有通知-->
+<block wx:if="{{content_list}}">
+	<view wx:for="{{content_list}}">
+		<view class="cu-card article" bindtap="showModal" data-target="Modal" data-title="{{item[1]}}"
+			data-content="{{item[2]}}">
+			<view class="cu-item shadow">
+				<view class="title">
+					<view class="text-cut">{{item[1]}}</view>
+				</view>
+				<view class="content">
+					<view class="desc">
+						<view>
+							<view class="cu-tag bg-red light sm round">日期：{{item[3]}}</view>
+							<view class="cu-tag bg-green light sm round">作者：{{item[4]}}</view>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="cu-modal {{modalName=='Modal'?'show':''}}">
-			<view class="cu-dialog">
-				<view class="cu-bar bg-white justify-end">
-					<view class="content">{{title}}</view>
-					<view class="action" bindtap="hideModal">
-						<text class="cuIcon-close text-red"></text>
-					</view>
-				</view>
-				<view>
-					<wemark md="{{content}}" link highlight type="wemark"></wemark>
-				</view>
-				<view class="cu-bar bg-white">
-					<view class="action margin-0 flex-sub solid-left" bindtap="hideModal">我知道了</view>
+	</view>
+	<view class="cu-modal {{modalName=='Modal'?'show':''}}">
+		<view class="cu-dialog">
+			<view class="cu-bar bg-white justify-end">
+				<view class="content">{{title}}</view>
+				<view class="action" bindtap="hideModal">
+					<text class="cuIcon-close text-red"></text>
 				</view>
 			</view>
+			<view>
+				<wemark md="{{content}}" link highlight type="wemark"></wemark>
+			</view>
+			<view class="cu-bar bg-white">
+				<view class="action margin-0 flex-sub solid-left" bindtap="hideModal">我知道了</view>
+			</view>
 		</view>
-	</block>
-	<!--没通知-->
-	<block wx:else>
+	</view>
+</block>
+<!--没通知-->
+<block wx:else>
+	<view class="contain">
 		<van-empty class="custom-image" image="/resources/icon/custom-empty-image.png" description="还没有公告哦~" />
-	</block>
-</view>
+	</view>
+</block>
