@@ -25,6 +25,7 @@ Page({
     isLogIn: false,
     perSign:0,
     runperSign:0,
+    code:'',
     iconList: [{
       icon: 'notificationfill',
       color: 'green',
@@ -234,5 +235,69 @@ Page({
     wx.navigateTo({
       url: '/pages/test/test',
     })
+  },
+
+  getinfo: function() {
+    var that = this;
+    var stud = wx.getStorageSync('student-info');
+    if(!stud)
+    {
+      console.log(1);
+      wx.login({
+        success: function (res) {
+          var code = res.code
+          var appid = app.globalData.appid
+          that.setData({
+            code:res.code,
+          })
+          wx.request({
+            url: app.globalData.serverUrl + app.globalData.apiVersion + '/getinfo',
+            method: 'POST',
+            data: {
+              code: code,
+              appid: appid,
+            },
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              if (res.data.data.is_register == false) {
+                app.globalData.submit = true
+                wx.navigateTo({
+                  url: '../logup/logup',
+                })
+              }
+              else if (res.data.data.is_register == true) {
+                app.globalData.openid = res.data.data.open_id
+                app.globalData.stdid = res.data.data.student_id
+                app.globalData.is_register = res.data.data.is_register
+                app.globalData.Totaltime = res.data.data.time
+                app.globalData.runTotaltime = res.data.data.runtime
+                
+                var student = res.data.data
+                //本地存储
+                try {
+                  wx.setStorageSync('student-info',student);
+                  console.log("setStorage Success");
+                } catch (e) {
+                  console.log("setStorage Error");
+                }
+                that.onLoad();
+                
+              }
+            }
+          })
+        }
+      })
+    }
+    else
+    {
+      console.log(2);
+      app.globalData.openid = stud.open_id
+      app.globalData.stdid = stud.student_id
+      app.globalData.is_register = stud.is_register
+      app.globalData.Totaltime = stud.time
+      app.globalData.runTotaltime = stud.runtime
+    }
   }
 })
