@@ -259,7 +259,9 @@ def getmine(request):
 def ruTrace(request):
     rTrace = []
     for i in base_trace.objects.all():
-        rTrace.append([json_util.dumps(i.id)[10:34]])
+        rTrace.append({'id':json_util.dumps(i.id)[10:34],'trace':i.trace})
+    if len(rTrace)>3:
+        rTrace = random.sample(rTrace,3)
     print(rTrace)
     response=wrap_json_response(data=rTrace,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)

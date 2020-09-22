@@ -29,7 +29,7 @@
       <!-- 用户名称开始 -->
       <block wx:if="{{!isLogIn}}">
         <view class="name">
-          <navigator url="/pages/preIndex/preIndex">登录</navigator>
+          <span bindtap="getinfo">登录</span>
           |
           <navigator url="/pages/logup/logup">注册</navigator>
         </view>
