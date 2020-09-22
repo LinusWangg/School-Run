@@ -1,0 +1,14 @@
+/* pages/test/test.wxss */
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+.button-contain {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 80rpx;
+  
+}

@@ -1,93 +1,109 @@
+<!--仿微信-->
 <view>
   <!-- 上侧部分 -->
-  <view class="top-view">
-  <!-- 用户信息开始 -->
+  <view class="top-view bg-gradual-green">
+    <!-- 用户信息开始 -->
     <view class="user">
-    <!-- 头像开始 -->
+      <!-- 头像开始 -->
       <view class="row">
-      <view class="avatar">
-        <open-data class="userAvatar" default-avatar="/iconPicture/tab001.jpg" type="userAvatarUrl"></open-data>
+        <vant-image>
+          <open-data class="userAvatar" default-avatar="/iconPicture/tab001.jpg" type="userAvatarUrl"></open-data>
+        </vant-image>
+        <!--用户名&学校-->
+        <view class="user-info-contain">
+          <view>
+            <view class="flex-sub text-xxl name-text user-info-padding-name">
+              <view class="text-white text-bold">{{student.name}}</view>
+            </view>
+          </view>
+          <view>
+            <view class="flex-sub text-df user-info-padding-school">
+              <text class="text-white solid-bottom">{{student.school}}</text>
+            </view>
+          </view>
+        </view>
+        <!--用户名部分结束-->
       </view>
-      </view>
-    <!-- 头像结束 -->
+      <!-- 头像结束 -->
 
-    <!-- 用户名称开始 -->
-    <block wx:if="{{!isLogIn}}">
-      <view class="name">
+      <!-- 用户名称开始 -->
+      <block wx:if="{{!isLogIn}}">
+        <view class="name">
           <navigator url="/pages/preIndex/preIndex">登录</navigator>
           |
           <navigator url="/pages/logup/logup">注册</navigator>
-      </view>
-    </block>
-    <block wx:else>
-      <view>
-        <text>欢迎使用！</text>
-      </view>
-    </block>
-    <!-- 用户名称结束 -->
+        </view>
+      </block>
+      <block wx:else>
+        <view>
+          <text>欢迎使用！</text>
+        </view>
+      </block>
+      <!-- 用户名称结束 -->
     </view>
   </view>
   <!--上层结束-->
-
-    <view class="numbers">
-      <view class="row">
-        <text>{{student.time}}</text>
-        <text>早操</text>
-      </view>
-      <!--
+</view>
+<view class="numbers cu-card bg-white">
+  <view class="row">
+    <text>{{student.time}}</text>
+    <text>早操</text>
+  </view>
+  <!--
         draw : 确定 canvas的id
         per : 进度百分比 (1-100)
         r: 圆的半径 (按px,最终转化成rpx)
       -->
-      <view class="row">
-        <circle draw='circwewle1' per = '{{perSign}}' r = '50'/>
-      </view>
+  <view class="row">
+    <circle draw='circwewle1' per='{{perSign}}' r='50' />
+  </view>
 
-      <view class="row">
-        <text>{{student.runtime}}</text>
-        <text>体能</text>
-      </view>
+  <view class="row">
+    <text>{{student.runtime}}</text>
+    <text>体能</text>
+  </view>
 
-      <view class="row">
-        <circle draw='circwewle2' per = '{{runperSign}}' r = '50'/>
-      </view>
+  <view class="row">
+    <circle draw='circwewle2' per='{{runperSign}}' r='50' />
+  </view>
 
+</view>
+<!--仿微信结束-->
+<!--宫格菜单-->
+<view class="cu-list grid col-4">
+    <view class="cu-item" wx:for="{{iconList}}" wx:if="{{index<8}}">
+      <view class="cuIcon-{{item.icon}} text-{{item.color}}" bindtap="{{item.bindtap}}">
+        <view class="cu-tag badge" wx:if="{{item.badge!=0}}">
+          <block wx:if="{{item.badge!=1}}">{{item.badge>99?"99+":item.badge}}</block>
+        </view>
+      </view>
+      <text>{{item.name}}</text>
     </view>
-  <!-- 用户信息结束 -->
-  
-</view> 
-
+  </view>
+<!--宫格菜单结束-->
+<!--个人信息
 <view class="function-view">
   <view class="item">
-    <view class="left"></view> 
+    <view class="left"></view>
   </view>
 
   <view class="item">
-    <view class="left">{{student.name}}</view> 
+    <view class="left">{{student.name}}</view>
   </view>
 
   <view class="item">
     <view class="left">{{student.student_id}}</view>
   </view>
-    
+
   <view class="item">
     <view class="left">{{student.school}}</view>
   </view>
 </view>
-<!-- 钱包 优惠券 结束 -->
-
-<!-- 官方微信客服开始 -->
-  <view class="contact-view">
-    <button open-type="contact">
-      联系客服
-    </button>
-  </view>
-  <view class="contact-view">
-    <button>
-      <navigator url="/pages/checkroute/checkroute">
-      查询线路
-      </navigator>
-    </button>
-  </view>
-  <!-- 官方微信客服结束 -->
-<!-- 客户端数据可视化测试 -->
+个人信息结束-->
+<!-- 官方微信客服开始
+<view class="contact-view">
+  <button open-type="contact">
+    联系客服
+  </button>
+</view>
+官方微信客服结束 -->

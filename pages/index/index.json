@@ -1,6 +1,9 @@
 {
   "usingComponents": {
-    "circle": "/components/circle/circle"
+    "circle": "/components/circle/circle",
+    "van-image": "/miniprogram_npm/vant-weapp/image/index",
+    "van-row": "/miniprogram_npm/vant-weapp/row/index",
+    "van-col": "/miniprogram_npm/vant-weapp/col/index"
   },
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",

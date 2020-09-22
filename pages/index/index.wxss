@@ -1,4 +1,6 @@
 /**index.wxss**/
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
 .userinfo {
   display: flex;
   flex-direction: column;
@@ -8,11 +10,46 @@
   color: transparent;
   border: none;
 }
+/*new css*/
+.user-info-bg {
+  display: flex;
+  flex-direction: row;
+  padding: 40rpx;
+  height: 250rpx;
+  border: none;
+}
 
+.user-info-new {
+  width: 750rpx;
+}
+
+.user-info-contain {
+  height: fit-content;
+}
+
+.user-info-padding-name {
+  padding-left: 40rpx;
+  padding-top: 20rpx;
+  padding-bottom: 10rpx;
+}
+.user-info-padding-school {
+  padding-left: 40rpx;
+  padding-top: 10rpx;
+  padding-bottom: 20rpx;
+}
+
+.user-info-identify {
+  margin-right: 0rpx;
+}
+
+.name-text {
+  padding-bottom: 0;
+}
+/*end new 2020-09-20*/
 .userAvatar {
-    width:100rpx;
-    height: 100rpx;
-    border-radius: 50%;
+    width:120rpx;
+    height: 120rpx;
+    border-radius: 15%;
     display:flex;
     overflow: hidden;
 }
@@ -76,7 +113,7 @@
 
 /* 顶部样式 开始 */
 .top-view{
-  background-color: #01ccb6;
+  background-color:white;
   color: white;
   padding: 40rpx;
 }
@@ -85,6 +122,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  height: 100px;
 }
 .top-view .user .row{
   display: flex;
@@ -110,12 +148,13 @@
   border-bottom-left-radius: 32rpx;
 }
 .numbers{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
   font-size: 28rpx;
   padding: 40rpx;
-  padding-bottom: 0rpx;
 }
 .numbers .row{
   display: flex;

@@ -14,3 +14,6 @@
   border: 0.5px solid black;
 
 } */
+page {
+  background-color: #f1f1f1;
+}
