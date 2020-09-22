@@ -55,6 +55,12 @@ Page({
       badge: 0,
       name: '信息',
       bindtap: 'jump_info'
+    },{
+      icon: 'warnfill',
+      color: 'green',
+      badge: 0,
+      name: '测试',
+      bindtap: 'jump_test'
     }],
   },
 
@@ -221,6 +227,12 @@ Page({
   jump_info: function() {
     wx.navigateTo({
       url: '/pages/preIndex/preIndex',
+    })
+  },
+
+  jump_test: function() {
+    wx.navigateTo({
+      url: '/pages/test/test',
     })
   }
 })

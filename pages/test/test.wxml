@@ -1,30 +1,16 @@
-<!-- <view wx:for="{{runTrace}}">
-  <span>
-    {{index+1}}:
-    <button class='btn'>
-    <navigator url="/pages/routeDraw2/routeDraw2?id={{item[0]}}">
-    预览
-    </navigator>
-    </button>
-    <button class='btn'>
-    <navigator url="/pages/location/location?id={{item[0]}}">
-    开始跑步
-    </navigator>
-    </button>
-  </span>
-</view> -->
+<!--pages/test/test.wxml-->
 <swiper class="card-swiper square-dot" style="height:1000rpx !important" indicator-dots="true" circular="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#39b54a">
   <swiper-item wx:for="{{swiperList}}" wx:key class="{{cardCur==index?'cur':''}}">
     <view class="swiper-item bg-gradual-green shadow shadow-wrap">
       <map
       id="myMap"
       style="width: 100%; height: 100%;"
-      latitude="{{item.map_setting.latitude}}"
-      longitude="{{item.map_setting.longitude}}"
-      markers="{{item.map_setting.markers}}"
-      covers="{{item.map_setting.covers}}"
+      latitude="{{latitude}}"
+      longitude="{{longitude}}"
+      markers="{{markers}}"
+      covers="{{covers}}"
       show-location
-      enable-scroll="{{item.map_setting.scroll}}"
+      enable-scroll="{{scroll}}"
     ></map>
     </view>
   </swiper-item>
@@ -32,6 +18,6 @@
 
 <view class="button-contain">
   <van-button round size="large" color="linear-gradient(45deg, #39b54a, #8dc63f)" >
-        开始跑步
+        扫码打卡
       </van-button>
 </view>
