@@ -1,15 +1,27 @@
-<view wx:for="{{runTrace}}">
-  <span>
-    {{index+1}}:
-    <button class='btn'>
-    <navigator url="/pages/routeDraw2/routeDraw2?id={{item[0]}}">
-    预览
-    </navigator>
-    </button>
-    <button class='btn'>
-    <navigator url="/pages/location/location?id={{item[0]}}">
-    开始跑步
-    </navigator>
-    </button>
-  </span>
-</view>
+<block wx:if="{{isValid}}">
+  <swiper class="card-swiper square-dot" style="height:1000rpx !important" indicator-dots="true" circular="true"
+    interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#39b54a">
+    <swiper-item wx:for="{{swiperList}}" wx:key class="{{cardCur==index?'cur':''}}">
+      <view class="swiper-item bg-gradual-green shadow shadow-wrap">
+        <map id="myMap" style="width: 100%; height: 100%;" latitude="{{item.map_setting.latitude}}"
+          longitude="{{item.map_setting.longitude}}" markers="{{item.map_setting.markers}}"
+          covers="{{item.map_setting.covers}}" polyline="{{item.map_setting.polyline}}"
+          scale="{{item.map_setting.scale}}" show-location="true" enable-scroll="{{item.map_setting.scroll}}">
+        </map>
+      </view>
+    </swiper-item>
+  </swiper>
+
+  <view class="button-contain">
+    <text class="text-grey">选中：{{idCur}}</text>
+    <van-button round size="large" color="linear-gradient(45deg, #39b54a, #8dc63f)" data-id="{{idCur}}"
+      bindtap="jump_location">
+      开始跑步
+    </van-button>
+  </view>
+</block>
+<block wx:else>
+  <view class="contain">
+    <van-empty class="custom-image" image="/resources/icon/empty_data.png" description="轨迹数据没有更新~" />
+  </view>
+</block>
