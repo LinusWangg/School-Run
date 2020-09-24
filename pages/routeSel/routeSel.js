@@ -1,4 +1,5 @@
 var app = getApp();
+var data;
 Page({
   data: {
     isValid: false,
@@ -16,7 +17,7 @@ Page({
         'content-type': 'application/json'
       },
       success: function (res) {
-        var data = res.data.data;
+        data = res.data.data;
         if(data != null && data.length) {
           for(var i = 0; i < data.length; i++) {
             var tmp = {
@@ -29,7 +30,6 @@ Page({
                 scroll: false,
                 polyline: [{
                   points: data[i].trace,
-                  color: "",
                   colorList: ["#4eb947", "#55ba46", "#5cbb45", "#63bd44", "#6abe43", "#71bf42", "#78c141", "#7fc240", "#86c43f"],
                   width: 7,
                   start: true,
@@ -129,9 +129,8 @@ Page({
     }
   },
   jump_location: function(event) {
-    console.log(event.currentTarget.dataset.id);
     wx.navigateTo({
-      url: '/pages/location/location?id='+event.currentTarget.dataset.id,
+      url: '/pages/location/location?trace='+JSON.stringify(data[event.currentTarget.dataset.index].trace)+'&id='+event.currentTarget.dataset.id,
     })
   }
 })

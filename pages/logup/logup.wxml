@@ -1,25 +1,46 @@
-<view wx:if="{{!success}}">
-      <view class='row'>
-            <view class='info'>
-                  <input class='info-input' bindinput="getSchoolName" placeholder="请输入你的学校" />
-            </view>
+<view>
+  <view class="cu-card case">
+    <view class="cu-item shadow">
+      <view class="bg-img bg-mask padding-tb-xl"
+        style="background-image: url('https://ossweb-img.qq.com/images/lol/web201310/skin/big10006.jpg');height: 414rpx;">
+        <view class="padding-xl text-white">
+          <view class="padding-xs text-xxl">
+            “校园跑”小程序
+          </view>
+          <view class="padding-xs">
+            Nothing defeats wyw ——— the god of all time.
+          </view>
+        </view>
       </view>
-      <view class='row'>
-            <view class='info'>
-                  <input class='info-input' bindinput="getStudentID" placeholder="请输入你的学号" />
+      <view class="cu-list">
+        <view class="cu-item">
+          <form bindsubmit="formSubmit">
+            <view class="cu-form-group margin-top">
+              <view class="title">学号</view>
+              <input name="id" placeholder="请输入真实学号"></input>
             </view>
-      </view>
-      <view class='row'>
-            <view class='info'>
-                  <input class='info-input' bindinput="getStudentName" placeholder="请输入你的姓名" />
+            <view class="cu-form-group">
+              <view class="title">姓名</view>
+              <input name="name" placeholder="请输入真实姓名"></input>
             </view>
+            <view class="cu-form-group">
+              <view class="title">学校</view>
+              <picker mode="multiSelector" bindchange="MultiChange" bindcolumnchange="MultiColumnChange"
+                value="{{multiIndex}}" range="{{multiArray}}">
+                <view class="picker text-left">
+                  {{multiArray[0][multiIndex[0]]}}，{{multiArray[1][multiIndex[1]]}}
+                </view>
+              </picker>
+            </view>
+            <view class="cu-form-group">
+              <view class="submit-button">
+                <button class="cu-btn round bg-gradual-green lg shadow" form-type="submit">注 册</button>
+              </view>
+            </view>
+          </form>
+        </view>
       </view>
-      <button class='submit' bindtap='submit'>提交</button>
+    </view>
+  </view>
 </view>
-<view class='success' wx:if="{{success}}">
-      <view class='cheer'>
-            <icon type="success" size="24" />
-            恭喜您注册成功!
-      </view>
-      <button type="default" class='return' bindtap='return_home'>返回首页</button>
-</view>
+<van-toast id="van-toast" />

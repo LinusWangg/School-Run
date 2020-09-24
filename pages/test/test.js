@@ -1,104 +1,136 @@
 Page({
   data: {
-    cardCur: 0,
-    swiperList: [{
-      id: 0,
-      type: 'image',
-      url: '/images/test1.jpg'
-    }, {
-      id: 1,
-        type: 'image',
-        url: '/images/test2.jpg',
-    }, {
-      id: 2,
-      type: 'image',
-      url: '/images/test3.jpg'
-    }],
-    latitude: 23.099994,
-    longitude: 113.324520,
-    markers: [{
-      id: 1,
-      latitude: 23.099994,
-      longitude: 113.324520,
-      name: 'T.I.T 创意园'
-    }],
-    covers: [{
-      latitude: 23.099994,
-      longitude: 113.344520,
-      iconPath: '/image/location.png'
-    }, {
-      latitude: 23.099994,
-      longitude: 113.304520,
-      iconPath: '/image/location.png'
-    }],
-    scroll: false
+    latitude: 31.938116613805835,
+    longitude: 118.79199706295856,
+    polygon: [{
+      points: [{
+        latitude: 31.939602862664927,
+        longitude: 118.78792736411503
+      }, {
+        latitude: 31.94043986767247,
+        longitude: 118.79167972107587
+      }],
+      strokeColor: "#00FF00",
+      strokeWidth: 5
+    },
+    {
+      points: [{
+        latitude: 31.940712802693543,
+        longitude: 118.79258028662696
+      }, {
+        latitude: 31.940985736487306,
+        longitude: 118.79646129536502
+      }],
+      strokeColor: "#00FF00",
+      strokeWidth: 5
+    },
+    {
+      points: [{
+        latitude: 31.940712802693543,
+        longitude: 118.79258028662696
+      }, {
+        latitude: 31.940985736487306,
+        longitude: 118.79646129536502
+      }],
+      strokeColor: "#00FF00",
+      strokeWidth: 5
+    },],
+    scroll: true
   },
   onReady: function (e) {
     this.mapCtx = wx.createMapContext('myMap')
   },
-  onLoad() {
-    this.towerSwiper('swiperList');
-    // 初始化towerSwiper 传已有的数组名即可
-  },
-  // cardSwiper
-  cardSwiper(e) {
-    console.log(e.detail.current)
-    this.setData({
-      cardCur: e.detail.current
-    })
-  },
-  // towerSwiper
-  // 初始化towerSwiper
-  towerSwiper(name) {
-    let list = this.data[name];
-    for (let i = 0; i < list.length; i++) {
-      list[i].zIndex = parseInt(list.length / 2) + 1 - Math.abs(i - parseInt(list.length / 2))
-      list[i].mLeft = i - parseInt(list.length / 2)
-    }
-    this.setData({
-      swiperList: list
-    })
-  },
-  // towerSwiper触摸开始
-  towerStart(e) {
-    this.setData({
-      towerStart: e.touches[0].pageX
-    })
-  },
-  // towerSwiper计算方向
-  towerMove(e) {
-    this.setData({
-      direction: e.touches[0].pageX - this.data.towerStart > 0 ? 'right' : 'left'
-    })
-  },
-  // towerSwiper计算滚动
-  towerEnd(e) {
-    let direction = this.data.direction;
-    let list = this.data.swiperList;
-    if (direction == 'right') {
-      let mLeft = list[0].mLeft;
-      let zIndex = list[0].zIndex;
-      for (let i = 1; i < list.length; i++) {
-        list[i - 1].mLeft = list[i].mLeft
-        list[i - 1].zIndex = list[i].zIndex
-      }
-      list[list.length - 1].mLeft = mLeft;
-      list[list.length - 1].zIndex = zIndex;
-      this.setData({
-        swiperList: list
-      })
-    } else {
-      let mLeft = list[list.length - 1].mLeft;
-      let zIndex = list[list.length - 1].zIndex;
-      for (let i = list.length - 1; i > 0; i--) {
-        list[i].mLeft = list[i - 1].mLeft
-        list[i].zIndex = list[i - 1].zIndex
-      }
-      list[0].mLeft = mLeft;
-      list[0].zIndex = zIndex;
-      this.setData({
-        swiperList: list
-      })
-    }
-  }
+  onLoad() {},
 })
+
+// points: [{
+//   latitude: 31.939602862664927,
+//   longitude: 118.78792736411503
+// }, {
+//   latitude: 31.94043986767247,
+//   longitude: 118.79167972107587
+// }, {
+//   latitude: 31.940712802693543,
+//   longitude: 118.79258028662696
+// }, {
+//   latitude: 31.940985736487306,
+//   longitude: 118.79646129536502
+// }, {
+//   latitude: 31.940858367595563,
+//   longitude: 118.79708311470984
+// }, {
+//   latitude: 31.94053084582504,
+//   longitude: 118.79751195514052
+// }, {
+//   latitude: 31.94018512778267,
+//   longitude: 118.797855027747
+// }, {
+//   latitude: 31.939147965296982,
+//   longitude: 118.79791935427
+// }, {
+//   latitude: 31.938893221826383,
+//   longitude: 118.797855027747
+// }, {
+//   latitude: 31.938074398754605,
+//   longitude: 118.79806944796235
+// }, {
+//   latitude: 31.936127390127474,
+//   longitude: 118.798412519914
+// }, {
+//   latitude: 31.93567247583651,
+//   longitude: 118.7979622381821
+// }, {
+//   latitude: 31.935581492458084,
+//   longitude: 118.79761916557561
+// }, {
+//   latitude: 31.935272149075836,
+//   longitude: 118.7950246784161
+// }, {
+//   latitude: 31.93496280465255,
+//   longitude: 118.79330931595666
+// }, {
+//   latitude: 31.93496280465255,
+//   longitude: 118.79330931595666
+// }, {
+//   latitude: 31.935272149075836,
+//   longitude: 118.7950246784161
+// }, {
+//   latitude: 31.935581492458084,
+//   longitude: 118.79761916557561
+// }, {
+//   latitude: 31.93567247583651,
+//   longitude: 118.7979622381821
+// }, {
+//   latitude: 31.936127390127474,
+//   longitude: 118.798412519914
+// }, {
+//   latitude: 31.938074398754605,
+//   longitude: 118.79806944796235
+// }, {
+//   latitude: 31.938893221826383,
+//   longitude: 118.797855027747
+// }, {
+//   latitude: 31.939147965296982,
+//   longitude: 118.79791935427
+// }, {
+//   latitude: 31.94018512778267,
+//   longitude: 118.797855027747
+// }, {
+//   latitude: 31.94053084582504,
+//   longitude: 118.79751195514052
+// }, {
+//   latitude: 31.940858367595563,
+//   longitude: 118.79708311470984
+// }, {
+//   latitude: 31.940985736487306,
+//   longitude: 118.79646129536502
+// }, {
+//   latitude: 31.940712802693543,
+//   longitude: 118.79258028662696
+// }, {
+//   latitude: 31.94043986767247,
+//   longitude: 118.79167972107587
+// }, {
+//   latitude: 31.939602862664927,
+//   longitude: 118.78792736411503
+// }],

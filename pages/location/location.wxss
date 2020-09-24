@@ -1,3 +1,171 @@
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+/*new-cover*/
+.cover-card {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  width: 730rpx;
+  height: 200rpx;
+  margin: 10rpx;
+  position: fixed;
+  border-radius: 20rpx;
+}
+
+.cover-card-shadow {
+  background: rgba(0, 0, 0, 0.08);
+  width: 738rpx;
+  height: 208rpx;
+  margin-top: 6rpx;
+  margin-left: 6rpx;
+  position: fixed;
+  border-radius: 24rpx;
+}
+
+.distance-block {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rpx;
+  margin-left: 40rpx;
+  height: 160rpx;
+  width: 200rpx;
+  background: transparent;
+  justify-content: center;
+}
+
+.distance-block-digit {
+  margin-top: 10rpx;
+  width: 180rpx;
+  font-size: 80rpx;
+  font-weight: 900;
+  color: rgb(22, 213, 160);
+  font-family: fantasy;
+  align-self: center;
+  background: transparent;
+  text-align: center;
+}
+
+.distance-block-text {
+  margin-top: 20rpx;
+  margin-bottom: 10rpx;
+  font-size: 30rpx;
+  color: grey;
+  font-family: fantasy;
+  align-self: center;
+}
+.time-block {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20rpx;
+  margin-left: 120rpx;
+  height: 160rpx;
+  width: 400rpx;
+  background: transparent;
+  justify-content: center;
+}
+
+.time-block-digit {
+  margin-top: 30rpx;
+  height: 80rpx;
+  width: 300rpx;
+  font-size: 60rpx;
+  color: rgb(0, 0, 0);
+  font-weight: 900;
+  font-family: fantasy;
+  align-self: center;
+  background: transparent;
+  text-align: center;
+}
+
+.time-block-text {
+  margin-top: 20rpx;
+  margin-bottom: 10rpx;
+  font-size: 30rpx;
+  color: grey;
+  font-family: fantasy;
+  align-self: center;
+}
+
+.start-button {
+  height: 200rpx;
+  width: 200rpx !important;
+  border-radius: 100rpx;
+  margin: 20rpx;
+  background-color: gold;
+  background-image: "/resources/icon/close.png";
+  background-position: center;
+  background-size: 200rpx;
+}
+
+.cover-card-bottom {
+  display: flex;
+  flex-direction: row;
+  background: white;
+  width: 730rpx;
+  height: 160rpx;
+  margin: 10rpx;
+  position: fixed;
+  border-radius: 20rpx;
+}
+
+.cover-card-bottom-shadow {
+  background: rgba(0, 0, 0, 0.08);
+  width: 738rpx;
+  height: 168rpx;
+  margin-top: 6rpx;
+  margin-left: 6rpx;
+  position: fixed;
+  border-radius: 24rpx;
+}
+
+.middle-button-block {
+  display: flex;
+  flex-direction: column;
+  margin-left: 265rpx;
+  height: 150rpx;
+  width: 200rpx;
+  background: transparent;
+  justify-content: center;
+  align-self: center;
+}
+
+.left-button-block {
+  display: flex;
+  flex-direction: column;
+  margin-left: 110rpx;
+  height: 150rpx;
+  width: 200rpx;
+  background: transparent;
+  justify-content: center;
+  align-self: center;
+}
+
+.right-button-block {
+  display: flex;
+  flex-direction: column;
+  margin-left: 110rpx;
+  height: 150rpx;
+  width: 200rpx;
+  background: transparent;
+  justify-content: center;
+  align-self: center;
+}
+
+.button-image {
+  width: 80rpx;
+  height: 80rpx;
+  align-self: center;
+}
+
+.button-block-text {
+  margin-top: 15rpx;
+  font-size: 30rpx;
+  color: grey;
+  font-family: fantasy;
+  align-self: center;
+}
+/*end new css*/
 .ButtonImage {
   width: 200rpx;
   height: 200rpx; 
@@ -56,7 +224,7 @@ border: 0;
   margin-left: 10rpx;
   margin-bottom: 20rpx;
   font-size: 60rpx;
-  color: whitesmoke;
+  color: black;
 }
 
 .ClearButtonLayout {
