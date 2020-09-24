@@ -1,11 +1,12 @@
 // pages/location/location.js
+import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
+
 var app = getApp();
 var countTooGetLocation = 0;
 var total_micro_second = 0;
 var startRun = 0;
 var totalSecond = 0;
 var oriMeters = 0.0;
-
 var oriPoints = [];
 var id = 0;
 
@@ -141,8 +142,8 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
-
+  onReady: function (e) {
+    this.mapCtx = wx.createMapContext('runMap');
   },
 
   /**
@@ -233,7 +234,7 @@ Page({
       success(res) {
         if (res.confirm) {
           console.log('用户点击确定');
-          console.log("精度列表",accuracyList);
+         
           count_down(this);
           wx.request({
             url: app.globalData.serverUrl + 'run' + '/Trace',
@@ -343,8 +344,7 @@ Page({
       type: 'gcj02', // 默认为 wgs84 返回 gps 坐标，gcj02 返回可用于 wx.openLocation 的坐标
       success: function (res) {
         console.log("res----------")
-        console.log(res.accuracy)
-        accuracyList.push(res.accuracy);
+      
         
         var newMarker = {
           latitude: res.latitude,
@@ -368,15 +368,12 @@ Page({
 
         if (point_len == 0) {
           oriPoints.push(newPoint);
-          smoothPoints.push(newPoint);
           oriMarkers.push(newMarker);
           console.log("==0");
         }
         else {
           console.log(">0");
           point_len = oriPoints.length;
-
-          var lastPoint = oriPoints[point_len - 1];
           var lastMarker = oriMarkers[point_len - 1];
           oriMarkers[point_len - 1].iconPath = '../../iconPicture/dot.png';
 
@@ -388,8 +385,6 @@ Page({
 
           if(newMeters < 48.0) {
             oriPoints.push(newPoint);
-            //LinearSmooth(smoothPoints, newPoint);
-            smoothPoints.push(newPoint);
             oriMarkers.push(newMarker);
             oriMeters = oriMeters + newMeters;
           }
@@ -409,11 +404,6 @@ Page({
             color:"#00FF00",
             width: 5,
             dottedLine: false
-        }],
-        polygon:[{
-          points:smoothPoints,
-          strokeColor:"#0000FF",
-          strokeWidth:10,
         }],
         settings: {
             showLocation:false,

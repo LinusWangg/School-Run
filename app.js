@@ -83,5 +83,6 @@ App({
     contentid:0,
     runsignToday:false,
     runsignPlusToday:false,
+    is_register:false
   }
 })

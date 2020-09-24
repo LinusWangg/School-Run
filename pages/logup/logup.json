@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "usingComponents": {
+    "van-button": "/miniprogram_npm/vant-weapp/button/index",
+    "van-toast": "/miniprogram_npm/vant-weapp/toast/index"
+  }
 }

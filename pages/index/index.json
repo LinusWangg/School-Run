@@ -2,8 +2,7 @@
   "usingComponents": {
     "circle": "/components/circle/circle",
     "van-image": "/miniprogram_npm/vant-weapp/image/index",
-    "van-row": "/miniprogram_npm/vant-weapp/row/index",
-    "van-col": "/miniprogram_npm/vant-weapp/col/index"
+    "van-toast": "/miniprogram_npm/vant-weapp/toast/index"
   },
   "navigationBarBackgroundColor": "#ffffff",
   "navigationBarTextStyle": "black",

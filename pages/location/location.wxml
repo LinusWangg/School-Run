@@ -1,5 +1,6 @@
 <view class="mainView">
    <map
+        id="runMap"
         class="mapView"
         style="width: 100%; height: 100vh;"
         latitude="{{latitude}}"
