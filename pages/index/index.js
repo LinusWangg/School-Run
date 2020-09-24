@@ -208,9 +208,10 @@ Page({
   },
 
   jump_checkroute: function () {
-    wx.navigateTo({
-      url: '/pages/checkroute/checkroute',
-    })
+    // wx.navigateTo({
+    //   url: '/pages/checkroute/checkroute',
+    // })
+    Toast.fail("未开通功能！");
   },
 
   jump_logs: function () {
@@ -226,15 +227,17 @@ Page({
   },
 
   jump_info: function () {
-    wx.navigateTo({
-      url: '/pages/preIndex/preIndex',
-    })
+    // wx.navigateTo({
+    //   url: '/pages/preIndex/preIndex',
+    // })
+    Toast.fail("未开通功能！");
   },
 
   jump_test: function () {
-    wx.navigateTo({
-      url: '/pages/logup/logup',
-    })
+    // wx.navigateTo({
+    //   url: '/pages/test/test',
+    // })
+    Toast.fail("未开通功能！");
   },
 
   login: function () {
@@ -267,11 +270,12 @@ Page({
                   duration: 2000,
                   forbidClick: true
                 });
-                setTimeout(function() {
+                setTimeout(function () {
                   wx.navigateTo({
                     url: '../logup/logup',
-                  })}, 2000);
-                
+                  })
+                }, 2000);
+
               } else if (res.data.data.is_register == true) {
                 app.globalData.openid = res.data.data.open_id
                 app.globalData.stdid = res.data.data.student_id
@@ -291,8 +295,8 @@ Page({
                   message: '登录成功',
                   duration: 2000
                 });
-                setTimeout(function() {
-                  that.onLoad();  
+                setTimeout(function () {
+                  that.onLoad();
                 }, 2000);
               }
             }

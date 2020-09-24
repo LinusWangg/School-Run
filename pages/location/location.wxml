@@ -1,44 +1,50 @@
 <view class="mainView">
-   <map
-        id="runMap"
-        class="mapView"
-        style="width: 100%; height: 100vh;"
-        latitude="{{latitude}}"
-        longitude="{{longitude}}"
-        scale="100"
-        polyline="{{polyline}}"
-        markers="{{markers}}"
-        polygons="{{polygon}}"
-        show-location="{{false}}"
-    >
-        <!--开始 按键-->
-        <cover-view class='ButtonLayout'>
-        <block wx:if="{{!start}}">
-            <button class='StartRunButton' bindtap="startRun">
-                <cover-image class='ButtonImage' src="../../iconPicture/start.png"></cover-image>
-            </button>
-        </block>
-        <!--暂停 按键-->
-        <block wx:else>
-            <button class='StopRunButton' bindtap="stopRun">
-                <cover-image class='ButtonImage' src="../../iconPicture/stop.png"></cover-image>
-            </button>
-        </block>
+    <map id="runMap" class="mapView" style="width: 100%; height: 100vh;" latitude="{{latitude}}"
+        longitude="{{longitude}}" scale="100" polyline="{{polyline}}" polygons="{{polygon}}"
+        show-location="{{false}}" markers="{{marker}}">
+        
+        <!--新的数据框-->
+        <cover-view class="cover-card-shadow" style="  top: 0;" />
+        <cover-view class="cover-card" style="top: 0;">
+            <cover-view class="distance-block">
+                <cover-view class="distance-block-digit">{{meters}}</cover-view>
+                <cover-view class="distance-block-text">已跑公里</cover-view>
+            </cover-view>
+            <cover-view class="time-block">
+                <cover-view class="time-block-digit">{{time}}</cover-view>
+                <cover-view class="time-block-text">总计用时</cover-view>
+            </cover-view>
         </cover-view>
-
-        <!--停止按 键-->
-        <cover-view wx:if="{{!start}}" class='ClearButtonLayout'>
-            <block>
-                <button class='ClearButton' bindtap="clearRun">
-                    <cover-image class='ClearButtonImage' src="../../iconPicture/clear.png"></cover-image>
-                </button>
+        <!--新的控件框-->
+        <cover-view class="cover-card-bottom-shadow" style="bottom: 0;" />
+        <cover-view class="cover-card-bottom" style="bottom: 0;">
+            <block wx:if="{{!start && init}}">
+                <cover-view class="middle-button-block" bindtap="startRun">
+                    <cover-image class="button-image" src="/resources/icon/play.png"></cover-image>
+                    <cover-view class="button-block-text">开始</cover-view>
+                </cover-view>
+            </block>
+            <block wx:elif="{{!start && !init}}">
+                <cover-view class="left-button-block" bindtap="startRun">
+                    <cover-image class="button-image" src="/resources/icon/play.png"></cover-image>
+                    <cover-view class="button-block-text">继续</cover-view>
+                </cover-view>
+                <cover-view class="right-button-block" bindtap="clearRun">
+                    <cover-image class="button-image" src="/resources/icon/stop.png"></cover-image>
+                    <cover-view class="button-block-text">结束</cover-view>
+                </cover-view>
+            </block>
+            <block wx:else>
+                <cover-view class="middle-button-block" bindtap="stopRun">
+                    <cover-image class="button-image" src="/resources/icon/pause.png"></cover-image>
+                    <cover-view class="button-block-text">暂停</cover-view>
+                </cover-view>
             </block>
         </cover-view>
-
-        <cover-view class="Container">
-            <cover-view class="CoverText">\n里程数：{{meters}}km</cover-view>
-            <cover-view class="CoverText">\n\n时 间：{{time}}</cover-view>
-        </cover-view>
-        <cover-view>精确值：{{accuracy}}</cover-view>
     </map>
 </view>
+<!-- 
+<cover-view class="cover-card">
+            <cover-view class="CoverText">\n里程数：{{meters}}km</cover-view>
+            <cover-view class="CoverText">\n\n时 间：{{time}}</cover-view>
+        </cover-view> -->

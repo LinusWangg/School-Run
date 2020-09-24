@@ -1,23 +1,2 @@
-<!--pages/test/test.wxml-->
-<swiper class="card-swiper square-dot" style="height:1000rpx !important" indicator-dots="true" circular="true" interval="5000" duration="500" bindchange="cardSwiper" indicator-color="#8799a3" indicator-active-color="#39b54a">
-  <swiper-item wx:for="{{swiperList}}" wx:key class="{{cardCur==index?'cur':''}}">
-    <view class="swiper-item bg-gradual-green shadow shadow-wrap">
-      <map
-      id="myMap"
-      style="width: 100%; height: 100%;"
-      latitude="{{latitude}}"
-      longitude="{{longitude}}"
-      markers="{{markers}}"
-      covers="{{covers}}"
-      show-location
-      enable-scroll="{{scroll}}"
-    ></map>
-    </view>
-  </swiper-item>
-</swiper>
-
-<view class="button-contain">
-  <van-button round size="large" color="linear-gradient(45deg, #39b54a, #8dc63f)" >
-        扫码打卡
-      </van-button>
-</view>
+<map id="myMap" style="width: 750rpx; height: 1500rpx;" latitude="{{latitude}}" longitude="{{longitude}}"
+  polygons="{{polygon}}" show-location enable-scroll="{{scroll}}"></map>

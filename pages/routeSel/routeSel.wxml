@@ -14,7 +14,7 @@
 
   <view class="button-contain">
     <text class="text-grey">选中：{{idCur}}</text>
-    <van-button round size="large" color="linear-gradient(45deg, #39b54a, #8dc63f)" data-id="{{idCur}}"
+    <van-button round size="large" color="linear-gradient(45deg, #39b54a, #8dc63f)" data-id="{{idCur}}" data-index="{{cardCur}}"
       bindtap="jump_location">
       开始跑步
     </van-button>
