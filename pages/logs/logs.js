@@ -25,7 +25,7 @@ Page({
     timestamp = Date.parse(now);
     now.setHours(6, 0, 0, 0);
     var start_time = Date.parse(now);
-    now.setHours(8, 0, 0, 0);
+    now.setHours(24, 0, 0, 0);
     var end_time = Date.parse(now);
     if(timestamp >= start_time && timestamp <= end_time) {
       tips = 0;
