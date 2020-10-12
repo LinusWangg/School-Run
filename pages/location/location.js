@@ -135,6 +135,7 @@ Page({
     // 页面初始化 options为页面跳转所带来的参数
     this.getLocation();
     trace = JSON.parse(options.trace);
+    id = options.id;
     var length = trace.length;
     console.log(trace);
     console.log(length);
