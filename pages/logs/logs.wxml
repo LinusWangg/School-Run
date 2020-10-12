@@ -14,7 +14,7 @@
   </block>
   <block wx:elif="{{tips == 0}}">
     <van-empty class="custom-image" image="/resources/icon/earth.png" description="点击按钮打卡~">
-      <van-button round size="large" color="linear-gradient(45deg, #39b54a, #8dc63f)">
+      <van-button round size="large" color="linear-gradient(45deg, #39b54a, #8dc63f)" bind:click="click">
         扫码打卡
       </van-button>
     </van-empty>
