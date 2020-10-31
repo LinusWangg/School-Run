@@ -208,10 +208,9 @@ Page({
   },
 
   jump_checkroute: function () {
-    // wx.navigateTo({
-    //   url: '/pages/checkroute/checkroute',
-    // })
-    Toast.fail("未开通功能！");
+    wx.navigateTo({
+      url: '/pages/checkroute/checkroute',
+    })
   },
 
   jump_logs: function () {

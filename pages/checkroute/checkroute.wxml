@@ -1,13 +1,27 @@
 <wxs module="filters" src="checkroute.wxs"></wxs>
-<view wx:for="{{Trace_List}}">
-  <span>
-    距离:{{filters.toFix(item[2])}}km
-    跑步日期:{{item[3]}}
-    DTW:{{filters.toFix(item[4])}}
-    <button class='btn'>
+<block wx:if="{{Trace_List}}">
+	<view wx:for="{{Trace_List}}">
     <navigator url="/pages/routeDraw/routeDraw?id={{item[0]}}">
-    预览
+		<view class="cu-card article">
+			<view class="cu-item shadow">
+				<view class="title">
+					<view class="text-cut">{{item[3]}}</view>
+				</view>
+				<view class="content">
+					<view class="desc">
+						<view>
+							<view class="cu-tag bg-red light sm round">距离：{{filters.toFix(item[2],2)}}km</view>
+							<view class="cu-tag bg-green light sm round">时间：{{item[4][0]}}分{{item[4][1]}}秒</view>
+						</view>
+					</view>
+				</view>
+      </view>
+    </view>
     </navigator>
-    </button>
-  </span>
-</view>
+  </view>
+</block>
+<block wx:else>
+	<view class="contain">
+		<van-empty class="custom-image" image="/resources/icon/custom-empty-image.png" description="还没有记录哦~" />
+	</view>
+</block>
