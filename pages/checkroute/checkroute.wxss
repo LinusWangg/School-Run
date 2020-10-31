@@ -1,4 +1,6 @@
-.btn{
-  width: 20px;
-  height: 10%;
+@import "/colorui/main.wxss";
+@import "/colorui/icon.wxss";
+
+.contain {
+  margin-top: 200rpx;
 }

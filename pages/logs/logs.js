@@ -80,77 +80,77 @@ Page({
           latitude: latitude,
           longitude: longitude,
         })
-      }
-    }),
-    wx.scanCode({
-      success: (res) => {
-        wx.request({
-          url: app.globalData.serverUrl+'daily'+'/check',
-          method:'POST',
-          data: {
-            open_id: app.globalData.openid,
-            student_id: app.globalData.stdid,
-            month:month,
-            day:day,
-            time:timestamp,
-            hour:hour,
-            minute:min,
-            code:res.result,
-            latitude: latitude,
-            longitude: longitude,
-          },
-          header: {
-            'content-type': 'application/json'
-          },
-          success: function (res){
-            if(res.data.data.is_post==false&&res.data.data.result==true)
-            {
-              wx.showToast({
-                title: '成功',
-                icon: 'success',
-                duration: 2000
-              })
-              app.globalData.flag=1
-              app.globalData.signToday=true
-              app.globalData.signPlusToday=false
-            }
-            else if (res.data.data.is_post == false && res.data.data.result == false)
-            {
-              wx.showToast({
-                title: '失败',
-                icon: 'failure',
-                duration: 2000
-              })
-              app.globalData.signToday = false
-            }
-            else if (res.data.data.is_post==true)
-            {
-              wx.showToast({
-                title: '不需要重复打卡',
-                icon: 'success',
-                duration: 2000
-              })
-              app.globalData.signToday = true
-              app.globalData.signPlusToday=true
-            }
-          }
-        })
-        this.setData({
-          flag:true,
-        })
-    },
-      //调取扫码接口失败
-    fail: (res) => {
-      wx.showToast({
-        title: '失败',
-        icon: 'success',
-        duration: 2000
+        wx.scanCode({
+          success: (res) => {
+            wx.request({
+              url: app.globalData.serverUrl+'daily'+'/check',
+              method:'POST',
+              data: {
+                open_id: app.globalData.openid,
+                student_id: app.globalData.stdid,
+                month:month,
+                day:day,
+                time:timestamp,
+                hour:hour,
+                minute:min,
+                code:res.result,
+                latitude: latitude,
+                longitude: longitude,
+              },
+              header: {
+                'content-type': 'application/json'
+              },
+              success: function (res){
+                if(res.data.data.is_post==false&&res.data.data.result==true)
+                {
+                  wx.showToast({
+                    title: '成功',
+                    icon: 'success',
+                    duration: 2000
+                  })
+                  app.globalData.flag=1
+                  app.globalData.signToday=true
+                  app.globalData.signPlusToday=false
+                }
+                else if (res.data.data.is_post == false && res.data.data.result == false)
+                {
+                  wx.showToast({
+                    title: '失败',
+                    icon: 'failure',
+                    duration: 2000
+                  })
+                  app.globalData.signToday = false
+                }
+                else if (res.data.data.is_post==true)
+                {
+                  wx.showToast({
+                    title: '不需要重复打卡',
+                    icon: 'success',
+                    duration: 2000
+                  })
+                  app.globalData.signToday = true
+                  app.globalData.signPlusToday=true
+                }
+              }
+            })
+            this.setData({
+              flag:true,
+            })
+        },
+          //调取扫码接口失败
+        fail: (res) => {
+          wx.showToast({
+            title: '失败',
+            icon: 'success',
+            duration: 2000
+          })
+        },
+        //调取扫码接口后操作（无论成功失败）
+        complete: (res) => {
+        }
       })
-    },
-    //调取扫码接口后操作（无论成功失败）
-    complete: (res) => {
     }
-  })
+    })
   },
 
   onChange(e) {
