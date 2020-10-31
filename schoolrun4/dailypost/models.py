@@ -11,6 +11,7 @@ class dailypost(mongoengine.Document):
     latitude = mongoengine.FloatField(default=0)
     longitude = mongoengine.FloatField(default=0)
     ip = mongoengine.StringField(default='')
+    code = mongoengine.StringField(default='')
 
     meta = {'collection':'dailypost', 'strict': False}
 

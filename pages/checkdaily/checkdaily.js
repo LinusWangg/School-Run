@@ -9,13 +9,13 @@ Page({
    * 页面的初始数据
    */
   data:{
-    Trace_List : [],
+    Daily_List : [],
   },
   onShow:function(){
     var that = this
     //获取当前时间戳  
     wx.request({
-      url: app.globalData.serverUrl+'run/getmine',
+      url: app.globalData.serverUrl+'daily/getmine',
       method: 'POST',
       data:{
         student_id : app.globalData.stdid,
@@ -26,20 +26,21 @@ Page({
       },
       success:function(res){
         var i=0;
+        console.log(res.data.data);
         if(res.data.data)
         {
           for(i=0;i<res.data.data.length;i++)
           {
-            res.data.data[i][3] = time.formatTimeTwo(res.data.data[i][3],'Y-M-D h:m:s');
-            res.data.data[i][4] = [parseInt(res.data.data[i][4]/60000)%60,parseInt(res.data.data[i][4]/1000)%60];
+            res.data.data[i][2] = time.formatTimeTwo(res.data.data[i][2],'Y-M-D h:m:s');
           }
           that.setData({
-            Trace_List : res.data.data,
+            Daily_List : res.data.data,
           })
         }
-        else{
+        else
+        {
           that.setData({
-            Trace_List : null,
+            Daily_List : null,
           })
         }
       },

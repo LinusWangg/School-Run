@@ -24,4 +24,5 @@ from schoolrun4 import settings
 urlpatterns = [
     path('check',views.check,name='check'),
     path('qrcode', views.makeqrcode,name='qrcode'),
+    path('getmine',views.getmine,name='getmine'),
 ]

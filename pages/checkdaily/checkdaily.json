@@ -1,0 +1,6 @@
+{
+  "usingComponents": {
+    "wemark": "/wemark/wemark",
+    "van-empty": "/miniprogram_npm/vant-weapp/empty/index"
+  }
+}

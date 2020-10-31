@@ -1,0 +1,25 @@
+<wxs module="filters" src="checkdaily.wxs"></wxs>
+<block wx:if="{{Daily_List}}">
+	<view wx:for="{{Daily_List}}">
+		<view class="cu-card article">
+			<view class="cu-item shadow">
+				<view class="title">
+					<view class="text-cut">{{item[2]}}</view>
+				</view>
+				<view class="content">
+					<view class="desc">
+						<view>
+							<view class="cu-tag bg-red light sm round">次数：第{{item[0]}}次</view>
+							<view class="cu-tag bg-green light sm round">口令：{{item[1]}}</view>
+						</view>
+					</view>
+				</view>
+      </view>
+    </view>
+  </view>
+</block>
+<block wx:else>
+	<view class="contain">
+		<van-empty class="custom-image" image="/resources/icon/custom-empty-image.png" description="还没有记录哦~" />
+	</view>
+</block>

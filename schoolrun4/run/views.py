@@ -251,7 +251,7 @@ def getmine(request):
     student_id = str(post_data.get('student_id'))
     Trace_list = []
     for i in Trace.objects.filter(student_id=student_id):
-        Trace_list.append([json_util.dumps(i.id)[10:34],i.student_id,i.distance,i.month,i.day,i.DTW])
+        Trace_list.append([json_util.dumps(i.id)[10:34],i.student_id,i.distance,i.post_time,i.time_cost])
     print(Trace_list)
     response=wrap_json_response(data=Trace_list,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)

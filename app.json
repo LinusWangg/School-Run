@@ -10,7 +10,8 @@
     "pages/routeSel/routeSel",
     "pages/routeDraw2/routeDraw2",
     "pages/Notice/Notice",
-    "pages/test/test"
+    "pages/test/test",
+    "pages/checkdaily/checkdaily"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -145,6 +145,20 @@ def check(request):
     response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
+def getmine(request):
+    post_data = request.body.decode("utf-8")
+    post_data = json.loads(post_data)
+    open_id = post_data.get('open_id')
+    student_id = str(post_data.get('student_id'))
+    Daily_list = []
+    x = 1
+    for i in dailypost.objects.filter(student_id=student_id):
+        Daily_list.append([x,i.code,i.post_time])
+        x=x+1
+    print(Daily_list)
+    response=wrap_json_response(data=Daily_list,code=ReturnCode.SUCCESS,message='ok')
+    return JsonResponse(data=response,safe=False)
+
 def makeqrcode(request):
 
     qr = qrcode.QRCode(

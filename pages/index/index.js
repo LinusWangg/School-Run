@@ -37,8 +37,14 @@ Page({
       icon: 'play_forward_fill',
       color: 'green',
       badge: 0,
-      name: '查询线路',
+      name: '查询跑步',
       bindtap: 'jump_checkroute'
+    }, {
+      icon: 'play_forward_fill',
+      color: 'green',
+      badge: 0,
+      name: '查询早操',
+      bindtap: 'jump_checkdaily'
     }, {
       icon: 'squarecheckfill',
       color: 'green',
@@ -210,6 +216,12 @@ Page({
   jump_checkroute: function () {
     wx.navigateTo({
       url: '/pages/checkroute/checkroute',
+    })
+  },
+
+  jump_checkdaily: function () {
+    wx.navigateTo({
+      url: '/pages/checkdaily/checkdaily',
     })
   },
 
