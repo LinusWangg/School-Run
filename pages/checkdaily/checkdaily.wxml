@@ -10,7 +10,6 @@
 					<view class="desc">
 						<view>
 							<view class="cu-tag bg-red light sm round">次数：第{{item[0]}}次</view>
-							<view class="cu-tag bg-green light sm round">口令：{{item[1]}}</view>
 						</view>
 					</view>
 				</view>

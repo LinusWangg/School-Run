@@ -25,6 +25,20 @@ def get_ip_address(request):
     client_ip = ip.split(",")[-1].strip() if ip else ""
     return client_ip
 
+def appendtrace(basetrac):
+    basetrace = []
+    length = len(basetrac)
+    length = 400/length
+    basetrace.append(basetrac[0])
+    for j in range(len(basetrac)-1):
+        dla = basetrac[j+1]['latitude']-basetrac[j]['latitude']
+        dlo = basetrac[j+1]['longitude']-basetrac[j]['longitude']
+        inla = 1/length
+        while inla<1:
+            basetrace.append({'latitude':basetrac[j]['latitude']+inla*dla,'longitude':basetrac[j]['longitude']+inla*dlo})
+            inla = inla+1/length
+    return basetrace
+
 def dtw(ts_run,ts_unique,d=lambda x,y: abs(float(x['latitude'])-float(y['latitude']))+abs(float(x['longitude'])-float(y['longitude']))):
     ts_run,ts_unique = np.array(ts_run),np.array(ts_unique)
     M,N = len(ts_run),len(ts_unique)
@@ -161,6 +175,7 @@ def Get_Trace(request):
     if not last_post_timestamp:
         data['is_post'] = False
         rTrace = base_trace.objects.get(pk=Traceid).trace
+        rTrace = appendtrace(rTrace)
         DTW = dtw(rTrace,points)
         print(DTW)
         if(DTW <= 0.03 and length >= 0):
@@ -191,6 +206,7 @@ def Get_Trace(request):
     if month2 != month or day2 != day:
         data['is_post'] = False
         rTrace = base_trace.objects.get(pk=Traceid).trace
+        rTrace = appendtrace(rTrace)
         DTW = dtw(rTrace,points)
         print(DTW)
         if(True):
@@ -232,8 +248,14 @@ def draw(request):
     post_data = request.body.decode("utf-8")
     post_data = json.loads(post_data)
     dataid = post_data.get('dataid')
-    Trac = Trace.objects.get(pk=dataid).trace
-    response=wrap_json_response(data=Trac,code=ReturnCode.SUCCESS,message='ok')
+    data={}
+    Trac = Trace.objects.get(pk=dataid)
+    data['trace'] = Trac.trace
+    data['distance'] = Trac.distance
+    data['time_cost'] = Trac.time_cost
+    data['post_time'] = Trac.post_time
+    print(data)
+    response=wrap_json_response(data=data,code=ReturnCode.SUCCESS,message='ok')
     return JsonResponse(data=response,safe=False)
 
 def draw2(request):

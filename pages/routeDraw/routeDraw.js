@@ -1,5 +1,7 @@
 // pages/routeDraw/routeDraw.js
+import Toast from '../../miniprogram_npm/vant-weapp/toast/toast';
 var app = getApp();
+var time= require("../../utils/util.js");
 Page({
 
   /**
@@ -17,6 +19,10 @@ Page({
     }],
     latitude:0,
     longitude:0,
+    min:0,
+    sec:0,
+    post_time:0,
+    distance:0,
   },
   
 
@@ -51,9 +57,14 @@ Page({
       success:function(res){
         console.log(res.data.data)
         that.setData({
-          ["polyline["+ 0 +"].points"]:res.data.data,
-          latitude:res.data.data[parseInt(res.data.data.length/2)].latitude,
-          longitude:res.data.data[parseInt(res.data.data.length/2)].longitude,
+          ["polyline["+ 0 +"].points"]:res.data.data['trace'],
+          latitude:res.data.data['trace'][parseInt(res.data.data['trace'].length/2)].latitude,
+          longitude:res.data.data['trace'][parseInt(res.data.data['trace'].length/2)].longitude,
+          time_cost:res.data.data['time_cost'],
+          min:parseInt(res.data.data['time_cost']/60000)%60,
+          sec:parseInt(res.data.data['time_cost']/1000)%60,
+          post_time:time.formatTimeTwo(res.data.data['post_time'],'Y-M-D h:m:s'),
+          distance:res.data.data['distance'],
         })
       },
     })

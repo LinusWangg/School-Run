@@ -80,7 +80,7 @@ def check(request):
                 data['result']=True
                 ticks=time.time()
                 local_time=time.localtime(time.time())
-                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=ptime,latitude=latitude,longitude=longitude,ip=str(ip))
+                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=ptime,latitude=latitude,longitude=longitude,ip=str(ip),code=code)
                 new_info.save()
                 if not Totalpost.objects.filter(open_id=open_id):
                     total=1
@@ -118,7 +118,7 @@ def check(request):
                 data['result']=True
                 ticks=time.time()
                 local_time=time.localtime(time.time())
-                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=ptime,latitude=latitude,longitude=longitude,ip=str(ip))
+                new_info=dailypost(open_id=open_id,student_id=student_id,post_time=ptime,latitude=latitude,longitude=longitude,ip=str(ip),code=code)
                 print('new info:openid:%s,student_id:%s'%(open_id,student_id))
                 new_info.save()
                 if not Totalpost.objects.filter(open_id=open_id):
