@@ -64,7 +64,7 @@ Page({
           min:parseInt(res.data.data['time_cost']/60000)%60,
           sec:parseInt(res.data.data['time_cost']/1000)%60,
           post_time:time.formatTimeTwo(res.data.data['post_time'],'Y-M-D h:m:s'),
-          distance:res.data.data['distance'],
+          distance:res.data.data['distance'].toFixed(2),
         })
       },
     })

@@ -18,7 +18,7 @@
         <cover-view class="cover-card-shadow" style="  top: 0;" />
         <cover-view class="cover-card" style="top: 0;">
             <cover-view class="distance-block">
-                <cover-view class="distance-block-digit">{{distance}}km</cover-view>
+                <cover-view class="distance-block-digit">{{distance}}</cover-view>
                 <cover-view class="distance-block-text">跑步公里</cover-view>
             </cover-view>
             <cover-view class="time-block">
