@@ -63,7 +63,7 @@ pyparsing==2.4.6
 python-memcached==1.59
 python-slugify==4.0.0
 pytz==2018.5
-PyYAML==5.1
+PyYAML==5.4
 qrcode==6.1
 raven==6.10.0
 rcssmin==1.0.6
