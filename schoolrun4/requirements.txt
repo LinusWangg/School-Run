@@ -7,7 +7,7 @@ bleach==3.3.0
 bootstrap-admin==0.4.3
 bottle==0.12.13
 bs4==0.0.1
-certifi==2018.10.15
+certifi==2022.12.7
 cffi==1.13.2
 chardet==3.0.4
 colorama==0.4.3
